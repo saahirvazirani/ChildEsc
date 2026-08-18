@@ -289,13 +289,13 @@ Release boundary and human decisions
 **Description:** Record the human decisions that have legal or double-blind-review consequences before staging any commit.
 
 **Acceptance criteria:**
-- [ ] Repository owner, name, and private-first visibility are approved.
-- [ ] Code, data/documentation, and paper licenses are selected explicitly.
-- [ ] The include/exclude manifest preserves anonymity and excludes participant data and local build debris.
+- [x] Repository owner, name, and private-first visibility are approved.
+- [x] Code, data/documentation, and paper licenses are selected explicitly.
+- [x] The include/exclude manifest preserves anonymity and excludes participant data and local build debris.
 
 **Verification:**
-- [ ] Manual check: compare the manifest against every top-level file and directory.
-- [ ] Manual check: confirm that no public repository is created before the anonymity decision.
+- [x] Manual check: compare the manifest against every top-level file and directory.
+- [x] Manual check: confirm that no public repository is created before the anonymity decision.
 
 **Dependencies:** None
 
@@ -312,13 +312,13 @@ Release boundary and human decisions
 **Description:** Prevent generated files, local templates, credentials, participant data, and sensitive disclosures from entering the repository accidentally.
 
 **Acceptance criteria:**
-- [ ] `.gitignore` excludes Python caches, LaTeX intermediates, rendered pages, local templates, temporary files, and private validation data paths.
-- [ ] `SECURITY.md` tells users not to submit crisis disclosures or identifying child data through issues and provides a private vulnerability-reporting route.
-- [ ] The tracked-file allowlist contains only intended research artifacts.
+- [x] `.gitignore` excludes Python caches, LaTeX intermediates, rendered pages, local templates, temporary files, and private validation data paths.
+- [x] `SECURITY.md` tells users not to submit crisis disclosures or identifying child data through issues and provides a private vulnerability-reporting route.
+- [x] The tracked-file allowlist contains only intended research artifacts.
 
 **Verification:**
-- [ ] `git status --short --ignored` matches the approved boundary.
-- [ ] Secret, identity, absolute-path, and large-file scans return no unexplained findings.
+- [x] `git status --short --ignored` matches the approved boundary.
+- [x] Secret, identity, absolute-path, and large-file scans return no unexplained findings.
 
 **Dependencies:** Task 16
 
@@ -331,9 +331,9 @@ Release boundary and human decisions
 
 ## Checkpoint: Release Boundary
 
-- [ ] The private-first strategy, license, and tracked-file boundary are approved.
-- [ ] No public identity or remote URL has been introduced into the anonymous submission package.
-- [ ] No recruitment or participant-data collection has begun.
+- [x] The private-first strategy, license, and tracked-file boundary are approved.
+- [x] No public identity or remote URL has been introduced into the anonymous submission package.
+- [x] No recruitment or participant-data collection has begun.
 
 ## Phase 2: Usable Research Artifact
 
@@ -342,13 +342,13 @@ Release boundary and human decisions
 **Description:** Make the root README sufficient for a new researcher to understand scope, install ChildEsc, reproduce results, interpret outputs, and avoid unsupported uses.
 
 **Acceptance criteria:**
-- [ ] README includes scope, content warning, requirements, quickstart, command reference, repository map, output interpretation, citation, and troubleshooting.
-- [ ] A validation-status table marks technical checks complete and practitioner, youth, ecological, clinical, cross-cultural, and deployment validation incomplete.
-- [ ] Claims consistently describe `child-centered` as a design objective and v0.1 results as policy-exposed diagnostics.
+- [x] README includes scope, content warning, requirements, quickstart, command reference, repository map, output interpretation, citation, and troubleshooting.
+- [x] A validation-status table marks technical checks complete and practitioner, youth, ecological, clinical, cross-cultural, and deployment validation incomplete.
+- [x] Claims consistently describe `child-centered` as a design objective and v0.1 results as policy-exposed diagnostics.
 
 **Verification:**
-- [ ] A clean clone can follow only the README to run `make reproduce`.
-- [ ] A terminology scan finds no unsupported `validated`, `effective`, `clinically appropriate`, or `youth-informed` claims.
+- [x] A clean clone can follow only the README to run `make reproduce`.
+- [x] A terminology scan finds no unsupported `validated`, `effective`, `clinically appropriate`, or `youth-informed` claims.
 
 **Dependencies:** Tasks 16-17
 
@@ -365,13 +365,13 @@ Release boundary and human decisions
 **Description:** Re-run the existing standard-library testbed on GitHub and make release-boundary failures visible before merge or publication.
 
 **Acceptance criteria:**
-- [ ] CI runs `make reproduce` on supported Python versions without network dependencies.
-- [ ] Generated benchmark and result synchronization remains covered by the existing tests.
-- [ ] Release checks detect credentials, local absolute paths, and prohibited participant-data directories.
+- [x] CI runs `make reproduce` on supported Python versions without network dependencies.
+- [x] Generated benchmark and result synchronization remains covered by the existing tests.
+- [x] Release checks detect credentials, local absolute paths, and prohibited participant-data directories.
 
 **Verification:**
-- [ ] `make reproduce` passes locally with 46 tests.
-- [ ] The first GitHub Actions run passes on the private repository.
+- [x] `make reproduce` passes locally with 46 scientific tests and five release tests.
+- [x] The corrected GitHub Actions run passes on Python 3.11 and 3.12 in the private repository.
 
 **Dependencies:** Tasks 17-18
 
@@ -385,9 +385,9 @@ Release boundary and human decisions
 
 ## Checkpoint: Reproducible Artifact
 
-- [ ] A clean local extraction reproduces benchmark outputs and all tests.
-- [ ] README commands and generated paths are accurate.
-- [ ] Validation-status wording matches `validation/ethics_gate.md` exactly.
+- [x] A clean local extraction reproduces benchmark outputs and all tests.
+- [x] README commands and generated paths are accurate.
+- [x] Validation-status wording matches `validation/ethics_gate.md` exactly.
 
 ## Phase 3: Private GitHub Staging
 
@@ -396,14 +396,14 @@ Release boundary and human decisions
 **Description:** Authenticate the GitHub CLI, create a clean initial commit on `main`, create the private remote, and verify the hosted artifact.
 
 **Acceptance criteria:**
-- [ ] `gh auth status` succeeds for the intended GitHub account.
-- [ ] The initial commit contains only approved files and has no secrets, identities in anonymous artifacts, or oversized build debris.
-- [ ] `saahirvazirani/ChildEsc` exists privately with `main` tracking `origin/main`.
+- [x] `gh auth status` succeeds for the intended GitHub account.
+- [x] The initial commit contains only approved files and has no secrets, identities in anonymous artifacts, or oversized build debris.
+- [x] `saahirvazirani/ChildEsc` exists privately with `main` tracking `origin/main`.
 
 **Verification:**
-- [ ] `git status --short --branch` is clean after push.
-- [ ] `gh repo view saahirvazirani/ChildEsc` confirms private visibility and the expected default branch.
-- [ ] A fresh clone passes `make reproduce` and the hosted CI run succeeds.
+- [x] `git status --short --branch` is clean after push.
+- [x] `gh repo view saahirvazirani/ChildEsc` confirms private visibility and the expected default branch.
+- [x] A fresh clone passes `make reproduce` and the hosted CI run succeeds.
 
 **Dependencies:** Tasks 16-19
 
@@ -551,3 +551,9 @@ Release boundary and human decisions
 - Approve the recommended private-first repository `saahirvazirani/ChildEsc`, or explicitly accept the double-blind risk of an immediate public repository.
 - Select licenses. Recommended default: Apache-2.0 for code and CC BY 4.0 for synthetic data and documentation, subject to author and venue requirements.
 - Decide whether the final workshop PDF belongs in the private staging repository now or should be added only after the anonymity period.
+
+## GitHub Staging Execution Outcome (2026-08-18)
+
+The approved private-first release is live at `https://github.com/saahirvazirani/ChildEsc` with `main` tracking `origin/main`. The repository contains source, synthetic data, aggregate diagnostics, anonymous manuscript source, prospective validation protocols, Apache-2.0 and CC BY 4.0 licensing, safety guidance, and a complete README. Rendered papers, Word files, supplement archives, templates, caches, local paths, credentials, and future participant-data paths are excluded.
+
+Local and clean-clone reproduction pass 46 frozen scientific-artifact tests, five separate release tests, and the release audit. The initial hosted run exposed Python-version floating-point and CSV newline drift; commit `769fb21` repaired both with high-precision aggregation, explicit LF output, and regression coverage. GitHub Actions run `32183952057` then passed on Python 3.11 and 3.12. Public visibility remains blocked by the workshop anonymity gate. Practitioner and youth validation remain protocol-only and are correctly reported as not started.

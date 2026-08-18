@@ -170,6 +170,19 @@ participation by 988. See `validation/delegated_followup_protocol.md` for the
 partnership, consent, human-review, privacy, capacity, and evaluation gates that
 would be required before a pilot.
 
+## Troubleshooting
+
+- **Private clone returns 404:** authenticate the intended account with
+  `gh auth login`, then run `gh repo clone saahirvazirani/ChildEsc`.
+- **`No module named childesc`:** run commands from the repository root through
+  `make`, or prefix direct module commands with `PYTHONPATH=src`.
+- **Release audit fails:** remove the reported credential, absolute local path,
+  oversized artifact, or prohibited participant-data path. Do not add an ignore
+  exception merely to silence a safety finding.
+- **Generated files appear modified:** run `make reproduce`, inspect `git diff`,
+  and confirm that the active Python version is 3.11 or newer. The release tests
+  enforce cross-version float aggregation and LF-only CSV output.
+
 ## Contributing safely
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before proposing benchmark changes.

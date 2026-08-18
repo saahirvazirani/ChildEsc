@@ -277,42 +277,42 @@
 
 ### Phase 1: Release Boundary
 
-- [ ] Task 16: Approve `saahirvazirani/ChildEsc` as a private-first repository.
-- [ ] Task 16: Approve code and data/documentation licenses.
-- [ ] Task 16: Approve the tracked-file include/exclude manifest.
-- [ ] Task 17: Add `.gitignore`, `.gitattributes`, and crisis-safe `SECURITY.md`.
-- [ ] Task 17: Scan candidate files for secrets, identity leaks, local paths, large files, and build debris.
+- [x] Task 16: Approve `saahirvazirani/ChildEsc` as a private-first repository.
+- [x] Task 16: Approve code and data/documentation licenses.
+- [x] Task 16: Approve the tracked-file include/exclude manifest.
+- [x] Task 17: Add `.gitignore`, `.gitattributes`, and crisis-safe `SECURITY.md`.
+- [x] Task 17: Scan candidate files for secrets, identity leaks, local paths, large files, and build debris.
 
 ### Checkpoint: Release Boundary
 
-- [ ] Private-first, license, and artifact-boundary decisions are recorded.
-- [ ] Anonymous submission artifacts contain no GitHub identity or remote URL.
-- [ ] No participant data or recruitment records exist in the repository.
+- [x] Private-first, license, and artifact-boundary decisions are recorded.
+- [x] Anonymous submission artifacts contain no GitHub identity or remote URL.
+- [x] No participant data or recruitment records exist in the repository.
 
 ### Phase 2: Usable Research Artifact
 
-- [ ] Task 18: Expand README with installation, quickstart, command reference, outputs, interpretation, citation, and troubleshooting.
-- [ ] Task 18: Add an explicit validation-status table with practitioner and youth validation marked `not started`.
-- [ ] Task 18: Add `CITATION.cff`, `CONTRIBUTING.md`, and `CHANGELOG.md`.
-- [ ] Task 19: Add GitHub Actions CI for `make reproduce`.
-- [ ] Task 19: Add and test an automated release audit.
-- [ ] Task 19: Re-run the current 46-test reproduction locally.
+- [x] Task 18: Expand README with installation, quickstart, command reference, outputs, interpretation, citation, and troubleshooting.
+- [x] Task 18: Add an explicit validation-status table with practitioner and youth validation marked `not started`.
+- [x] Task 18: Add `CITATION.cff`, `CONTRIBUTING.md`, and `CHANGELOG.md`.
+- [x] Task 19: Add GitHub Actions CI for `make reproduce`.
+- [x] Task 19: Add and test an automated release audit.
+- [x] Task 19: Re-run the current 46-test reproduction locally.
 
 ### Checkpoint: Reproducible Artifact
 
-- [ ] A clean extraction follows only the README and reproduces all outputs.
-- [ ] Technical validation is distinguished from construct, ecological, clinical, cross-cultural, and deployment validation.
-- [ ] Protocol-only files cannot be mistaken for completed human validation.
+- [x] A clean extraction follows only the README and reproduces all outputs.
+- [x] Technical validation is distinguished from construct, ecological, clinical, cross-cultural, and deployment validation.
+- [x] Protocol-only files cannot be mistaken for completed human validation.
 
 ### Phase 3: Private GitHub Staging
 
-- [ ] Task 20: Re-authenticate `gh` for the intended account.
-- [ ] Task 20: Rename the local default branch to `main`.
-- [ ] Task 20: Stage only approved files and inspect the complete diff.
-- [ ] Task 20: Create atomic initial commit(s) with no secrets or build debris.
-- [ ] Task 20: Create private `saahirvazirani/ChildEsc` and push `main`.
-- [ ] Task 20: Verify the hosted file set, private visibility, clean clone, and CI run.
-- [ ] Task 21: Keep the repository private until the double-blind anonymity gate clears.
+- [x] Task 20: Re-authenticate `gh` for the intended account.
+- [x] Task 20: Rename the local default branch to `main`.
+- [x] Task 20: Stage only approved files and inspect the complete diff.
+- [x] Task 20: Create atomic initial commit(s) with no secrets or build debris.
+- [x] Task 20: Create private `saahirvazirani/ChildEsc` and push `main`.
+- [x] Task 20: Verify the hosted file set, private visibility, clean clone, and CI run.
+- [x] Task 21: Keep the repository private until the double-blind anonymity gate clears.
 - [ ] Task 21: Tag public v0.1 only as a preliminary synthetic testbed after release approval.
 
 ### Phase 4: Prospective Human Validation
@@ -330,7 +330,7 @@
 
 ### Final Checkpoint
 
-- [ ] Private GitHub staging repository is clean, documented, and reproducible.
+- [x] Private GitHub staging repository is clean, documented, and reproducible.
 - [ ] Any public release is cleared for workshop anonymity and licensing.
-- [ ] Validation claims match completed evidence exactly.
-- [ ] GitHub contains no participant-level sensitive data, contact information, or crisis disclosures.
+- [x] Validation claims match completed evidence exactly.
+- [x] GitHub contains no participant-level sensitive data, contact information, or crisis disclosures.
