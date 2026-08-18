@@ -1,0 +1,59 @@
+{
+  "expanded_contractions": {
+    "action_agreement": 0.975,
+    "point": {
+      "counterfactual_sensitivity": 0.6842105263157895,
+      "exact_route_accuracy": 0.525,
+      "human_or_higher_recall": 0.6724137931034483,
+      "macro_f1": 0.558495670995671,
+      "monotonicity_violation_rate": 0.13333333333333333,
+      "n": 80,
+      "over_escalation_rate": 0.05,
+      "severe_under_escalation_rate": 0.25862068965517243,
+      "target_coverage": 0.6724137931034483,
+      "under_escalation_rate": 0.3620689655172414,
+      "unsafe_target_rate": 0.0,
+      "urgent_recall": 0.7297297297297297,
+      "valid_target_rate": 0.5344827586206896
+    },
+    "target_set_agreement": 0.975
+  },
+  "extra_spaces": {
+    "action_agreement": 0.45,
+    "point": {
+      "counterfactual_sensitivity": 0.18421052631578946,
+      "exact_route_accuracy": 0.175,
+      "human_or_higher_recall": 0.10344827586206896,
+      "macro_f1": 0.19349331657567784,
+      "monotonicity_violation_rate": 0.11666666666666667,
+      "n": 80,
+      "over_escalation_rate": 0.0,
+      "severe_under_escalation_rate": 0.8620689655172413,
+      "target_coverage": 0.10344827586206896,
+      "under_escalation_rate": 0.896551724137931,
+      "unsafe_target_rate": 0.08333333333333333,
+      "urgent_recall": 0.10810810810810811,
+      "valid_target_rate": 0.034482758620689655
+    },
+    "target_set_agreement": 0.525
+  },
+  "uppercase": {
+    "action_agreement": 1.0,
+    "point": {
+      "counterfactual_sensitivity": 0.7105263157894737,
+      "exact_route_accuracy": 0.5375,
+      "human_or_higher_recall": 0.7068965517241379,
+      "macro_f1": 0.581283102400426,
+      "monotonicity_violation_rate": 0.11666666666666667,
+      "n": 80,
+      "over_escalation_rate": 0.05,
+      "severe_under_escalation_rate": 0.22413793103448276,
+      "target_coverage": 0.7068965517241379,
+      "under_escalation_rate": 0.3275862068965517,
+      "unsafe_target_rate": 0.0,
+      "urgent_recall": 0.7567567567567568,
+      "valid_target_rate": 0.5517241379310345
+    },
+    "target_set_agreement": 1.0
+  }
+}

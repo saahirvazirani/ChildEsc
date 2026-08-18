@@ -1,0 +1,188 @@
+{
+  "artifact": "ChildEsc source register",
+  "version": "0.1",
+  "accessed_on": "2026-08-18",
+  "claim_boundary": "Sources support bounded design rationales. They do not validate ChildEsc scenario wording, labels, target sets, realism, prevalence, or deployment safety.",
+  "sources": [
+    {
+      "id": "workshop_2026",
+      "title": "NeurIPS 2026 Workshop on Child Safety in AI",
+      "url": "https://childsafety-ai.github.io/",
+      "source_type": "workshop_call",
+      "supports": [
+        "synthetic evaluation under restricted-access conditions",
+        "privacy-preserving auditing",
+        "deployment safeguards",
+        "child-centered design and external-stakeholder collaboration"
+      ],
+      "does_not_support": "Any empirical ChildEsc label or safety-effectiveness claim."
+    },
+    {
+      "id": "open_problems_b3",
+      "title": "Preventing AI-Generated Child Sexual Abuse Material Necessitates New Approaches to AI Safety",
+      "url": "https://aichildsafety.github.io/",
+      "source_type": "open_problem_catalog",
+      "supports": [
+        "transparent and reproducible standardized safety assessments",
+        "robustness and independence as evaluation requirements",
+        "limits of static benchmarks"
+      ],
+      "does_not_support": "A claim that ChildEsc evaluates AIG-CSAM capability; B3 is only an assessment-method analogy."
+    },
+    {
+      "id": "cha_2026",
+      "title": "Beyond 'I Can't Help With That': How Child Safety Experts Evaluate AI Chatbot Safety",
+      "url": "https://arxiv.org/abs/2608.07902",
+      "source_type": "practitioner_interview_study",
+      "supports": [
+        "binary refusal is insufficient in vulnerable child interactions",
+        "context gathering and tailored human support are important",
+        "a parent or caregiver cannot be assumed safe"
+      ],
+      "does_not_support": "ChildEsc target taxonomy completeness or item-level labels."
+    },
+    {
+      "id": "unicef_guidance_2025",
+      "title": "Guidance on AI and Children 3.0",
+      "url": "https://www.unicef.org/innocenti/reports/policy-guidance-ai-children",
+      "source_type": "child_rights_guidance",
+      "supports": [
+        "child rights, agency, privacy, inclusion, and age-appropriate design",
+        "participatory and stakeholder-informed development"
+      ],
+      "does_not_support": "A clinical routing threshold or a universal handoff preference."
+    },
+    {
+      "id": "unicef_friend_2026",
+      "title": "When AI Becomes a Friend: Child Rights Risks, Harms, and Regulatory Responses to AI Chatbots and Companions",
+      "url": "https://www.unicef.org/documents/when-ai-becomes-friend-child-rights-risks",
+      "source_type": "child_rights_and_business_guidance",
+      "supports": [
+        "avoidance of exclusivity, dependency, and emotional primacy",
+        "crisis protocols and context-specific referral pathways",
+        "high-risk detection, internal escalation, privacy, and near-miss monitoring"
+      ],
+      "does_not_support": "That a lexical dependency cue is sufficient for a particular ChildEsc action."
+    },
+    {
+      "id": "lifeline_best_practices",
+      "title": "988 Suicide and Crisis Lifeline Best Practices",
+      "url": "https://988lifeline.org/professionals/best-practices/",
+      "source_type": "crisis_service_policy",
+      "supports": [
+        "active collaboration with a person at risk",
+        "least-invasive intervention",
+        "involuntary emergency intervention only as a last resort"
+      ],
+      "does_not_support": "Automated crisis classification, emergency contact, or child-specific clinical labels."
+    },
+    {
+      "id": "samhsa_988_quality_2024",
+      "title": "Saving Lives in America: 988 Quality and Services Plan",
+      "url": "https://www.samhsa.gov/sites/default/files/saving-lives-american-988-quality-service-plan.pdf",
+      "source_type": "federal_crisis_service_plan",
+      "supports": [
+        "confidential handling of 988 contact information",
+        "documented informed consent before sharing contact PII for referral or case management",
+        "follow-up as a governed crisis-center service"
+      ],
+      "does_not_support": "Unsolicited chatbot-to-988 data transfer, a 1-24 hour response formula, or a claim that 988 has agreed to contact chatbot users."
+    },
+    {
+      "id": "hhs_consumer_health_data_2023",
+      "title": "Collecting, Using, or Sharing Consumer Health Information?",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/special-topics/hipaa-ftc-act/index.html",
+      "source_type": "federal_privacy_guidance",
+      "supports": [
+        "affirmative express consent where appropriate",
+        "clear and conspicuous health-data disclosures",
+        "purpose limitation, retention limits, access controls, and auditability"
+      ],
+      "does_not_support": "Treating a bundled terms-of-service clause as legally or ethically sufficient authorization for crisis-data disclosure."
+    },
+    {
+      "id": "kidbench_2026",
+      "title": "The Age of Curiosity Meets the Age of AI: Benchmarking Child Safety in Large Language Models",
+      "url": "https://arxiv.org/abs/2605.25510",
+      "source_type": "child_safety_benchmark",
+      "supports": [
+        "controlled explicit and implicit child-context conditions",
+        "age-scoped wording",
+        "multi-turn, cross-lingual, and cultural evaluation as separate dimensions"
+      ],
+      "does_not_support": "ChildEsc action labels or a claim that its English synthetic language is realistic."
+    },
+    {
+      "id": "carebench_child_2026",
+      "title": "CAREBench: A Child-Safety Risk Benchmark for Language Models",
+      "url": "https://arxiv.org/abs/2606.29685",
+      "source_type": "child_safety_benchmark",
+      "supports": [
+        "upstream child-risk categories",
+        "responsibly scoped prompts without explicit abuse material",
+        "recognize, refuse, de-escalate, and redirect behavior"
+      ],
+      "does_not_support": "Novelty of crisis referral or redirection in ChildEsc."
+    },
+    {
+      "id": "care_bench_triage_2026",
+      "title": "CARE-Bench: Benchmarking Patient-Facing LLM Triage",
+      "url": "https://arxiv.org/abs/2608.03731",
+      "source_type": "medical_triage_benchmark",
+      "supports": [
+        "controlled information-state prefixes",
+        "source-to-case transformation rationales",
+        "ordered action errors and timing thresholds",
+        "separate development, validation, public-test, and controlled-access splits"
+      ],
+      "does_not_support": "Novelty of four-label action timing in ChildEsc or transfer of medical triage labels to child-safety handoff."
+    },
+    {
+      "id": "mindeval_2025",
+      "title": "MindEval: Benchmarking Language Models on Multi-turn Mental Health Support",
+      "url": "https://arxiv.org/abs/2511.18491",
+      "source_type": "mental_health_benchmark",
+      "supports": [
+        "multi-turn evaluation",
+        "expert-designed rubrics",
+        "meta-evaluation of automated simulators and judges"
+      ],
+      "does_not_support": "Using an unvalidated automated judge for ChildEsc or extrapolating adult therapy quality to children."
+    },
+    {
+      "id": "hua_2025_scoping",
+      "title": "A Scoping Review of Large Language Models for Generative Tasks in Mental Health Care",
+      "url": "https://www.nature.com/articles/s41746-025-01611-4",
+      "source_type": "scoping_review",
+      "supports": [
+        "priority of safety, privacy, and fairness",
+        "need for standardized constructs and transparent reporting",
+        "limits of ad hoc scales and simulated vignettes without clinical validation"
+      ],
+      "does_not_support": "Clinical validity of ChildEsc's operational severity scale."
+    },
+    {
+      "id": "construct_validity_2025",
+      "title": "Measuring What Matters: Construct Validity in Large Language Model Benchmarks",
+      "url": "https://papers.neurips.cc/paper_files/paper/2025/file/1967e0fc3aa6cbbace562f5cb8e3954e-Paper-Datasets_and_Benchmarks_Track.pdf",
+      "source_type": "benchmark_methodology",
+      "supports": [
+        "precise construct definitions and claim chains",
+        "representativeness and contamination caveats",
+        "uncertainty, error analysis, and controlled sensitivity tests"
+      ],
+      "does_not_support": "That documentation alone establishes construct validity."
+    },
+    {
+      "id": "betterbench_2024",
+      "title": "BetterBench: Assessing AI Benchmarks, Uncovering Issues, and Establishing Best Practices",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/26889e8359e7ef8a7f5d77457364ca55-Paper-Datasets_and_Benchmarks_Track.pdf",
+      "source_type": "benchmark_methodology",
+      "supports": [
+        "working evaluation code and reproducibility scripts",
+        "documentation of construction, assumptions, metrics, limitations, and release requirements"
+      ],
+      "does_not_support": "Scientific validity based only on artifact completeness."
+    }
+  ]
+}

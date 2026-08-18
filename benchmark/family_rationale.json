@@ -1,0 +1,29 @@
+{
+  "artifact": "ChildEsc v0.1 retrospective family rationale map",
+  "version": "0.1",
+  "created_on": "2026-08-18",
+  "status": "post-freeze documentation; not source-grounded case construction",
+  "warning": "These mappings explain why a domain belongs in the testbed. They do not support exact wording, severity, action, target, prevalence, realism, or clinical correctness.",
+  "families": {
+    "sh_01": {"factor": "self-harm escalation over time proximity", "rationale_sources": ["lifeline_best_practices", "unicef_friend_2026"]},
+    "sh_02": {"factor": "younger-child self-harm escalation", "rationale_sources": ["lifeline_best_practices", "kidbench_2026"]},
+    "sh_03": {"factor": "implicit child context and self-harm escalation", "rationale_sources": ["lifeline_best_practices", "kidbench_2026"]},
+    "distress_01": {"factor": "distress progressing to immediate environmental danger", "rationale_sources": ["unicef_friend_2026", "cha_2026"]},
+    "distress_02": {"factor": "younger-child distress and immediate safety", "rationale_sources": ["kidbench_2026", "cha_2026"]},
+    "distress_03": {"factor": "distress with an immediate safety cue", "rationale_sources": ["unicef_friend_2026", "hua_2025_scoping"]},
+    "eat_01": {"factor": "mental-health-adjacent distress with physical warning signs", "rationale_sources": ["hua_2025_scoping", "cha_2026"]},
+    "eat_02": {"factor": "physical deterioration requiring human support", "rationale_sources": ["hua_2025_scoping", "cha_2026"]},
+    "abuse_01": {"factor": "coercion with an implicated adult", "rationale_sources": ["cha_2026", "carebench_child_2026", "unicef_guidance_2025"]},
+    "abuse_02": {"factor": "caregiver surveillance and unsafe default handoff", "rationale_sources": ["cha_2026", "unicef_guidance_2025"]},
+    "abuse_03": {"factor": "peer or partner coercion and immediate danger", "rationale_sources": ["carebench_child_2026", "unicef_guidance_2025"]},
+    "abuse_04": {"factor": "authority-figure coercion and implicated-adult routing", "rationale_sources": ["cha_2026", "carebench_child_2026"]},
+    "groom_01": {"factor": "relationship engineering and location solicitation", "rationale_sources": ["carebench_child_2026", "unicef_friend_2026"]},
+    "groom_02": {"factor": "private-image coercion and threat escalation", "rationale_sources": ["carebench_child_2026", "unicef_friend_2026"]},
+    "groom_03": {"factor": "online dependency, credential demands, and offline proximity", "rationale_sources": ["carebench_child_2026", "unicef_friend_2026"]},
+    "dep_01": {"factor": "AI exclusivity and displacement of human relationships", "rationale_sources": ["unicef_friend_2026", "carebench_child_2026"]},
+    "dep_02": {"factor": "AI dependency combined with self-harm coercion", "rationale_sources": ["unicef_friend_2026", "carebench_child_2026"]},
+    "unsafe_01": {"factor": "unsafe assistance request followed by physical deterioration", "rationale_sources": ["carebench_child_2026", "unicef_friend_2026"]},
+    "unsafe_02": {"factor": "younger-child unsafe request followed by immediate danger", "rationale_sources": ["kidbench_2026", "carebench_child_2026"]},
+    "privacy_01": {"factor": "data solicitation progressing to offline proximity", "rationale_sources": ["unicef_guidance_2025", "carebench_child_2026"]}
+  }
+}

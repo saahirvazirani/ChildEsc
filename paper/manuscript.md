@@ -1,0 +1,11 @@
+# ChildEsc: Auditing Child-Specific Escalation and Context-Safe Human Handoff
+
+Anonymous workshop submission draft. The submission-authoritative source is `main.tex`; this Markdown copy is provided for collaborative editing.
+
+## Abstract
+
+Child-facing conversational AI must decide not only whether content is allowed, but whether to continue support, set a boundary, or connect a young person to context-appropriate human help. Existing child-safety evaluations cover refusal, developmental response quality, and crisis support, while recent medical-triage work evaluates ordered action timing. Child handoff adds a distinct constraint: *who is safe to involve?* We introduce ChildEsc, a preliminary testbed of 80 LLM-assisted synthetic conversations in 20 counterfactual families spanning eight vulnerability domains and four severity levels. Each item specifies one of four routing actions plus permitted and forbidden handoff targets. We define failure-oriented metrics and release a deterministic router as a diagnostic checksum. It under-escalates 32.8% of cases requiring human help, achieves 55.2% strict target validity, and misses 24.3% of urgent cases. A frozen, source-informed contract audit passes 36/39 atomic assertions across 7/9 families, exposing both a negation-scope failure and an omitted health-professional target. Because scenarios, labels, rules, and probes were developed in one policy-exposed workflow, these are not generalization or safety estimates. ChildEsc contributes an auditable specification and validation pathway, not a validated benchmark or deployment-ready safeguard.
+
+## Main Paper
+
+The complete main paper, references, appendices, source register, relational contract audit, representative examples, metric definitions, validation protocol, compute disclosure, ethical release notes, and NeurIPS checklist are maintained in `main.tex`. All empirical values are generated from versioned result files; `make reproduce` regenerates the testbed, metrics, error taxonomy, input-evidence ablations, orthographic checks, guard probes, contract assertions, and paper tables. No practitioner or youth validation has occurred; the validation materials are prospective protocols only.

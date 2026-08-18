@@ -1,0 +1,47 @@
+{
+  "systems": {
+    "childesc_rules": {
+      "action": {
+        "correct": 52,
+        "over_escalation": 4,
+        "severe_under_escalation": 13,
+        "under_escalation": 11
+      },
+      "target": {
+        "extra_unpermitted": 9,
+        "missing": 17,
+        "not_required_spurious": 2,
+        "not_required_valid": 20,
+        "valid": 32
+      }
+    },
+    "explicit_keyword": {
+      "action": {
+        "correct": 18,
+        "severe_under_escalation": 51,
+        "under_escalation": 11
+      },
+      "target": {
+        "missing": 51,
+        "not_required_valid": 22,
+        "valid": 7
+      }
+    },
+    "severity_agnostic": {
+      "action": {
+        "correct": 20,
+        "over_escalation": 6,
+        "severe_under_escalation": 27,
+        "under_escalation": 27
+      },
+      "target": {
+        "forbidden": 4,
+        "missing": 34,
+        "not_required_spurious": 6,
+        "not_required_valid": 16,
+        "valid": 20
+      }
+    }
+  },
+  "total_rows": 240
+}

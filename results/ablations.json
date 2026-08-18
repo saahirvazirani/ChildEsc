@@ -1,0 +1,72 @@
+{
+  "adult_implication_disabled": {
+    "action_agreement": 1.0,
+    "point": {
+      "counterfactual_sensitivity": 0.7105263157894737,
+      "exact_route_accuracy": 0.4875,
+      "human_or_higher_recall": 0.7068965517241379,
+      "macro_f1": 0.581283102400426,
+      "monotonicity_violation_rate": 0.11666666666666667,
+      "n": 80,
+      "over_escalation_rate": 0.05,
+      "severe_under_escalation_rate": 0.22413793103448276,
+      "target_coverage": 0.6896551724137931,
+      "under_escalation_rate": 0.3275862068965517,
+      "unsafe_target_rate": 0.5833333333333334,
+      "urgent_recall": 0.7567567567567568,
+      "valid_target_rate": 0.43103448275862066
+    },
+    "target_set_agreement": 0.9125
+  },
+  "full": {
+    "action_agreement": 1.0,
+    "point": {
+      "counterfactual_sensitivity": 0.7105263157894737,
+      "exact_route_accuracy": 0.5375,
+      "human_or_higher_recall": 0.7068965517241379,
+      "macro_f1": 0.581283102400426,
+      "monotonicity_violation_rate": 0.11666666666666667,
+      "n": 80,
+      "over_escalation_rate": 0.05,
+      "severe_under_escalation_rate": 0.22413793103448276,
+      "target_coverage": 0.7068965517241379,
+      "under_escalation_rate": 0.3275862068965517,
+      "unsafe_target_rate": 0.0,
+      "urgent_recall": 0.7567567567567568,
+      "valid_target_rate": 0.5517241379310345
+    },
+    "target_set_agreement": 1.0
+  },
+  "implicated_subset_n": 12,
+  "implicated_target_categories": {
+    "adult_implication_disabled": {
+      "forbidden": 7,
+      "missing": 4,
+      "not_required_valid": 1
+    },
+    "full": {
+      "missing": 4,
+      "not_required_valid": 1,
+      "valid": 7
+    }
+  },
+  "latest_user_turn_only": {
+    "action_agreement": 0.3375,
+    "point": {
+      "counterfactual_sensitivity": 0.0,
+      "exact_route_accuracy": 0.1375,
+      "human_or_higher_recall": 0.0,
+      "macro_f1": 0.06043956043956045,
+      "monotonicity_violation_rate": 0.0,
+      "n": 80,
+      "over_escalation_rate": 0.0,
+      "severe_under_escalation_rate": 1.0,
+      "target_coverage": 0.0,
+      "under_escalation_rate": 1.0,
+      "unsafe_target_rate": 0.0,
+      "urgent_recall": 0.0,
+      "valid_target_rate": 0.0
+    },
+    "target_set_agreement": 0.4625
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "artifact": "ChildEsc prospective delegated follow-up extension",
+  "version": "0.1",
+  "status": "prospective_only_not_implemented",
+  "purpose": "Specify the evidence and governance required before testing whether a crisis service could offer time-bounded follow-up after a child-facing chatbot interaction.",
+  "current_behavior": {
+    "transmit_contact_data": false,
+    "initiate_outreach": false,
+    "schedule_follow_up": false,
+    "require_phone_or_email_for_account": false,
+    "claim_988_participation": false
+  },
+  "activation_gates": [
+    "formal_written_partnership_with_988_administrator_or_participating_crisis_center",
+    "independent_child_safeguarding_and_ethics_approval",
+    "jurisdiction_specific_legal_and_privacy_review",
+    "age_appropriate_consent_assent_and_guardianship_design",
+    "independent_validation_and_calibration_of_the_risk_construct",
+    "human_crisis_professional_review_before_any_disclosure",
+    "capacity_service_level_and_failure_mode_agreement",
+    "prospective_measurement_of_chilling_effects_false_alerts_and_inequity"
+  ],
+  "consent_contract": {
+    "separate_affirmative_opt_in": true,
+    "bundled_terms_of_service_is_sufficient": false,
+    "declining_blocks_account_access": false,
+    "plain_language_recipient_purpose_data_and_expiry": true,
+    "revocation_and_deletion_path_required": true,
+    "reconfirm_before_non_imminent_transfer_when_feasible": true
+  },
+  "eligibility": {
+    "scheduled_window_applies_only_to": "non_imminent_significant_concern_after_human_review",
+    "attempt_in_progress_or_imminent_danger": "exclude_from_delayed_queue_and_offer_immediate_synchronous_crisis_support_under_qualified_human_protocol",
+    "model_score_alone_can_trigger": false,
+    "abstain_when_context_is_insufficient": true
+  },
+  "deadline_policy": {
+    "candidate_range_hours": [1, 24],
+    "formula_status": "not_researched_validated_or_implemented",
+    "owner": "independent_multidisciplinary_committee_including_988_child_safety_clinical_privacy_and_youth_representatives",
+    "required_properties": [
+      "monotone_nonincreasing_deadline_as_validated_risk_increases",
+      "calibrated_on_independent_prospective_outcomes",
+      "uncertainty_and_abstention_aware",
+      "versioned_and_pre_registered",
+      "audited_for_age_culture_disability_language_and_access_disparities",
+      "never_used_as_a_clinical_or_legal_determination"
+    ]
+  },
+  "minimum_data_contract": {
+    "default_payload": [
+      "study_specific_pseudonymous_identifier",
+      "user_selected_contact_channel",
+      "documented_consent_receipt",
+      "human_verified_priority_band",
+      "consent_expiry"
+    ],
+    "conversation_transcript_shared_by_default": false,
+    "precise_location_shared_by_default": false,
+    "commercial_reuse": false,
+    "secondary_model_training": false,
+    "encryption_access_logging_retention_and_deletion_controls_required": true
+  },
+  "evidence_boundary": "This artifact is a governance specification, not evidence that outreach is effective, lawful, operationally available, acceptable to youth, or offered by 988."
+}

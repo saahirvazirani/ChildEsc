@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "Citation metadata will be completed after double-blind review."
+title: "ChildEsc: A Preliminary Counterfactual Testbed for Child-Centered Escalation and Human-Handoff Routing"
+type: software
+version: 0.1.0-draft
+date-released: 2026-08-18
+authors:
+  - name: "Anonymous ChildEsc authors"
+license: Apache-2.0
+abstract: >-
+  ChildEsc is a preliminary synthetic testbed for specifying and auditing
+  child-centered escalation and human-handoff routing in consumer
+  conversational AI. Practitioner and youth validation have not occurred.

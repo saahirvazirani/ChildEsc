@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Operating-system and editor files
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Local paper templates and formatting references
+/ChildSafetyAI_Paper_Template*.docx
+/Formatting_Instructions_For_NeurIPS_2026.pdf
+/rendered_template*/
+
+# Generated paper artifacts and render checks
+/paper/build/
+/paper/rendered_*/
+/paper/tmp/
+/paper/template/
+/paper/*.aux
+/paper/*.bbl
+/paper/*.blg
+/paper/*.log
+/paper/*.out
+/paper/*.pdf
+/paper/*.docx
+/paper/*.zip
+/paper/docx_a11y_report.json
+
+# Human-validation data must never be committed
+/data/private/
+/validation/private/
+/validation/raw/
+/validation/responses/
+/validation/recruitment/
+/validation/consent/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.orig

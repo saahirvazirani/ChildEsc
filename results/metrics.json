@@ -1,0 +1,173 @@
+{
+  "benchmark": "ChildEsc",
+  "bootstrap_repetitions": 1000,
+  "items": 80,
+  "systems": {
+    "childesc_rules": {
+      "ci95_grouped_bootstrap": {
+        "counterfactual_sensitivity": {
+          "high": 0.8378378378378378,
+          "low": 0.5789473684210527
+        },
+        "exact_route_accuracy": {
+          "high": 0.6375,
+          "low": 0.4375
+        },
+        "macro_f1": {
+          "high": 0.7023741714995857,
+          "low": 0.4616524578505516
+        },
+        "over_escalation_rate": {
+          "high": 0.1,
+          "low": 0.0125
+        },
+        "severe_under_escalation_rate": {
+          "high": 0.3275862068965517,
+          "low": 0.12727272727272726
+        },
+        "under_escalation_rate": {
+          "high": 0.4406779661016949,
+          "low": 0.20689655172413793
+        },
+        "unsafe_target_rate": {
+          "high": 0.0,
+          "low": 0.0
+        },
+        "urgent_recall": {
+          "high": 0.8857142857142857,
+          "low": 0.6176470588235294
+        },
+        "valid_target_rate": {
+          "high": 0.6451612903225806,
+          "low": 0.45454545454545453
+        }
+      },
+      "point": {
+        "counterfactual_sensitivity": 0.7105263157894737,
+        "exact_route_accuracy": 0.5375,
+        "human_or_higher_recall": 0.7068965517241379,
+        "macro_f1": 0.581283102400426,
+        "monotonicity_violation_rate": 0.11666666666666667,
+        "n": 80,
+        "over_escalation_rate": 0.05,
+        "severe_under_escalation_rate": 0.22413793103448276,
+        "target_coverage": 0.7068965517241379,
+        "under_escalation_rate": 0.3275862068965517,
+        "unsafe_target_rate": 0.0,
+        "urgent_recall": 0.7567567567567568,
+        "valid_target_rate": 0.5517241379310345
+      }
+    },
+    "explicit_keyword": {
+      "ci95_grouped_bootstrap": {
+        "counterfactual_sensitivity": {
+          "high": 0.23076923076923078,
+          "low": 0.05
+        },
+        "exact_route_accuracy": {
+          "high": 0.325,
+          "low": 0.1375
+        },
+        "macro_f1": {
+          "high": 0.21036144578313248,
+          "low": 0.08277310924369749
+        },
+        "over_escalation_rate": {
+          "high": 0.0,
+          "low": 0.0
+        },
+        "severe_under_escalation_rate": {
+          "high": 0.9661016949152542,
+          "low": 0.7719298245614035
+        },
+        "under_escalation_rate": {
+          "high": 0.9661016949152542,
+          "low": 0.7719298245614035
+        },
+        "unsafe_target_rate": {
+          "high": 0.0,
+          "low": 0.0
+        },
+        "urgent_recall": {
+          "high": 0.358974358974359,
+          "low": 0.05263157894736842
+        },
+        "valid_target_rate": {
+          "high": 0.22807017543859648,
+          "low": 0.03389830508474576
+        }
+      },
+      "point": {
+        "counterfactual_sensitivity": 0.13157894736842105,
+        "exact_route_accuracy": 0.225,
+        "human_or_higher_recall": 0.1206896551724138,
+        "macro_f1": 0.14502164502164502,
+        "monotonicity_violation_rate": 0.016666666666666666,
+        "n": 80,
+        "over_escalation_rate": 0.0,
+        "severe_under_escalation_rate": 0.8793103448275862,
+        "target_coverage": 0.1206896551724138,
+        "under_escalation_rate": 0.8793103448275862,
+        "unsafe_target_rate": 0.0,
+        "urgent_recall": 0.1891891891891892,
+        "valid_target_rate": 0.1206896551724138
+      }
+    },
+    "severity_agnostic": {
+      "ci95_grouped_bootstrap": {
+        "counterfactual_sensitivity": {
+          "high": 0.48717948717948717,
+          "low": 0.23684210526315788
+        },
+        "exact_route_accuracy": {
+          "high": 0.3125,
+          "low": 0.1625
+        },
+        "macro_f1": {
+          "high": 0.3333333333333333,
+          "low": 0.16408581935717936
+        },
+        "over_escalation_rate": {
+          "high": 0.125,
+          "low": 0.0375
+        },
+        "severe_under_escalation_rate": {
+          "high": 0.5714285714285714,
+          "low": 0.3508771929824561
+        },
+        "under_escalation_rate": {
+          "high": 0.9444444444444444,
+          "low": 0.7719298245614035
+        },
+        "unsafe_target_rate": {
+          "high": 0.5,
+          "low": 0.25
+        },
+        "urgent_recall": {
+          "high": 0.0,
+          "low": 0.0
+        },
+        "valid_target_rate": {
+          "high": 0.5,
+          "low": 0.20634920634920634
+        }
+      },
+      "point": {
+        "counterfactual_sensitivity": 0.3684210526315789,
+        "exact_route_accuracy": 0.2375,
+        "human_or_higher_recall": 0.41379310344827586,
+        "macro_f1": 0.24837629780472376,
+        "monotonicity_violation_rate": 0.21666666666666667,
+        "n": 80,
+        "over_escalation_rate": 0.075,
+        "severe_under_escalation_rate": 0.46551724137931033,
+        "target_coverage": 0.3448275862068966,
+        "under_escalation_rate": 0.8620689655172413,
+        "unsafe_target_rate": 0.3333333333333333,
+        "urgent_recall": 0.0,
+        "valid_target_rate": 0.3448275862068966
+      }
+    }
+  },
+  "version": "0.1.0"
+}

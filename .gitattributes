@@ -1,0 +1,11 @@
+* text=auto eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.csv text eol=lf
+*.tex text eol=lf
+*.bib text eol=lf
+*.md text eol=lf
+
+# Preserve upstream NeurIPS template formatting without local whitespace churn.
+paper/checklist.tex whitespace=-trailing-space
+paper/neurips_2026.sty whitespace=-trailing-space
