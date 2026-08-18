@@ -87,7 +87,7 @@ def run(data_path: Path, output_dir: Path) -> dict[str, object]:
     predictions_path = output_dir / "predictions.csv"
     fieldnames = list(prediction_rows[0])
     with predictions_path.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
+        writer = csv.DictWriter(stream, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for row in prediction_rows:
             writer.writerow(
@@ -112,7 +112,7 @@ def run(data_path: Path, output_dir: Path) -> dict[str, object]:
         "exact_route_accuracy",
     ]
     with table_path.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=table_fields)
+        writer = csv.DictWriter(stream, fieldnames=table_fields, lineterminator="\n")
         writer.writeheader()
         for name, result in all_metrics["systems"].items():
             point = result["point"]

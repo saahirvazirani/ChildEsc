@@ -41,7 +41,7 @@ def _macro_f1(rows: Sequence[Mapping[str, object]]) -> float:
         precision = _safe_div(true_positive, true_positive + false_positive)
         recall = _safe_div(true_positive, true_positive + false_negative)
         scores.append(_safe_div(2 * precision * recall, precision + recall))
-    return sum(scores) / len(scores) if scores else 0.0
+    return math.fsum(scores) / len(scores) if scores else 0.0
 
 
 def compute_metrics(rows: Sequence[Mapping[str, object]]) -> dict[str, float | int]:

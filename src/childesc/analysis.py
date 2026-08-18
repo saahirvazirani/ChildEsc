@@ -224,7 +224,7 @@ def _error_outputs(
 def _write_csv(path: Path, rows: Sequence[Mapping[str, object]]) -> None:
     fieldnames = list(rows[0])
     with path.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
+        writer = csv.DictWriter(stream, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for row in rows:
             writer.writerow(

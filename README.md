@@ -52,7 +52,7 @@ requires authorized GitHub access. The command deterministically generates the
 benchmark, evaluates the baselines and rule checksum, runs the frozen analyses
 and relational contracts, executes all tests, and audits the release boundary.
 
-Expected output includes 46 passing scientific-artifact tests, three passing
+Expected output includes 46 passing scientific-artifact tests, five passing
 repository-release tests, and `Release audit passed.` Keeping the suites separate
 preserves the paper's frozen 46-test count.
 
@@ -65,7 +65,7 @@ preserves the paper's frozen 46-test count.
 | `make analysis` | Generate error, ablation, robustness, and guard analyses. |
 | `make contracts` | Evaluate frozen relational contract assertions. |
 | `make test` | Run unit, regression, leakage, and synchronization tests. |
-| `make release-test` | Run the three repository release-audit tests. |
+| `make release-test` | Run the five cross-platform and release-audit tests. |
 | `make release-audit` | Check candidate files for local paths, credentials, private study paths, and oversized artifacts. |
 | `make reproduce` | Run the complete pipeline and release audit. |
 | `make clean-results` | Remove generated benchmark and result files. |
