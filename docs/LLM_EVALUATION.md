@@ -53,6 +53,9 @@ coerced. The current REST shapes were checked against official documentation on
 - Anthropic Messages and structured outputs:
   <https://platform.claude.com/docs/en/api/messages/create> and
   <https://platform.claude.com/docs/en/build-with-claude/structured-outputs>
+- OpenRouter Chat Completions and structured outputs:
+  <https://openrouter.ai/docs/api_reference/overview> and
+  <https://openrouter.ai/docs/guides/features/structured-outputs>
 
 The adapters use only the Python standard library. No provider SDK is required.
 The API contract identifier is part of each cache key, so a future endpoint
@@ -103,7 +106,33 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --model MODEL_ID \
   --cache .cache/childesc/anthropic-model \
   --output results/llm/anthropic-model
+
+export OPENROUTER_API_KEY="your-key"
+PYTHONPATH=src python3 -m childesc.llm_evaluate \
+  --data benchmark/childesc_v0_1.jsonl \
+  --provider openrouter \
+  --model openai/gpt-4o-mini \
+  --cache .cache/childesc/openrouter-gpt-4o-mini \
+  --output results/llm/openrouter-gpt-4o-mini
 ```
+
+OpenRouter structured-output support is endpoint-dependent. Before selecting a
+model, confirm that its model/provider page advertises `structured_outputs` and
+`response_format`. The adapter sends `provider.require_parameters=true` so
+OpenRouter routes only to an endpoint that accepts the requested parameters.
+OpenRouter notes that strict enforcement can still vary by upstream provider,
+so ChildEsc independently applies the same strict parser and incomplete-run
+policy used for direct providers. Response-healing plugins are deliberately not
+enabled because they would introduce a provider-specific transformation between
+the model output and the evaluated route.
+
+`require_parameters` constrains capability, not necessarily one upstream
+vendor endpoint. OpenRouter may still choose among compatible endpoints for a
+model slug. Cached replay exactly preserves the returned response, but a study
+that treats upstream-provider identity as an experimental variable should pin
+that routing through a separately versioned adapter configuration or use the
+direct-provider adapters. Report any upstream provider metadata returned by
+OpenRouter; do not infer missing provenance.
 
 `temperature` is omitted by default because model support differs. If a study
 sets `--temperature`, use the same supported value across comparison runs and

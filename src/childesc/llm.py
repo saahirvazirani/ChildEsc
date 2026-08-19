@@ -442,10 +442,79 @@ class AnthropicAdapter(ProviderAdapter):
         }
 
 
+class OpenRouterAdapter(ProviderAdapter):
+    """OpenRouter Chat Completions adapter with required structured output."""
+
+    name = "openrouter"
+    api_key_env = "OPENROUTER_API_KEY"
+    api_contract = "chat-completions-v1-json-schema-2026-08"
+
+    def build_http_request(
+        self, request: RoutingRequest, api_key: str | None
+    ) -> HttpRequest:
+        body: dict[str, object] = {
+            "model": request.model,
+            "messages": [
+                {"role": "system", "content": request.system_prompt},
+                {"role": "user", "content": request.user_prompt},
+            ],
+            "max_tokens": request.max_output_tokens,
+            "response_format": {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "childesc_route",
+                    "strict": True,
+                    "schema": request.schema,
+                },
+            },
+            "provider": {"require_parameters": True},
+        }
+        if request.temperature is not None:
+            body["temperature"] = request.temperature
+        headers = {"Content-Type": "application/json"}
+        if api_key:
+            headers["Authorization"] = f"Bearer {api_key}"
+        return HttpRequest(
+            url="https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            body=body,
+        )
+
+    def extract_text(self, response: Mapping[str, object]) -> str:
+        choices = response.get("choices")
+        if not isinstance(choices, list) or not choices:
+            raise ProviderResponseError("OpenRouter returned no completion choice")
+        choice = choices[0]
+        if not isinstance(choice, dict):
+            raise ProviderResponseError("OpenRouter choice has an invalid shape")
+        if choice.get("error"):
+            raise ProviderResponseError(
+                f"OpenRouter choice error: {_bounded_error(choice['error'])}"
+            )
+        finish_reason = choice.get("finish_reason")
+        if finish_reason in {"content_filter", "error"}:
+            raise ProviderResponseError(
+                f"OpenRouter completion stopped with {finish_reason}"
+            )
+        message = choice.get("message")
+        content = message.get("content") if isinstance(message, dict) else None
+        if not isinstance(content, str) or not content.strip():
+            raise ProviderResponseError("OpenRouter choice contained no text")
+        return content
+
+    def audit_metadata(self, response: Mapping[str, object]) -> dict[str, object]:
+        return {
+            key: response[key]
+            for key in ("id", "model", "provider", "usage")
+            if key in response
+        }
+
+
 PROVIDERS: dict[str, type[ProviderAdapter]] = {
     "gemini": GeminiAdapter,
     "openai": OpenAIAdapter,
     "anthropic": AnthropicAdapter,
+    "openrouter": OpenRouterAdapter,
 }
 
 

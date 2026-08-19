@@ -563,8 +563,8 @@ Local and clean-clone reproduction pass 46 frozen scientific-artifact tests, fiv
 ## Overview
 
 Add an optional, dependency-free evaluation path that sends only synthetic
-conversation text and a versioned routing prompt to Gemini, OpenAI, or
-Anthropic. Provider responses are normalized to the existing `RouteDecision`
+conversation text and a versioned routing prompt to Gemini, OpenAI, Anthropic,
+or OpenRouter. Provider responses are normalized to the existing `RouteDecision`
 contract, stored in a content-addressed local cache, and replayable without
 network access or credentials. This path evaluates routing actions and handoff
 targets only. It does not generate or assess a supportive response.
@@ -620,8 +620,8 @@ Versioned routing prompt + strict schema
 
 ### Phase 2: Adapters and Cache
 
-- Implement injectable Gemini, OpenAI, and Anthropic REST adapters against their
-  official structured-output APIs.
+- Implement injectable Gemini, OpenAI, Anthropic, and OpenRouter REST adapters
+  against their official structured-output APIs.
 - Implement atomic, content-addressed JSON cache writes and request-fingerprint
   verification on reads.
 - Normalize valid outputs to `RouteDecision` and retain bounded provider
@@ -648,7 +648,7 @@ Versioned routing prompt + strict schema
 
 ## Definition of Done
 
-- All three providers produce the same normalized routing contract in tests.
+- All four providers produce the same normalized routing contract in tests.
 - A cached run completes with no API key and no transport invocation.
 - No benchmark label or authoring field is sent to a provider.
 - Every invalid or failed provider result remains visible in output telemetry.
@@ -658,11 +658,11 @@ Versioned routing prompt + strict schema
 ## Execution Outcome (2026-08-19)
 
 Implemented a two-field routing contract and standard-library REST adapters for
-Gemini, OpenAI, and Anthropic. Content-addressed cache entries verify both the
-complete non-secret request and raw provider response, while cache-only mode
+Gemini, OpenAI, Anthropic, and OpenRouter. Content-addressed cache entries
+verify both the complete non-secret request and raw provider response, while cache-only mode
 fails closed before network access. The evaluator withholds comparative metrics
 unless every requested item has a valid route and omits conditional bootstrap
-intervals that a smoke-test slice cannot define. Thirteen no-network LLM tests,
+intervals that a smoke-test slice cannot define. Fifteen no-network LLM tests,
 the frozen 46-test scientific suite, five release tests, full reproduction, and
 the release audit pass. No paid or live model evaluation was run. An attempted
 read-only Gemini CLI review was stopped after repeated quota-exhaustion errors;

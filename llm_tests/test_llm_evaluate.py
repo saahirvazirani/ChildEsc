@@ -3,7 +3,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from childesc.llm import CachedRoutingClient, GeminiAdapter, JsonTransport, ResponseCache
+from childesc.llm import (
+    CachedRoutingClient,
+    GeminiAdapter,
+    JsonTransport,
+    ResponseCache,
+    get_adapter,
+)
 from childesc.llm_evaluate import run
 
 
@@ -22,6 +28,12 @@ class InspectingTransport(JsonTransport):
 
 
 class LLMEvaluateTests(unittest.TestCase):
+    def test_openrouter_is_available_through_provider_registry(self) -> None:
+        adapter = get_adapter("openrouter")
+
+        self.assertEqual(adapter.name, "openrouter")
+        self.assertEqual(adapter.api_key_env, "OPENROUTER_API_KEY")
+
     def test_run_sends_only_conversation_and_exports_routing_metrics(self) -> None:
         item = {
             "id": "case",

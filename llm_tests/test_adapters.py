@@ -5,6 +5,7 @@ from childesc.llm import (
     AnthropicAdapter,
     GeminiAdapter,
     OpenAIAdapter,
+    OpenRouterAdapter,
     ProviderResponseError,
     RoutingRequest,
     parse_route,
@@ -50,6 +51,23 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(output_format["type"], "json_schema")
         self.assertEqual(output_format["schema"], self.request.schema)
 
+    def test_openrouter_requires_structured_output_capable_routing(self) -> None:
+        http_request = OpenRouterAdapter().build_http_request(self.request, "secret")
+
+        self.assertEqual(
+            http_request.url, "https://openrouter.ai/api/v1/chat/completions"
+        )
+        self.assertEqual(http_request.headers["Authorization"], "Bearer secret")
+        output_format = http_request.body["response_format"]
+        self.assertEqual(output_format["type"], "json_schema")
+        self.assertTrue(output_format["json_schema"]["strict"])
+        self.assertEqual(
+            output_format["json_schema"]["schema"], self.request.schema
+        )
+        self.assertEqual(
+            http_request.body["provider"], {"require_parameters": True}
+        )
+
     def test_all_adapters_extract_the_same_route_json(self) -> None:
         route = json.dumps(
             {"action": "human_support", "targets": ["safe_adult"]}
@@ -74,6 +92,17 @@ class AdapterTests(unittest.TestCase):
                 AnthropicAdapter(),
                 {"content": [{"type": "text", "text": route}]},
             ),
+            (
+                OpenRouterAdapter(),
+                {
+                    "choices": [
+                        {
+                            "finish_reason": "stop",
+                            "message": {"role": "assistant", "content": route},
+                        }
+                    ]
+                },
+            ),
         )
 
         for adapter, response in responses:
@@ -96,6 +125,17 @@ class AdapterTests(unittest.TestCase):
             )
         with self.assertRaises(ProviderResponseError):
             AnthropicAdapter().extract_text({"content": [], "stop_reason": "refusal"})
+        with self.assertRaises(ProviderResponseError):
+            OpenRouterAdapter().extract_text(
+                {
+                    "choices": [
+                        {
+                            "finish_reason": "content_filter",
+                            "message": {"role": "assistant", "content": None},
+                        }
+                    ]
+                }
+            )
 
     def test_route_parser_rejects_extra_fields_and_unknown_targets(self) -> None:
         with self.assertRaises(ValueError):

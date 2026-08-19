@@ -340,7 +340,7 @@
 ### Phase 1: Contract and Test Specification
 
 - [x] Task 26: Verify current structured-output request shapes from official
-  Gemini, OpenAI, and Anthropic documentation.
+  Gemini, OpenAI, Anthropic, and OpenRouter documentation.
 - [x] Task 26: Freeze a provider-neutral routing prompt and strict JSON Schema.
 - [x] Task 26: Add failing tests for request parity, response parsing, and label
   isolation without changing the frozen 46-test suite.
@@ -349,7 +349,7 @@
 
 - [x] Task 27: Implement injectable standard-library REST transport and bounded,
   credential-safe errors.
-- [x] Task 27: Implement Gemini, OpenAI, and Anthropic adapters.
+- [x] Task 27: Implement Gemini, OpenAI, Anthropic, and OpenRouter adapters.
 - [x] Task 28: Implement content-addressed response caching with atomic writes.
 - [x] Task 28: Prove cache-only replay requires neither credentials nor network.
 
@@ -363,8 +363,8 @@
 
 ### Phase 4: Documentation and Verification
 
-- [x] Task 30: Document Gemini, OpenAI, and Anthropic usage and safe cost-limited
-  smoke tests.
+- [x] Task 30: Document Gemini, OpenAI, Anthropic, and OpenRouter usage and safe
+  cost-limited smoke tests.
 - [x] Task 30: State that supportive-response quality is outside scope and needs
   a separate rubric plus human validation.
 - [x] Task 30: Run LLM tests, frozen scientific tests, release tests, full

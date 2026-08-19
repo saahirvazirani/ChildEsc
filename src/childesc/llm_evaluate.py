@@ -204,7 +204,11 @@ def main() -> None:
     )
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--provider", choices=("gemini", "openai", "anthropic"), required=True)
+    parser.add_argument(
+        "--provider",
+        choices=("gemini", "openai", "anthropic", "openrouter"),
+        required=True,
+    )
     parser.add_argument("--model", required=True)
     parser.add_argument(
         "--cache", type=Path, default=Path(".cache/childesc/llm-responses")

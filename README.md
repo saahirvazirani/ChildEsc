@@ -85,10 +85,11 @@ PYTHONPATH=src python3 -m childesc.evaluate \
 
 ## Optional LLM routing evaluation
 
-ChildEsc includes provider-neutral adapters for Gemini, OpenAI, and Anthropic.
-They ask a model for only an action and target classes; they do not ask the
-model to generate a supportive response. Exact model IDs are explicit CLI
-arguments so runs never silently move to a provider alias chosen by this repo.
+ChildEsc includes provider-neutral adapters for Gemini, OpenAI, Anthropic, and
+OpenRouter. They ask a model for only an action and target classes; they do not
+ask the model to generate a supportive response. Exact model IDs are explicit
+CLI arguments so runs never silently move to a provider alias chosen by this
+repo.
 
 Start with a small Gemini smoke run to bound cost:
 
@@ -119,7 +120,22 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
 
 For comparison runs, use `--provider openai` with `OPENAI_API_KEY` or
 `--provider anthropic` with `ANTHROPIC_API_KEY`, and supply a model that supports
-the provider's structured-output API. The evaluator writes
+the provider's structured-output API. OpenRouter is also supported:
+
+```bash
+export OPENROUTER_API_KEY="your-key"
+PYTHONPATH=src python3 -m childesc.llm_evaluate \
+  --data benchmark/childesc_v0_1.jsonl \
+  --provider openrouter \
+  --model openai/gpt-4o-mini \
+  --limit 4 \
+  --cache .cache/childesc/openrouter-gpt-4o-mini \
+  --output results/llm/openrouter-gpt-4o-mini-smoke
+```
+
+The selected OpenRouter model and upstream endpoint must support
+`structured_outputs` and `response_format`. The adapter requires parameter-
+compatible routing and rejects nonconforming responses. The evaluator writes
 `routing_predictions.jsonl` and `routing_metrics.json`. Comparative routing
 metrics are withheld unless every item has a valid route; refusals, transport
 failures, and malformed outputs remain visible as incomplete results.
