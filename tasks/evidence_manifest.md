@@ -72,3 +72,25 @@ da5fcdb3a68f7e27accfe0db7b673866f4d6a1b15798e82ae0d0bc8b8a217f66  tests/test_con
 The follow-up specification is not part of the v0.1 empirical result. It defaults to no PII collection, no transfer, no scheduling, no outreach, and no claim of 988 participation.
 
 The final 57-file anonymous supplement was extracted into `/private/tmp/childesc_supplement_reviewed_20260818` and `make reproduce` passed all 46 tests. The generated benchmark and all 12 result artifacts, including the three contract-audit outputs, matched the workspace byte-for-byte by SHA-256.
+
+## Prompted-router protocol freeze, 2026-08-19
+
+The acceptance-oriented model protocol was frozen before any full live
+prompted-model result. Provider credentials were absent, and no eligible
+independent holdout author was documented. The current author and coding agents
+remain ineligible to create a claimed independent holdout.
+
+```text
+2acae4d6b88b5651454e9b07fafa9163d91c9e612794df8382443110300cba44  benchmark/childesc_v0_1.jsonl
+186e9e055eb71599866c89d1eef1eb6cdd44b861a214cd94bbb0b8077ba35ec3  src/childesc/prompts/childesc_routing_v1.txt
+bdda4a89ac8353aa487cf0dd60dc854e8d5b4e3c1f53cb9ddf28fc4842dbd2c7  canonical ROUTE_SCHEMA JSON
+bc7e83ab1fe42b6a153aea3b21a2b72a366ed0533c3e6df7d4e14084527b7f5c  tasks/llm_evaluation_protocol.md
+6e6b37f7ace4be68d730d309259583d612d0750c4a710e9503204895378cbf9c  tasks/acceptance_claims.md
+987d4ecacf94756916b7260590547b022639dc21  git commit before protocol files
+```
+
+The protocol fixes three trials per available direct-provider model, one call
+per item per trial, no hidden retries, complete-run gating, family-level
+resampling, deterministic route scoring, and the action-route gap as the central
+target analysis. No prompted-model score may be added to the paper until its
+full run replays from verified cache entries.

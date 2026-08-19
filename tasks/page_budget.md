@@ -34,6 +34,24 @@ Detailed error tables, ablations, robustness checks, protocols, and extended lim
 
 The fourth page is not filled with more policy-exposed score detail. Its acceptance purpose is to show: (1) the exact construct and supported claim, (2) the distinction from CAREBench, KIDBench, and the August 2026 CARE-Bench triage benchmark, (3) source-informed relational contract results, (4) validation gates required before comparative or deployment claims, and (5) the bounded, non-operational status of the proposed delegated 988 follow-up extension.
 
+## Acceptance revision allocation, 2026-08-19
+
+If at least one complete prompted-model audit is available, the main paper will
+replace checksum breadth rather than add another table:
+
+| Page | Acceptance job | Main content |
+|---|---|---|
+| 1 | Make the paper memorable | Safe-recipient question, closest-work gap, narrow contributions |
+| 2 | Make the construct credible | Scope, matched families, actions, target constraints, provenance, primary metrics |
+| 3 | Prove technical utility | Frozen model protocol, model-plus-checksum table, action-route gap, one target failure |
+| 4 | Earn workshop fit | Validity boundary, practical use, and three concrete workshop questions |
+
+Keyword and severity-agnostic rows, full intervals, stress tests, the complete
+contract audit, procedural validation detail, and delegated 988 follow-up move
+to the appendix. If no live provider run completes, the current checksum table
+and contract audit remain, and the paper must not imply that model evaluation
+has occurred.
+
 ## Verification rule
 
 After every material manuscript change:

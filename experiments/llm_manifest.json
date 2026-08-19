@@ -1,0 +1,71 @@
+{
+  "artifact": "ChildEsc prompted-router evaluation",
+  "benchmark": {
+    "items": 80,
+    "path": "benchmark/childesc_v0_1.jsonl",
+    "sha256": "2acae4d6b88b5651454e9b07fafa9163d91c9e612794df8382443110300cba44",
+    "version": "0.1.0"
+  },
+  "credentials_present_at_freeze": {
+    "anthropic": false,
+    "gemini": false,
+    "openai": false,
+    "openrouter": false
+  },
+  "freeze_date": "2026-08-19",
+  "git_commit_at_freeze": "987d4ecacf94756916b7260590547b022639dc21",
+  "holdout": {
+    "eligible_author_documented": false,
+    "included": false,
+    "status": "not_authored"
+  },
+  "models": [
+    {
+      "id": "gemini-3.1-pro-preview",
+      "provider": "gemini",
+      "role": "primary",
+      "version_status": "preview_returned_model_version_required"
+    },
+    {
+      "id": "gpt-5.5-2026-04-23",
+      "provider": "openai",
+      "role": "comparison",
+      "version_status": "dated_snapshot"
+    },
+    {
+      "id": "claude-sonnet-5",
+      "provider": "anthropic",
+      "role": "comparison",
+      "version_status": "canonical_pinned_id"
+    }
+  ],
+  "primary_metrics": [
+    "under_escalation_rate",
+    "urgent_recall",
+    "valid_target_rate",
+    "unsafe_target_rate",
+    "action_route_gap",
+    "action_correct_target_failure_rate",
+    "exact_route_accuracy"
+  ],
+  "prompt": {
+    "path": "src/childesc/prompts/childesc_routing_v1.txt",
+    "sha256": "186e9e055eb71599866c89d1eef1eb6cdd44b861a214cd94bbb0b8077ba35ec3",
+    "version": "childesc-routing-v1"
+  },
+  "protocol": {
+    "path": "tasks/llm_evaluation_protocol.md",
+    "sha256": "bc7e83ab1fe42b6a153aea3b21a2b72a366ed0533c3e6df7d4e14084527b7f5c",
+    "version": "1.0.0"
+  },
+  "schema": {
+    "sha256": "bdda4a89ac8353aa487cf0dd60dc854e8d5b4e3c1f53cb9ddf28fc4842dbd2c7"
+  },
+  "settings": {
+    "max_output_tokens": 256,
+    "temperature": null,
+    "timeout_seconds": 60,
+    "trials_per_model": 3
+  },
+  "status": "frozen_no_live_results"
+}
