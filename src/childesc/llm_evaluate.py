@@ -25,6 +25,7 @@ from .metrics import ACTION_LEVEL, SEVERITY_LEVEL, compute_metrics, grouped_boot
 
 INTERVAL_METRICS = (
     "macro_f1",
+    "action_accuracy",
     "under_escalation_rate",
     "severe_under_escalation_rate",
     "over_escalation_rate",
@@ -32,6 +33,8 @@ INTERVAL_METRICS = (
     "counterfactual_sensitivity",
     "valid_target_rate",
     "unsafe_target_rate",
+    "action_route_gap",
+    "action_correct_target_failure_rate",
     "exact_route_accuracy",
 )
 
@@ -77,6 +80,11 @@ def _defined_interval_metrics(
         "counterfactual_sensitivity": has_gold_transition,
         "valid_target_rate": has_target,
         "unsafe_target_rate": has_forbidden,
+        "action_correct_target_failure_rate": any(
+            row["gold_action"] == row["predicted_action"]
+            and ACTION_LEVEL[str(row["gold_action"])] >= 2
+            for row in rows
+        ),
     }
     return tuple(
         metric for metric in INTERVAL_METRICS if conditional.get(metric, True)

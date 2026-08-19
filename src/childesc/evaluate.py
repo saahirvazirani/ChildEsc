@@ -60,6 +60,9 @@ def run(data_path: Path, output_dir: Path) -> dict[str, object]:
     prediction_rows: list[dict[str, object]] = []
 
     interval_metrics = (
+        "action_accuracy",
+        "action_route_gap",
+        "action_correct_target_failure_rate",
         "macro_f1",
         "under_escalation_rate",
         "severe_under_escalation_rate",
@@ -100,6 +103,11 @@ def run(data_path: Path, output_dir: Path) -> dict[str, object]:
     table_path = output_dir / "paper_table.csv"
     table_fields = [
         "system",
+        "action_accuracy",
+        "action_route_gap",
+        "action_correct_handoff_n",
+        "action_correct_target_failures",
+        "action_correct_target_failure_rate",
         "macro_f1",
         "urgent_recall",
         "under_escalation_rate",

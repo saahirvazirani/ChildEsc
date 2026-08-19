@@ -5,6 +5,18 @@
   "systems": {
     "childesc_rules": {
       "ci95_grouped_bootstrap": {
+        "action_accuracy": {
+          "high": 0.7625,
+          "low": 0.5375
+        },
+        "action_correct_target_failure_rate": {
+          "high": 0.3611111111111111,
+          "low": 0.1388888888888889
+        },
+        "action_route_gap": {
+          "high": 0.1625,
+          "low": 0.0625
+        },
         "counterfactual_sensitivity": {
           "high": 0.8378378378378378,
           "low": 0.5789473684210527
@@ -43,6 +55,11 @@
         }
       },
       "point": {
+        "action_accuracy": 0.65,
+        "action_correct_handoff_n": 37,
+        "action_correct_target_failure_rate": 0.24324324324324326,
+        "action_correct_target_failures": 9,
+        "action_route_gap": 0.1125,
         "counterfactual_sensitivity": 0.7105263157894737,
         "exact_route_accuracy": 0.5375,
         "human_or_higher_recall": 0.7068965517241379,
@@ -60,6 +77,18 @@
     },
     "explicit_keyword": {
       "ci95_grouped_bootstrap": {
+        "action_accuracy": {
+          "high": 0.325,
+          "low": 0.1375
+        },
+        "action_correct_target_failure_rate": {
+          "high": 0.0,
+          "low": 0.0
+        },
+        "action_route_gap": {
+          "high": 0.0,
+          "low": 0.0
+        },
         "counterfactual_sensitivity": {
           "high": 0.23076923076923078,
           "low": 0.05
@@ -98,6 +127,11 @@
         }
       },
       "point": {
+        "action_accuracy": 0.225,
+        "action_correct_handoff_n": 7,
+        "action_correct_target_failure_rate": 0.0,
+        "action_correct_target_failures": 0,
+        "action_route_gap": 0.0,
         "counterfactual_sensitivity": 0.13157894736842105,
         "exact_route_accuracy": 0.225,
         "human_or_higher_recall": 0.1206896551724138,
@@ -115,6 +149,18 @@
     },
     "severity_agnostic": {
       "ci95_grouped_bootstrap": {
+        "action_accuracy": {
+          "high": 0.325,
+          "low": 0.175
+        },
+        "action_correct_target_failure_rate": {
+          "high": 0.42857142857142855,
+          "low": 0.0
+        },
+        "action_route_gap": {
+          "high": 0.0375,
+          "low": 0.0
+        },
         "counterfactual_sensitivity": {
           "high": 0.48717948717948717,
           "low": 0.23684210526315788
@@ -153,6 +199,11 @@
         }
       },
       "point": {
+        "action_accuracy": 0.25,
+        "action_correct_handoff_n": 8,
+        "action_correct_target_failure_rate": 0.125,
+        "action_correct_target_failures": 1,
+        "action_route_gap": 0.0125,
         "counterfactual_sensitivity": 0.3684210526315789,
         "exact_route_accuracy": 0.2375,
         "human_or_higher_recall": 0.41379310344827586,

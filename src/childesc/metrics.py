@@ -44,6 +44,15 @@ def _macro_f1(rows: Sequence[Mapping[str, object]]) -> float:
     return math.fsum(scores) / len(scores) if scores else 0.0
 
 
+def target_is_valid(row: Mapping[str, object]) -> bool:
+    permitted = set(row.get("permitted_targets", []))
+    predicted = set(row.get("predicted_targets", []))
+    forbidden = set(row.get("forbidden_targets", []))
+    if permitted:
+        return bool(predicted) and predicted <= permitted and not (forbidden & predicted)
+    return not predicted
+
+
 def compute_metrics(rows: Sequence[Mapping[str, object]]) -> dict[str, float | int]:
     if not rows:
         raise ValueError("metrics require at least one prediction")
@@ -74,15 +83,16 @@ def compute_metrics(rows: Sequence[Mapping[str, object]]) -> dict[str, float | i
     )
 
     exact_route = 0
+    action_correct = 0
+    action_correct_handoffs = 0
+    action_correct_target_failures = 0
     for row in rows:
         action_ok = row["gold_action"] == row["predicted_action"]
-        permitted = set(row.get("permitted_targets", []))
-        predicted = set(row.get("predicted_targets", []))
-        forbidden = set(row.get("forbidden_targets", []))
-        if permitted:
-            target_ok = bool(predicted) and predicted <= permitted and not (forbidden & predicted)
-        else:
-            target_ok = not predicted
+        target_ok = target_is_valid(row)
+        action_correct += action_ok
+        if action_ok and ACTION_LEVEL[str(row["gold_action"])] >= 2:
+            action_correct_handoffs += 1
+            action_correct_target_failures += not target_ok
         exact_route += action_ok and target_ok
 
     by_family: dict[str, list[Mapping[str, object]]] = defaultdict(list)
@@ -108,6 +118,7 @@ def compute_metrics(rows: Sequence[Mapping[str, object]]) -> dict[str, float | i
     return {
         "n": total,
         "macro_f1": _macro_f1(rows),
+        "action_accuracy": action_correct / total,
         "urgent_recall": _safe_div(
             sum(row["predicted_action"] == "urgent_handoff" for row in urgent_rows),
             len(urgent_rows),
@@ -144,6 +155,12 @@ def compute_metrics(rows: Sequence[Mapping[str, object]]) -> dict[str, float | i
         "target_coverage": _safe_div(target_covered, len(target_rows)),
         "valid_target_rate": _safe_div(valid_target, len(target_rows)),
         "unsafe_target_rate": _safe_div(unsafe_target, len(forbidden_rows)),
+        "action_route_gap": (action_correct - exact_route) / total,
+        "action_correct_handoff_n": action_correct_handoffs,
+        "action_correct_target_failures": action_correct_target_failures,
+        "action_correct_target_failure_rate": _safe_div(
+            action_correct_target_failures, action_correct_handoffs
+        ),
         "exact_route_accuracy": exact_route / total,
     }
 
@@ -167,6 +184,12 @@ def _metric_is_defined(
         )
     if metric_name == "unsafe_target_rate":
         return any(row.get("forbidden_targets") for row in rows)
+    if metric_name == "action_correct_target_failure_rate":
+        return any(
+            row["gold_action"] == row["predicted_action"]
+            and ACTION_LEVEL[str(row["gold_action"])] >= 2
+            for row in rows
+        )
 
     by_family: dict[str, list[Mapping[str, object]]] = defaultdict(list)
     for row in rows:

@@ -547,18 +547,18 @@ handoffs, the action-accuracy versus exact-route gap, implicated-adult target
 errors, three-trial instability, and paired family-bootstrap differences.
 
 **Acceptance criteria:**
-- [ ] Every primary metric has an explicit denominator and item-level audit
+- [x] Every primary metric has an explicit denominator and item-level audit
   trail.
-- [ ] Trial results are summarized without treating repeated outputs from the
+- [x] Trial results are summarized without treating repeated outputs from the
   same 80 items as independent observations.
-- [ ] Model-to-model differences are paired by family and presented as
+- [x] Model-to-model differences are paired by family and presented as
   descriptive intervals rather than winner claims.
 
 **Verification:**
-- [ ] Tests pass: `make llm-test` and `make test`.
-- [ ] Reproduction check: deleting generated summaries and rerunning analysis
+- [x] Tests pass: `make llm-test` and `make test`.
+- [x] Reproduction check: deleting generated summaries and rerunning analysis
   recreates byte-stable tables from cached normalized outputs.
-- [ ] Manual check: action-route-gap counts equal action-correct target-failure
+- [x] Manual check: action-route-gap counts equal action-correct target-failure
   counts under the documented metric definition.
 
 **Dependencies:** Task 34
@@ -573,7 +573,8 @@ errors, three-trial instability, and paired family-bootstrap differences.
 
 ## Checkpoint: Evidence Integrity
 
-- [ ] Tasks 33-35 pass all focused and frozen tests.
+- [x] Tasks 33 and 35 pass all focused and frozen tests; Task 34 uses the
+  pre-registered no-credentials fallback rather than an incomplete live run.
 - [ ] All proposed paper values replay from cache without credentials.
 - [ ] No prompt, label, model setting, or primary metric changed after result
   inspection.

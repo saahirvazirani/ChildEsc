@@ -197,6 +197,35 @@ results collected under different prompt/schema hashes as if they were the same
 evaluation. Provider/model names and cache files are experiment provenance, not
 evidence of clinical validity or deployment safety.
 
+## Repeated-Trial Analysis
+
+After complete trials have replayed from cache, aggregate their routing
+decisions without treating repeated outputs as independent benchmark items:
+
+```bash
+PYTHONPATH=src python3 -m childesc.llm_analysis \
+  --run results/llm/gemini/trial-1 \
+  --run results/llm/gemini/trial-2 \
+  --run results/llm/gemini/trial-3 \
+  --output results/llm/analysis
+```
+
+The analyzer rejects incomplete runs, mismatched prompt/schema/data hashes,
+duplicate trial IDs, and inconsistent reference fields. It writes:
+
+- `summary.json` with per-trial metrics, trial means and ranges, and action/full-
+  route instability;
+- `paper_table.csv` with deterministic reporting fields;
+- `action_correct_target_failures.csv` for cases where the action is correct but
+  targets invalidate the route; and
+- `paired_differences.json` with family-paired bootstrap differences for systems
+  sharing trial IDs.
+
+The action-route gap is exact action accuracy minus exact route accuracy. It
+quantifies how much action-only scoring would overstate conformance because of
+missing, unpermitted, forbidden, or spurious targets. It is not a clinical risk
+score.
+
 ## Data and Safety
 
 The checked-in benchmark is synthetic and contains sensitive themes. Provider

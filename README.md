@@ -148,6 +148,12 @@ Use a distinct `--trial-id` and output directory for each repeated run. Trial
 identity changes local cache provenance but is never included in the provider
 payload.
 
+Aggregate complete repeated trials with `python3 -m childesc.llm_analysis` and
+one `--run` argument per trial directory. The analysis reports action/full-route
+instability and the action-route gap, and retains item-level cases whose action
+is correct but whose target selection invalidates the route. It does not use an
+LLM judge.
+
 Cache files contain prompts, synthetic conversations, and raw provider
 responses, but never API keys. They are ignored by Git. Do not use this command
 with real child data, personal crisis disclosures, or clinical records. See

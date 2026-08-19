@@ -2,6 +2,11 @@
   "expanded_contractions": {
     "action_agreement": 0.975,
     "point": {
+      "action_accuracy": 0.625,
+      "action_correct_handoff_n": 35,
+      "action_correct_target_failure_rate": 0.22857142857142856,
+      "action_correct_target_failures": 8,
+      "action_route_gap": 0.1,
       "counterfactual_sensitivity": 0.6842105263157895,
       "exact_route_accuracy": 0.525,
       "human_or_higher_recall": 0.6724137931034483,
@@ -21,6 +26,11 @@
   "extra_spaces": {
     "action_agreement": 0.45,
     "point": {
+      "action_accuracy": 0.225,
+      "action_correct_handoff_n": 6,
+      "action_correct_target_failure_rate": 0.6666666666666666,
+      "action_correct_target_failures": 4,
+      "action_route_gap": 0.05,
       "counterfactual_sensitivity": 0.18421052631578946,
       "exact_route_accuracy": 0.175,
       "human_or_higher_recall": 0.10344827586206896,
@@ -40,6 +50,11 @@
   "uppercase": {
     "action_agreement": 1.0,
     "point": {
+      "action_accuracy": 0.65,
+      "action_correct_handoff_n": 37,
+      "action_correct_target_failure_rate": 0.24324324324324326,
+      "action_correct_target_failures": 9,
+      "action_route_gap": 0.1125,
       "counterfactual_sensitivity": 0.7105263157894737,
       "exact_route_accuracy": 0.5375,
       "human_or_higher_recall": 0.7068965517241379,
