@@ -557,3 +557,114 @@ Release boundary and human decisions
 The approved private-first release is live at `https://github.com/saahirvazirani/ChildEsc` with `main` tracking `origin/main`. The repository contains source, synthetic data, aggregate diagnostics, anonymous manuscript source, prospective validation protocols, Apache-2.0 and CC BY 4.0 licensing, safety guidance, and a complete README. Rendered papers, Word files, supplement archives, templates, caches, local paths, credentials, and future participant-data paths are excluded.
 
 Local and clean-clone reproduction pass 46 frozen scientific-artifact tests, five separate release tests, and the release audit. The initial hosted run exposed Python-version floating-point and CSV newline drift; commit `769fb21` repaired both with high-precision aggregation, explicit LF output, and regression coverage. GitHub Actions run `32183952057` then passed on Python 3.11 and 3.12. Public visibility remains blocked by the workshop anonymity gate. Practitioner and youth validation remain protocol-only and are correctly reported as not started.
+
+# Implementation Plan: Provider-Neutral LLM Routing Evaluation
+
+## Overview
+
+Add an optional, dependency-free evaluation path that sends only synthetic
+conversation text and a versioned routing prompt to Gemini, OpenAI, or
+Anthropic. Provider responses are normalized to the existing `RouteDecision`
+contract, stored in a content-addressed local cache, and replayable without
+network access or credentials. This path evaluates routing actions and handoff
+targets only. It does not generate or assess a supportive response.
+
+## Architecture Decisions
+
+- Preserve `evaluate_item` as the label-isolation boundary; an LLM never receives
+  gold actions, target sets, severity labels, family identifiers, or authoring
+  metadata.
+- Use provider REST APIs through the Python standard library so the benchmark
+  does not acquire provider SDK dependencies.
+- Use one versioned system prompt, one canonical conversation serialization,
+  and one JSON Schema across providers.
+- Key cache entries by the complete non-secret request specification, including
+  provider, model, endpoint mode, prompt, schema, generation settings, and
+  conversation.
+- Never cache credentials. Keep response caches ignored by Git because they may
+  contain conversation text and provider metadata.
+- Treat API errors, refusals, and schema-invalid outputs as recorded routing
+  failures. Do not exclude them from denominators or silently retry them into a
+  successful result.
+- Keep LLM tests outside `tests/` so the manuscript's frozen 46-test scientific
+  suite remains unchanged.
+
+## Dependency Graph
+
+```text
+Versioned routing prompt + strict schema
+    |
+    +--> Provider request/response adapters
+    |       |
+    |       +--> Content-addressed response cache
+    |               |
+    |               +--> Cache-only replay
+    |
+    +--> Normalized route parser
+            |
+            +--> Routing-only evaluator and metrics
+                    |
+                    +--> CLI, documentation, and audit tests
+```
+
+## Phases
+
+### Phase 1: Contract and Tests
+
+- Specify the allowed action, target, risk-domain, and response-requirement
+  vocabulary in one strict JSON Schema.
+- Add tests for provider request shapes, response extraction, strict parsing,
+  API-key omission from cache keys, cache hits, and cache-only misses.
+- Add an end-to-end cached evaluation test proving that labels are not present
+  in provider requests and no network transport is called during replay.
+
+### Phase 2: Adapters and Cache
+
+- Implement injectable Gemini, OpenAI, and Anthropic REST adapters against their
+  official structured-output APIs.
+- Implement atomic, content-addressed JSON cache writes and request-fingerprint
+  verification on reads.
+- Normalize valid outputs to `RouteDecision` and retain bounded provider
+  metadata needed for auditability.
+
+### Phase 3: Evaluation and Documentation
+
+- Add a CLI with explicit provider/model selection, cache directory, cache-only
+  mode, item limit, timeout, and output directory.
+- Export routing predictions, standard ChildEsc metrics, invalid-result counts,
+  cache telemetry, prompt/schema hashes, and run configuration.
+- Document credentials, cost controls, reproducibility, limitations, and the
+  separate human-validation study required to evaluate supportive responses.
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Gold-label leakage through request context | Critical | Build requests only from `conversation`; test sent payloads for forbidden benchmark fields. |
+| Provider drift changes results | High | Record provider/model and cache exact raw responses; replay cached runs for analysis. |
+| Invalid outputs inflate metrics if excluded | High | Record them as failures and include them in all-item denominators. |
+| API keys or sensitive content enter Git | Critical | Exclude secrets from cache material, ignore cache directories, and retain release-audit checks. |
+| Routing scores are misread as response quality | High | Name outputs routing-only and state the exclusion in CLI help, README, and run metadata. |
+
+## Definition of Done
+
+- All three providers produce the same normalized routing contract in tests.
+- A cached run completes with no API key and no transport invocation.
+- No benchmark label or authoring field is sent to a provider.
+- Every invalid or failed provider result remains visible in output telemetry.
+- Frozen scientific tests, release tests, LLM adapter tests, and the full
+  reproduction pipeline pass.
+
+## Execution Outcome (2026-08-19)
+
+Implemented a two-field routing contract and standard-library REST adapters for
+Gemini, OpenAI, and Anthropic. Content-addressed cache entries verify both the
+complete non-secret request and raw provider response, while cache-only mode
+fails closed before network access. The evaluator withholds comparative metrics
+unless every requested item has a valid route and omits conditional bootstrap
+intervals that a smoke-test slice cannot define. Thirteen no-network LLM tests,
+the frozen 46-test scientific suite, five release tests, full reproduction, and
+the release audit pass. No paid or live model evaluation was run. An attempted
+read-only Gemini CLI review was stopped after repeated quota-exhaustion errors;
+the confirmed smoke-slice bootstrap defect found during manual review was fixed
+and regression-tested.

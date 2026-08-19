@@ -334,3 +334,38 @@
 - [ ] Any public release is cleared for workshop anonymity and licensing.
 - [x] Validation claims match completed evidence exactly.
 - [x] GitHub contains no participant-level sensitive data, contact information, or crisis disclosures.
+
+## Provider-Neutral LLM Evaluation Checklist
+
+### Phase 1: Contract and Test Specification
+
+- [x] Task 26: Verify current structured-output request shapes from official
+  Gemini, OpenAI, and Anthropic documentation.
+- [x] Task 26: Freeze a provider-neutral routing prompt and strict JSON Schema.
+- [x] Task 26: Add failing tests for request parity, response parsing, and label
+  isolation without changing the frozen 46-test suite.
+
+### Phase 2: Provider and Cache Implementation
+
+- [x] Task 27: Implement injectable standard-library REST transport and bounded,
+  credential-safe errors.
+- [x] Task 27: Implement Gemini, OpenAI, and Anthropic adapters.
+- [x] Task 28: Implement content-addressed response caching with atomic writes.
+- [x] Task 28: Prove cache-only replay requires neither credentials nor network.
+
+### Phase 3: Routing-Only Evaluation
+
+- [x] Task 29: Implement the LLM routing evaluator and CLI.
+- [x] Task 29: Record invalid outputs and provider failures without dropping
+  benchmark items from metric denominators.
+- [x] Task 29: Export prompt/schema hashes, provider/model settings, cache
+  telemetry, predictions, and routing metrics.
+
+### Phase 4: Documentation and Verification
+
+- [x] Task 30: Document Gemini, OpenAI, and Anthropic usage and safe cost-limited
+  smoke tests.
+- [x] Task 30: State that supportive-response quality is outside scope and needs
+  a separate rubric plus human validation.
+- [x] Task 30: Run LLM tests, frozen scientific tests, release tests, full
+  reproduction, and a fresh code review.

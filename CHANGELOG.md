@@ -3,6 +3,20 @@
 All notable changes to ChildEsc will be recorded here. Benchmark versions are
 immutable after release; corrections create a new candidate version.
 
+## Unreleased
+
+- Added provider-neutral routing adapters for Gemini, OpenAI, and Anthropic
+  using each provider's structured-output REST API.
+- Added content-addressed raw-response caching and credential-free offline
+  replay with cache-integrity checks.
+- Added a routing-only evaluator that withholds comparative metrics when any
+  requested item lacks a valid route.
+- Added 13 isolated adapter, cache, leakage, and evaluator tests without
+  changing the frozen 46-test scientific suite.
+
+Supportive-response quality remains outside scope and requires a separate
+rubric and human-validation study.
+
 ## 0.1.0-draft - 2026-08-18
 
 - Added 80 LLM-assisted synthetic conversations across 20 counterfactual

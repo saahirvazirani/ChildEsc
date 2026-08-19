@@ -62,6 +62,7 @@ preserves the paper's frozen 46-test count.
 |---|---|
 | `make benchmark` | Generate `benchmark/childesc_v0_1.jsonl` deterministically. |
 | `make evaluate` | Evaluate baselines and the rule implementation checksum. |
+| `make llm-test` | Test the optional provider adapters and offline cache replay without API calls. |
 | `make analysis` | Generate error, ablation, robustness, and guard analyses. |
 | `make contracts` | Evaluate frozen relational contract assertions. |
 | `make test` | Run unit, regression, leakage, and synchronization tests. |
@@ -81,6 +82,53 @@ PYTHONPATH=src python3 -m childesc.evaluate \
   --data benchmark/childesc_v0_1.jsonl \
   --output results
 ```
+
+## Optional LLM routing evaluation
+
+ChildEsc includes provider-neutral adapters for Gemini, OpenAI, and Anthropic.
+They ask a model for only an action and target classes; they do not ask the
+model to generate a supportive response. Exact model IDs are explicit CLI
+arguments so runs never silently move to a provider alias chosen by this repo.
+
+Start with a small Gemini smoke run to bound cost:
+
+```bash
+export GEMINI_API_KEY="your-key"
+PYTHONPATH=src python3 -m childesc.llm_evaluate \
+  --data benchmark/childesc_v0_1.jsonl \
+  --provider gemini \
+  --model gemini-2.5-flash-lite \
+  --limit 4 \
+  --cache .cache/childesc/gemini-2.5-flash-lite \
+  --output results/llm/gemini-2.5-flash-lite-smoke
+```
+
+Replay the exact provider responses without a key or network request:
+
+```bash
+unset GEMINI_API_KEY
+PYTHONPATH=src python3 -m childesc.llm_evaluate \
+  --data benchmark/childesc_v0_1.jsonl \
+  --provider gemini \
+  --model gemini-2.5-flash-lite \
+  --limit 4 \
+  --cache .cache/childesc/gemini-2.5-flash-lite \
+  --cache-only \
+  --output results/llm/gemini-2.5-flash-lite-replay
+```
+
+For comparison runs, use `--provider openai` with `OPENAI_API_KEY` or
+`--provider anthropic` with `ANTHROPIC_API_KEY`, and supply a model that supports
+the provider's structured-output API. The evaluator writes
+`routing_predictions.jsonl` and `routing_metrics.json`. Comparative routing
+metrics are withheld unless every item has a valid route; refusals, transport
+failures, and malformed outputs remain visible as incomplete results.
+
+Cache files contain prompts, synthetic conversations, and raw provider
+responses, but never API keys. They are ignored by Git. Do not use this command
+with real child data, personal crisis disclosures, or clinical records. See
+[`docs/LLM_EVALUATION.md`](docs/LLM_EVALUATION.md) for the exact contract,
+provider API sources, full-run workflow, and interpretation limits.
 
 ## Outputs
 
@@ -105,6 +153,12 @@ Do not interpret these outputs as model capability estimates. The source
 scenarios, initial reference labels, and lexical router were developed in the
 same workflow. The contract probes were also developer-authored after inspecting
 the router. Their results measure implemented conformance, not external validity.
+
+LLM routing scores, when produced, evaluate only action and handoff-target
+selection on the same policy-exposed synthetic testbed. Assessing whether a
+generated supportive response is safe, helpful, age-appropriate, culturally
+responsive, or autonomy-preserving requires a separate response rubric and an
+appropriately governed human-validation study.
 
 ## Validation status
 
@@ -133,7 +187,8 @@ overwriting v0.1. See [`validation/README.md`](validation/README.md) and
 | Path | Contents |
 |---|---|
 | `benchmark/` | Source families, generated synthetic data, source register, dataset card, authoring protocol, and contract probes. |
-| `src/childesc/` | Generator, router, metrics, evaluation, analysis, and contract code. |
+| `src/childesc/` | Generator, router, metrics, analysis, contracts, and optional cached LLM routing evaluation. |
+| `llm_tests/` | No-network provider-adapter, cache-integrity, leakage, and routing-evaluator tests. |
 | `tests/` | Frozen unit, regression, leakage, and artifact-synchronization tests. |
 | `release_tests/` | Repository release-boundary tests kept outside the frozen paper count. |
 | `results/` | Deterministically generated aggregate and item-level technical outputs. |
