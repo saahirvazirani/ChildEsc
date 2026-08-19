@@ -109,6 +109,10 @@ official `dblblindworkshop` source to 14 pages: content pages 1--4, references
 beginning on page 5, followed by the optional appendix and checklist. All four
 content pages and the first reference page were rendered and visually inspected.
 The collaboration DOCX was independently rendered to five pages and inspected.
+The committed tree was archived as the anonymous supplement, extracted to a
+fresh temporary directory, and rerun without credentials. All benchmark and
+result files matched the workspace byte-for-byte; all 75 tests passed in that
+clean copy.
 
 ```text
 2a758ea9a0e9449c57e187d9902b01ee007a42b57175432e002db6cb2c06cdab  src/childesc/metrics.py

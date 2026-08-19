@@ -745,22 +745,25 @@ defer attractive new experiments that would create post-hoc validity risk.
 
 ## Task 41: Build and audit the anonymous submission package
 
+**Status:** Completed with the pre-registered no-live-model fallback. The
+submission package contains no provider output because none is reported.
+
 **Description:** Produce the final PDF and anonymous supplement, replay model
 results in a clean environment, and audit page limits, identity, secrets,
 provider terms, local paths, stale outputs, and unsupported claims.
 
 **Acceptance criteria:**
-- [ ] Main content is at most four pages and references begin on page five.
-- [ ] The anonymous supplement reproduces all paper values from synthetic data
+- [x] Main content is at most four pages and references begin on page five.
+- [x] The anonymous supplement reproduces all paper values from synthetic data
   and permitted cached or normalized model outputs without network credentials.
-- [ ] No username-linked repository URL, author identity, API key, PII, real
+- [x] No username-linked repository URL, author identity, API key, PII, real
   child disclosure, or unapproved raw provider response is present.
 
 **Verification:**
-- [ ] Tests pass: `make reproduce`, `make llm-test`, `make release-test`, and
+- [x] Tests pass: `make reproduce`, `make llm-test`, `make release-test`, and
   `make release-audit`.
-- [ ] Clean-room check: extract the anonymous archive and reproduce all tables.
-- [ ] Visual check: inspect every PDF page for clipping, overflow, anonymity,
+- [x] Clean-room check: extract the anonymous archive and reproduce all tables.
+- [x] Visual check: inspect every PDF page for clipping, overflow, anonymity,
   and reference boundaries.
 
 **Dependencies:** Task 40
@@ -777,10 +780,10 @@ provider terms, local paths, stale outputs, and unsupported claims.
 
 - [ ] At least one prompted model router has a complete replayable full result;
   the preferred result is three providers with three trials each.
-- [ ] The action-route gap and implicated-adult target failures are visible in
+- [x] The action-route gap and implicated-adult target failures are visible in
   the main paper.
-- [ ] No supportive-response, model-ranking, clinical, population, hotline-
+- [x] No supportive-response, model-ranking, clinical, population, hotline-
   partnership, or deployment claim exceeds the completed evidence.
-- [ ] Practitioner and youth validation remain prospective and are correctly
+- [x] Practitioner and youth validation remain prospective and are correctly
   disclosed as incomplete.
-- [ ] The final package is anonymous, four-page compliant, and reproducible.
+- [x] The final package is anonymous, four-page compliant, and reproducible.
