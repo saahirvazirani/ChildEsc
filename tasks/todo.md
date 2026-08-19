@@ -369,3 +369,410 @@
   a separate rubric plus human validation.
 - [x] Task 30: Run LLM tests, frozen scientific tests, release tests, full
   reproduction, and a fresh code review.
+
+## Acceptance-Maximization Checklist
+
+## Task 31: Freeze the reviewer-facing thesis
+
+**Description:** Lock ChildEsc as a works-in-progress audit of whether prompted
+child-facing model routers choose both a proportionate escalation action and a
+context-safe recipient. Write one explicit chain from phenomenon to task,
+items, metrics, and permitted claims before adding new evidence.
+
+**Acceptance criteria:**
+- [ ] The title-level contribution is safe-recipient routing, not ordinal labels
+  or action timing alone.
+- [ ] Permitted and prohibited claims are recorded in one source of truth.
+- [ ] The page ledger reserves one main table and one concise failure example.
+
+**Verification:**
+- [ ] Manual check: a fresh reader can state the paper's unique question after
+  reading only the proposed title, abstract skeleton, and contribution list.
+- [ ] Search check: no planning text calls the benchmark validated, realistic,
+  clinical, representative, or deployment-ready.
+
+**Dependencies:** Task 30
+
+**Files likely touched:**
+- `tasks/acceptance_claims.md`
+- `tasks/page_budget.md`
+- `paper/main.tex`
+- `paper/manuscript.md`
+
+**Estimated scope:** Medium: 4 files
+
+## Task 32: Freeze the model evaluation protocol
+
+**Description:** Pre-register the exact provider model IDs, three-trial design,
+generation settings, completion and retry policy, primary estimands, statistical
+analysis, result-inspection rule, and fallback ladder before any full live run.
+
+**Acceptance criteria:**
+- [ ] The manifest names exact model IDs and records whether each ID is a pinned
+  snapshot, stable release, preview, or provider-routed alias.
+- [ ] Primary metrics include under-escalation, urgent recall, strict target
+  validity, action-route gap, implicated-adult unsafe-target rate, and exact
+  route accuracy with explicit denominators.
+- [ ] The protocol states that prompt, schema, labels, and primary analysis will
+  not be changed after results are inspected.
+
+**Verification:**
+- [ ] Hash check: benchmark, prompt, schema, protocol, and analysis-plan hashes
+  are written to the experiment manifest.
+- [ ] Manual check: unavailable models or credentials map to a documented
+  fallback rather than an unrecorded substitution.
+
+**Dependencies:** Task 31
+
+**Files likely touched:**
+- `tasks/llm_evaluation_protocol.md`
+- `experiments/llm_manifest.json`
+- `tasks/evidence_manifest.md`
+
+**Estimated scope:** Medium: 3 files
+
+## Conditional Task 32A: Seal an independently authored holdout
+
+**Description:** If an eligible adult collaborator is available by the protocol
+freeze, have that person create a small set of counterfactual families without
+access to the current scenarios, labels, router, prompt, or item-level errors.
+This is an artifact-authoring collaboration, not practitioner or youth
+validation. If the independence boundary cannot be documented, record the gate
+failure and skip the task.
+
+**Acceptance criteria:**
+- [ ] The collaborator's non-exposure to the current policy and item set is
+  documented before authoring begins.
+- [ ] The authoring packet fixes the schema, safety restrictions, source
+  rationale, and family-level split without revealing current lexical cues.
+- [ ] The sealed set is evaluated once after the primary protocol is frozen and
+  is never used to tune the prompt, router, labels, or model settings.
+
+**Verification:**
+- [ ] Independence check: the author signs the existing exposure checklist and
+  has not received current item text, predictions, or rules.
+- [ ] Structural tests pass on the sealed families before any model output is
+  inspected.
+- [ ] Manual check: if eligibility fails, the paper says no independently
+  authored holdout is reported.
+
+**Dependencies:** Task 32 and an eligible unexposed collaborator
+
+**Files likely touched:**
+- `validation/holdout_author_packet.md`
+- `benchmark/holdout_manifest.json`
+- `data/controlled/`
+- `tasks/evidence_manifest.md`
+
+**Estimated scope:** Medium: 4 files, conditional
+
+## Checkpoint: Protocol Freeze
+
+- [ ] Tasks 31-32 and the Task 32A eligibility decision are reviewed and
+  approved before any full provider run.
+- [ ] No full prompted-model run output has been inspected; existing
+  deterministic checksum results remain explicitly policy-exposed.
+- [ ] Provider data terms and raw-response release constraints are recorded.
+- [ ] Cost and credential availability are confirmed for at least one primary
+  model.
+
+## Task 33: Add auditable independent trials
+
+**Description:** Extend the routing evaluator with an explicit trial identifier
+and append-only attempt ledger so three identical visible requests create three
+auditable provider attempts rather than one cache entry reused three times.
+
+**Acceptance criteria:**
+- [ ] Trial identity is part of cache provenance but not leaked into the visible
+  child conversation or routing instructions.
+- [ ] Every provider attempt records status, timestamp, request hash, response
+  hash, bounded error, and returned model metadata without credentials.
+- [ ] Cache-only replay reconstructs each trial and fails closed on any missing
+  or altered entry.
+
+**Verification:**
+- [ ] Tests pass: `make llm-test`.
+- [ ] Regression test: three trial IDs produce three transport calls online and
+  zero transport calls during complete replay.
+- [ ] Regression test: the serialized provider body contains no trial ID or
+  benchmark label.
+
+**Dependencies:** Task 32
+
+**Files likely touched:**
+- `src/childesc/llm.py`
+- `src/childesc/llm_evaluate.py`
+- `llm_tests/test_cache.py`
+- `llm_tests/test_llm_evaluate.py`
+
+**Estimated scope:** Medium: 4 files
+
+## Task 34: Execute complete prompted-router audits
+
+**Description:** Run a four-item smoke test for each available direct provider,
+inspect payload isolation and structured outputs, then execute three complete
+80-item trials per frozen primary model. OpenRouter remains a portability smoke
+test unless upstream provenance is pinned.
+
+**Acceptance criteria:**
+- [ ] Every reported model has the protocol-required number of complete trials,
+  or the manuscript uses the pre-registered fallback and discloses the reason.
+- [ ] Raw attempts and normalized predictions account for every item without
+  selective exclusion or silent response repair.
+- [ ] Exact provider, model, returned model version, prompt/schema hashes,
+  settings, timestamps, and cache hashes are present in each run manifest.
+
+**Verification:**
+- [ ] Live smoke commands finish with valid two-field routes for four items.
+- [ ] Full-run cache-only commands finish without API keys or network access.
+- [ ] Manual check: invalid output and provider-error counts reconcile with the
+  attempt ledger.
+
+**Dependencies:** Task 33 and configured provider credentials
+
+**Files likely touched:**
+- `experiments/llm_manifest.json`
+- `results/llm/`
+- `.cache/childesc/`
+
+**Estimated scope:** Medium: generated experiment artifacts
+
+## Task 35: Analyze the action-route gap and stability
+
+**Description:** Add deterministic analysis for action-correct but target-wrong
+handoffs, the action-accuracy versus exact-route gap, implicated-adult target
+errors, three-trial instability, and paired family-bootstrap differences.
+
+**Acceptance criteria:**
+- [ ] Every primary metric has an explicit denominator and item-level audit
+  trail.
+- [ ] Trial results are summarized without treating repeated outputs from the
+  same 80 items as independent observations.
+- [ ] Model-to-model differences are paired by family and presented as
+  descriptive intervals rather than winner claims.
+
+**Verification:**
+- [ ] Tests pass: `make llm-test` and `make test`.
+- [ ] Reproduction check: deleting generated summaries and rerunning analysis
+  recreates byte-stable tables from cached normalized outputs.
+- [ ] Manual check: action-route-gap counts equal action-correct target-failure
+  counts under the documented metric definition.
+
+**Dependencies:** Task 34
+
+**Files likely touched:**
+- `src/childesc/llm_analysis.py`
+- `llm_tests/test_llm_analysis.py`
+- `results/llm/summary.json`
+- `results/llm/paper_table.csv`
+
+**Estimated scope:** Medium: 4 files
+
+## Checkpoint: Evidence Integrity
+
+- [ ] Tasks 33-35 pass all focused and frozen tests.
+- [ ] All proposed paper values replay from cache without credentials.
+- [ ] No prompt, label, model setting, or primary metric changed after result
+  inspection.
+- [ ] Any deviation from the frozen protocol is logged and kept out of primary
+  claims unless the entire affected analysis is rerun under a new version.
+
+## Task 36: Rewrite the title and abstract around one finding
+
+**Description:** Make the safe-recipient question the title-level hook and
+rewrite the abstract after evidence freeze to include the narrow construct, the
+model-audit setup, one concrete action-route-gap finding, and the validation
+boundary.
+
+**Acceptance criteria:**
+- [ ] The title distinguishes ChildEsc from refusal and action-only benchmarks.
+- [ ] The abstract reports only results regenerated from frozen artifacts.
+- [ ] The final sentence states that practitioner and youth validation have not
+  occurred and blocks deployment interpretation.
+
+**Verification:**
+- [ ] Manuscript synchronization tests cover every abstract number.
+- [ ] Manual check: the abstract contains problem, gap, method, result,
+  contribution, and limitation without a model-ranking claim.
+
+**Dependencies:** Task 35
+
+**Files likely touched:**
+- `paper/main.tex`
+- `paper/manuscript.md`
+- `scripts/build_paper_docx.py`
+- `tests/test_artifacts.py`
+
+**Estimated scope:** Medium: 4 files
+
+## Task 37: Replace checksum breadth with model evidence
+
+**Description:** Replace the three-rule main table with a compact table showing
+available prompted model routers plus the frozen checksum. Center the columns on
+under-escalation, urgent recall, target validity, action-route gap, unsafe
+targets, and exact routing; move diagnostic baselines and full intervals to the
+appendix.
+
+**Acceptance criteria:**
+- [ ] The main table has no more than the columns needed to support the central
+  claim and remains legible at the official template size.
+- [ ] One concise example shows how an action-correct route can still select an
+  inappropriate recipient.
+- [ ] Keyword, severity-agnostic, stress-test, and full contract details remain
+  reproducible in the appendix rather than being deleted.
+
+**Verification:**
+- [ ] Build succeeds with the NeurIPS 2026 `dblblindworkshop` option.
+- [ ] Visual check: table text and the failure example are readable at 100%.
+- [ ] Data check: every table cell is derived from the frozen result files.
+
+**Dependencies:** Tasks 35-36
+
+**Files likely touched:**
+- `paper/main.tex`
+- `paper/manuscript.md`
+- `scripts/build_paper_docx.py`
+- `tests/test_artifacts.py`
+
+**Estimated scope:** Medium: 4 files
+
+## Task 38: Rebalance page four for workshop discussion
+
+**Description:** Use the final content page for construct limitations,
+actionable impact, and three precise workshop questions. Move the prospective
+1--24 hour 988 mechanism and detailed validation protocol to the appendix so
+they do not dilute or destabilize the core paper.
+
+**Acceptance criteria:**
+- [ ] The main text names practitioner and youth validation as incomplete and
+  does not imply a hotline partnership or operational referral pathway.
+- [ ] Three discussion questions address abstention or clarification, separate
+  practitioner and youth judgments, and governance before operational handoff.
+- [ ] References begin on page five without changing template margins, font
+  sizes, or spacing.
+
+**Verification:**
+- [ ] Compile and inspect all four content pages and the first reference page.
+- [ ] Phrase scan finds no unsupported 988 policy, validated cutoff, automated
+  outreach, or deployment-readiness statement in the main paper.
+- [ ] Appendix cross-references remain correct.
+
+**Dependencies:** Task 37
+
+**Files likely touched:**
+- `paper/main.tex`
+- `paper/manuscript.md`
+- `tasks/page_budget.md`
+- `scripts/build_paper_docx.py`
+
+**Estimated scope:** Medium: 4 files
+
+## Checkpoint: Reviewer Read
+
+- [ ] Tasks 36-38 produce a self-contained four-page paper.
+- [ ] A fresh reader identifies the construct, model evidence, strongest
+  failure, and evidence boundary from the title, abstract, and main table.
+- [ ] Closest-work text distinguishes ChildEsc from CAREBench, KIDBench,
+  MinorBench, MindEval, and CARE-Bench without novelty overreach.
+- [ ] The appendix adds reproducibility depth but is not needed to discover the
+  central contribution.
+
+## Task 39: Obtain independent editorial reviews
+
+**Description:** After the evidence freeze, request an issues-only review from
+one benchmark methodologist and, if available, one youth-facing practitioner.
+Treat feedback as manuscript review, not participant data or empirical
+validation, unless an appropriate approved study route exists.
+
+**Acceptance criteria:**
+- [ ] Reviewers receive the same frozen anonymous paper and a request focused on
+  construct validity, target safety, claims, and actionable ambiguity.
+- [ ] No practitioner quote, score, demographic, or response is analyzed or
+  reported as research evidence.
+- [ ] Reviewer conflicts and access to the benchmark or router are recorded for
+  internal reconciliation.
+
+**Verification:**
+- [ ] Manual check: the manuscript still states that practitioner and youth
+  validation have not occurred.
+- [ ] Review files are excluded from the anonymous submission unless explicitly
+  cleared and necessary.
+
+**Dependencies:** Task 38
+
+**Files likely touched:**
+- `tasks/external_review_log.md`
+- `tasks/review_reconciliation.md`
+
+**Estimated scope:** Small: 2 files
+
+## Task 40: Reconcile findings without post-hoc expansion
+
+**Description:** Classify independent findings as confirmed validity defects,
+plausible reviewer concerns, or optional improvements. Repair confirmed defects
+and only high-value concerns that do not alter the frozen primary evaluation;
+defer attractive new experiments that would create post-hoc validity risk.
+
+**Acceptance criteria:**
+- [ ] Every accepted change has a finding classification and evidence trail.
+- [ ] Changes to prompt, labels, model set, or primary analysis trigger the
+  pre-registered redesign rule rather than silent reruns.
+- [ ] Optional breadth additions are deferred unless they directly protect the
+  central claim and fit the page and evidence budget.
+
+**Verification:**
+- [ ] Tests pass: `make reproduce`, `make llm-test`, and `make release-test`.
+- [ ] Manual check: all reviewer findings are closed, bounded in limitations, or
+  explicitly deferred.
+
+**Dependencies:** Task 39
+
+**Files likely touched:**
+- `tasks/review_reconciliation.md`
+- `paper/main.tex`
+- `paper/manuscript.md`
+- `tests/test_artifacts.py`
+
+**Estimated scope:** Medium: 4 files
+
+## Task 41: Build and audit the anonymous submission package
+
+**Description:** Produce the final PDF and anonymous supplement, replay model
+results in a clean environment, and audit page limits, identity, secrets,
+provider terms, local paths, stale outputs, and unsupported claims.
+
+**Acceptance criteria:**
+- [ ] Main content is at most four pages and references begin on page five.
+- [ ] The anonymous supplement reproduces all paper values from synthetic data
+  and permitted cached or normalized model outputs without network credentials.
+- [ ] No username-linked repository URL, author identity, API key, PII, real
+  child disclosure, or unapproved raw provider response is present.
+
+**Verification:**
+- [ ] Tests pass: `make reproduce`, `make llm-test`, `make release-test`, and
+  `make release-audit`.
+- [ ] Clean-room check: extract the anonymous archive and reproduce all tables.
+- [ ] Visual check: inspect every PDF page for clipping, overflow, anonymity,
+  and reference boundaries.
+
+**Dependencies:** Task 40
+
+**Files likely touched:**
+- `paper/main.tex`
+- `paper/ChildEsc_Workshop_Paper.pdf`
+- `scripts/release_audit.py`
+- `dist/`
+
+**Estimated scope:** Medium: build and release artifacts
+
+## Final Acceptance Checkpoint
+
+- [ ] At least one prompted model router has a complete replayable full result;
+  the preferred result is three providers with three trials each.
+- [ ] The action-route gap and implicated-adult target failures are visible in
+  the main paper.
+- [ ] No supportive-response, model-ranking, clinical, population, hotline-
+  partnership, or deployment claim exceeds the completed evidence.
+- [ ] Practitioner and youth validation remain prospective and are correctly
+  disclosed as incomplete.
+- [ ] The final package is anonymous, four-page compliant, and reproducible.

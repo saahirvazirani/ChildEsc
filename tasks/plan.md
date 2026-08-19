@@ -668,3 +668,360 @@ the release audit pass. No paid or live model evaluation was run. An attempted
 read-only Gemini CLI review was stopped after repeated quota-exhaustion errors;
 the confirmed smoke-slice bootstrap defect found during manual review was fixed
 and regression-tested.
+
+# Acceptance-Maximization Plan: Child Safety in AI Workshop
+
+## Overview
+
+The highest-probability submission shape is a works-in-progress technical paper
+that asks one memorable question: when a child-facing conversational model
+escalates, does it identify a context-appropriate person or service rather than
+defaulting to a potentially implicated adult? The current artifact already
+specifies this construct and discloses its validity limits unusually well. Its
+largest remaining acceptance weakness is empirical: all reported scores come
+from policy-exposed lexical policies, even though the repository now has a
+provider-neutral, leakage-tested LLM evaluation path. The acceptance-oriented
+revision should replace some checksum detail with a small, frozen, multi-model
+routing audit and use the resulting action-versus-target gap to demonstrate why
+ChildEsc adds information beyond action-only scoring.
+
+The goal is not to claim a validated benchmark or identify a winning model.
+The goal is to establish technical utility, expose a concrete child-safety
+failure mode, and give the workshop a precise construct and validation pathway
+to debate.
+
+## Evidence Basis
+
+- The official workshop explicitly welcomes synthetic benchmarks, evaluation
+  protocols, deployment safeguards, hotline collaboration, and child-centered
+  design. It prioritizes productive workshop discussion alongside technical
+  soundness: <https://childsafety-ai.github.io/>.
+- MinorBench, accepted at the ICLR 2025 AI for Children workshop, combined a
+  child-specific taxonomy with 299 prompts, six model evaluations, and system
+  prompt comparisons: <https://openreview.net/forum?id=SmZcXcPBAU>.
+- CAREBench evaluates 500 prompts on seven frontier models with three replicate
+  generations and has parent, clinician, and safety-practitioner input. ChildEsc
+  should not compete on breadth; it should isolate the distinct safe-recipient
+  construct: <https://arxiv.org/abs/2606.29685>.
+- MindEval validates both simulated-patient realism and automated judgment
+  against expert judgments before making response-quality claims. This supports
+  keeping generated supportive-response quality outside the current paper:
+  <https://arxiv.org/abs/2511.18491>.
+- CounselBench finds that LLM judges can overlook safety concerns identified by
+  mental-health professionals. ChildEsc should retain deterministic route
+  scoring and not add an unvalidated LLM judge:
+  <https://arxiv.org/abs/2506.08584>.
+- NeurIPS benchmark-validity guidance recommends an explicit chain from
+  phenomenon to task, items, metrics, and claims, plus uncertainty and error
+  analysis. ChildEsc should make that chain visible in the four-page paper:
+  <https://proceedings.neurips.cc/paper_files/paper/2025/file/1967e0fc3aa6cbbace562f5cb8e3954e-Paper-Datasets_and_Benchmarks_Track.pdf>.
+
+## Reviewer-Centered Diagnosis
+
+| Dimension | Current state | Acceptance implication | Required action |
+|---|---|---|---|
+| Workshop fit | Strong alignment with synthetic evaluation and safeguards | Preserve and state directly | Frame as a discussion-ready works-in-progress audit |
+| Novelty | Narrow but defensible: ordinal routing plus permitted and forbidden recipients | Make the recipient constraint the title-level hook | Stop presenting ordered actions as the novelty |
+| Technical evidence | Reproducible but limited to policy-exposed rule checks | Largest remaining weakness | Add frozen prompted-model routing runs |
+| Construct validity | Transparently incomplete | Acceptable for WIP if claims remain narrow | Keep practitioner and youth validation prospective |
+| Statistical evidence | Grouped bootstrap exists for 20 families | Adequate for descriptive uncertainty, not ranking | Add paired family-level deltas and replicate instability |
+| Practical impact | Clear developer use, but 988 extension is speculative | Main-text distraction and governance risk | Keep operational follow-up out of the four-page thesis |
+| Reproducibility | Strong local artifact, cache, and leakage tests | Competitive advantage | Release anonymous cached outputs and exact run manifests |
+| Discussion value | Present but diffuse | Workshop explicitly rewards it | End with three concrete questions for participants |
+
+## Architecture Decisions
+
+- Keep the submission category and claims consistent with a works-in-progress
+  paper. Do not relabel ChildEsc as validated, representative, clinical, or
+  deployment-ready.
+- Define the measured phenomenon as route conformance under the ChildEsc
+  specification, not general child safety, mental-health support quality, crisis
+  prediction, or real-world handoff success.
+- Freeze `benchmark/childesc_v0_1.jsonl`, its labels, the routing prompt, schema,
+  primary metrics, model set, and analysis plan before the first full model run.
+- If a genuinely unexposed adult collaborator is available by August 20,
+  prioritize a small sealed set of independently authored counterfactual
+  families over adding the third provider. The collaborator must not inspect
+  the current scenarios, labels, router, prompt, or item-level errors before
+  authoring. If that boundary cannot be maintained, skip the holdout and report
+  none rather than generating more same-workflow data.
+- Evaluate three prompted model routers from different providers, using exact
+  provider model identifiers and identical visible task instructions. Candidate
+  models are Gemini `gemini-3.1-pro-preview`, OpenAI
+  `gpt-5.5-2026-04-23`, and Anthropic `claude-sonnet-5`, subject to a
+  documented API capability preflight immediately before freezing.
+- Prefer direct-provider results in the paper. Use OpenRouter for portability
+  testing or a fallback only; do not treat an OpenRouter slug as a controlled
+  provider comparison unless the upstream endpoint and returned model version
+  are pinned and recorded.
+- Run three independently cached trials per model because provider outputs can
+  vary even for classification. Record every attempt and do not silently replace
+  malformed responses or provider failures.
+- Do not add an LLM judge. The model returns only the two-field route, and all
+  reported scoring remains deterministic against the provisional reference
+  action and target constraints.
+- Make the primary technical result the action-route gap: the number and rate of
+  cases whose action is correct but whose handoff target is missing,
+  unpermitted, or forbidden. This directly tests the paper's unique thesis.
+- Keep the current checksum as an auditable reference implementation. Move the
+  Keyword and Agnostic rows, stress tests, full contract table, and secondary
+  metrics to the appendix if space is needed.
+- Remove the prospective 1--24 hour 988 mechanism from the four-page main text.
+  The appendix may retain it as explicitly non-operational governance work, but
+  it is not evidence for ChildEsc and should not compete with the central claim.
+
+## Pre-Registered Evaluation Contract
+
+### Systems
+
+| Role | System | Reporting rule |
+|---|---|---|
+| Primary | Three direct-provider prompted model routers | Three complete cached trials per model |
+| Checksum | Frozen `ChildEsc-Rules` | One deterministic run, labeled policy-exposed |
+| Appendix baselines | Keyword and severity-agnostic rules | Diagnostic only |
+| Portability | OpenRouter adapter | Smoke result only unless endpoint provenance is pinned |
+
+### Primary Estimands
+
+| Estimand | Denominator | Reason |
+|---|---|---|
+| Under-escalation rate | Items requiring human or urgent support | Captures missed escalation without dilution by low-risk items |
+| Urgent recall | Urgent-reference items | Makes urgent-to-human downgrades visible |
+| Strict target validity | Items requiring a target | Measures whether every emitted recipient is permitted and none forbidden |
+| Action-route gap | All items, with paired count among action-correct handoffs | Shows what action-only evaluation misses |
+| Unsafe implicated-adult rate | Items with a forbidden recipient | Tests the paper's child-specific handoff constraint |
+| Exact route accuracy | All items | Requires both action and recipient conformance |
+
+Macro F1, counterfactual sensitivity, monotonicity violations, family/domain
+breakdowns, malformed-output counts, and target-error categories remain
+secondary. No aggregate safety score is created.
+
+### Inference and Stability
+
+- Keep the four variants of each family together in all resampling.
+- Report point estimates and 95% family-bootstrap intervals for each model.
+- Report paired family-bootstrap intervals for model-to-model differences only
+  in the appendix; do not declare a winner from overlapping point estimates.
+- Report the proportion of items with action or target disagreement across the
+  three trials. Summarize primary metrics across trials without pooling 240
+  correlated outputs as if they were independent items.
+- Treat invalid structured outputs and provider failures as observable system
+  failures. A primary table row requires a complete, auditable run policy; all
+  failed attempts remain in the run ledger.
+
+### Claim Boundary
+
+Permitted claims are that ChildEsc can execute a reproducible routing audit,
+that prompted systems exhibit particular errors on this policy-exposed
+synthetic set, and that target constraints reveal failures hidden by action-only
+scoring. Prohibited claims include model safety rankings, clinical accuracy,
+population error rates, realistic child behavior, successful crisis referral,
+or safe supportive responses.
+
+## Dependency Graph
+
+```text
+Acceptance thesis and claim freeze
+    |
+    +--> Evaluation manifest and primary estimands
+    |       |
+    |       +--> Conditional independent holdout decision
+    |       |
+    |       +--> Replicate-aware cache and attempt ledger
+    |               |
+    |               +--> Provider capability smoke tests
+    |                       |
+    |                       +--> Three complete model audits
+    |                               |
+    |                               +--> Paired analysis and error cases
+    |
+    +--> Four-page page ledger
+            |
+            +--> Main-table replacement and narrative rewrite
+
+Model evidence + four-page rewrite
+    |
+    +--> Methodologist review
+    +--> Practitioner editorial review, if available
+            |
+            +--> Claim reconciliation, anonymity audit, final package
+```
+
+## Task List
+
+### Phase 1: Freeze the Acceptance Thesis
+
+- [ ] Task 31: Freeze the paper as a works-in-progress audit of escalation and
+  context-safe recipients, with a one-sentence phenomenon/task/metric/claim
+  chain.
+- [ ] Task 32: Pre-register exact model IDs, trial count, settings, primary
+  estimands, retry policy, exclusions, and fallback rules before live runs.
+- [ ] Conditional Task 32A: If an eligible unexposed collaborator is available,
+  seal a small independently authored family set before model evaluation;
+  otherwise record the failed eligibility gate and do not create a holdout.
+
+### Checkpoint: Protocol Freeze
+
+- [ ] Benchmark, labels, prompt, schema, model manifest, and analysis plan have
+  hashes and timestamps.
+- [ ] No live prompted-model result has been inspected before the protocol
+  freeze; the already reported deterministic checksum remains explicitly
+  policy-exposed.
+- [ ] Provider credentials and cost approval are available for at least one
+  primary model; unavailable providers trigger a disclosed fallback, not a
+  silent model substitution.
+
+### Phase 2: Produce Model Evidence
+
+- [ ] Task 33: Add replicate-aware run identity, append-only attempt logging,
+  and deterministic aggregation tests without changing the frozen benchmark.
+- [ ] Task 34: Run four-item provider smoke tests, inspect request isolation and
+  structured outputs, then execute three complete trials for each available
+  primary model.
+- [ ] Task 35: Add action-route-gap, action-correct target-failure, replicate
+  instability, and paired family-bootstrap analyses.
+
+### Checkpoint: Evidence Integrity
+
+- [ ] Every primary result replays from cache without credentials or network.
+- [ ] Every attempted item is accounted for, including malformed responses and
+  provider errors.
+- [ ] Exact prompts, schemas, model versions, timestamps, settings, hashes, and
+  provider metadata accompany the results.
+- [ ] A frozen analysis script regenerates every number proposed for the paper.
+
+### Phase 3: Rewrite the Four-Page Paper
+
+- [ ] Task 36: Replace the generic title and checksum-centered abstract with the
+  safe-recipient question, a concrete model-audit finding, and the validation
+  boundary.
+- [ ] Task 37: Replace the current three-rule table with one compact model-plus-
+  checksum table and a paired action-versus-route failure visualization or
+  concise error table.
+- [ ] Task 38: Rebalance page four around limitations, actionable impact, and
+  three workshop questions; move the delegated 988 mechanism and procedural
+  validation detail to the appendix.
+
+### Checkpoint: Reviewer Read
+
+- [ ] A reviewer can identify the new construct, technical method, strongest
+  result, and evidence boundary from the title, abstract, and one table.
+- [ ] The main text directly distinguishes ChildEsc from CAREBench, KIDBench,
+  MinorBench, and CARE-Bench without claiming ordered routing as novel.
+- [ ] References start on page five without template compression.
+
+### Phase 4: Independent Review and Submission QA
+
+- [ ] Task 39: Obtain one benchmark-methodology review and, if available, one
+  youth-facing practitioner editorial review after the model analysis is frozen.
+- [ ] Task 40: Reconcile reviews as confirmed defects, plausible concerns, or
+  optional improvements; repair only confirmed defects and high-value concerns.
+- [ ] Task 41: Build the anonymous supplement, run clean-room cache replay and
+  artifact tests, inspect every PDF page, and scan all files for identity or
+  provider-secret leakage.
+
+### Final Checkpoint
+
+- [ ] The four-page submission is technically self-contained and discussion-
+  ready even if the appendix is not read.
+- [ ] Practitioner and youth validation are still described as not completed.
+- [ ] Editorial feedback is not reported as empirical validation or participant
+  data.
+- [ ] The anonymous artifact contains reproducible synthetic data, cached model
+  outputs permitted for release, and no credentials, PII, or real disclosures.
+- [ ] The final manuscript contains no model-ranking, clinical, 988-partnership,
+  or deployment-readiness claim.
+
+## Four-Page Revision Budget
+
+| Page | Acceptance job | Content to preserve or add | Content to move |
+|---|---|---|---|
+| 1 | Make the paper memorable | Safe-recipient hook, closest-work gap, narrow contributions | Long benchmark catalog |
+| 2 | Make the construct credible | Scope, matched families, actions and target constraints, provenance | Full taxonomy and equations |
+| 3 | Prove technical utility | Model protocol, primary metrics, model-plus-checksum table, action-route gap | Keyword/Agnostic detail and full CIs |
+| 4 | Earn workshop fit | Failure example, validity boundary, impact path, three discussion questions | 988 timing mechanism and full validation gates |
+
+## Workshop Discussion Questions
+
+The final paper should end with questions that the reported artifact makes
+concrete rather than generic future work:
+
+1. When context is incomplete, should a child-safety router abstain, ask a
+   question, or offer multiple consent-preserving routes?
+2. How should practitioner risk judgments and young people's judgments of
+   agency, plausibility, and coercion be kept distinct when validating handoff
+   targets?
+3. What evidence and governance gates are required before a target label such
+   as `crisis_service` can become an operational referral pathway?
+
+## Fallback Ladder
+
+| Trigger | Submission fallback |
+|---|---|
+| Three providers complete by August 23 | Report all three with replicate stability |
+| Two providers complete | Report two plus checksum; avoid broad cross-provider claims |
+| Only Gemini completes | Report one prompted-router case study plus checksum and emphasize evaluation infrastructure |
+| No live run completes | Keep the current checksum paper, remove any claim that model evaluation has occurred, and emphasize the released protocol |
+| Independent practitioner or holdout author is unavailable | Preserve protocol-only validation and do not recruit or generate a same-workflow holdout |
+
+## Explicit Stop-List
+
+- Do not rush youth recruitment or collect personal disclosures before an
+  appropriate institutional and safeguarding route is documented.
+- Do not describe informal practitioner comments as validation, expert labels,
+  or study evidence.
+- Do not tune the prompt, labels, or model settings after inspecting primary
+  results unless the affected run is clearly redesignated as development-only.
+- Do not add more LLM-authored families from the same policy-exposed workflow to
+  create the appearance of scale.
+- Do not score supportive-response quality, empathy, clinical appropriateness,
+  or cultural responsiveness in this paper.
+- Do not use an LLM-as-a-judge for target correctness when the current target
+  schema supports deterministic scoring.
+- Do not make the proposed 988 data-transfer and 1--24 hour follow-up mechanism
+  a main-paper contribution or imply a service partnership.
+- Do not publish the identity-linked GitHub repository before the double-blind
+  policy permits it.
+
+## Schedule
+
+| Date | Deliverable |
+|---|---|
+| August 19 | Acceptance thesis, model set, estimands, and fallback policy frozen |
+| August 20 | Holdout eligibility decided; replicate and attempt-ledger support complete and tested |
+| August 21 | Provider smoke tests and capability manifest complete |
+| August 22--23 | Full model runs, cache replay, and primary analysis complete |
+| August 24 | Evidence freeze and four-page table selected |
+| August 25 | Main paper and appendix rewritten |
+| August 26 | Independent methodology and practitioner editorial reviews |
+| August 27 | Confirmed defects repaired; no new exploratory experiments |
+| August 28 | Final page, anonymity, clean-room, and submission checks |
+| August 29 | Submission buffer |
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Model results look like rankings on an unvalidated set | Critical | Call them prompted-router diagnostics and foreground the policy-exposed set |
+| Provider drift or aliases undermine reproducibility | High | Use pinned IDs where available, record returned versions, and release cache replay |
+| Repeated runs are silently deduplicated by the cache | High | Add an explicit trial identifier to cache provenance and test independent attempts |
+| Transient errors disappear during reruns | High | Use an append-only attempt ledger and pre-specified completion policy |
+| The model table crowds out the construct | High | Replace checksum detail rather than adding a second large table |
+| Target scoring appears arbitrary | High | Show the phenomenon-to-claim chain and one implicated-adult counterexample |
+| A rushed holdout repeats circular authoring | High | Require an unexposed independent author or report no holdout |
+| Validation language outruns completed evidence | Critical | Preserve protocol-only wording and run a phrase-level claim audit |
+| The 988 extension dominates reviewer attention | High | Remove it from main-text contributions and keep it non-operational in the appendix |
+| Provider terms prohibit releasing raw responses | Medium | Review terms before the run and release normalized outputs plus hashes if raw cache release is not permitted |
+
+## Definition of Done
+
+- The title, abstract, and main result all center the same safe-recipient thesis.
+- At least one prompted model router has a complete, replayable full evaluation;
+  the preferred outcome is three models with three trials each.
+- Primary results include the action-route gap and implicated-adult target errors,
+  not only macro F1 or exact accuracy.
+- All empirical claims are bounded to the policy-exposed synthetic testbed.
+- The fourth page creates concrete workshop discussion rather than adding an
+  operational policy proposal.
+- The submission remains at most four content pages, anonymous, reproducible,
+  and free of unsupported practitioner, youth, clinical, or service claims.
