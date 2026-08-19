@@ -78,6 +78,7 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --data benchmark/childesc_v0_1.jsonl \
   --provider gemini \
   --model gemini-2.5-flash-lite \
+  --trial-id trial-1 \
   --limit 4 \
   --cache .cache/childesc/gemini-2.5-flash-lite \
   --output results/llm/gemini-2.5-flash-lite-smoke
@@ -88,6 +89,14 @@ the same command without that flag. Use separate cache and output directories
 for every provider/model/settings combination, even though cache hashes already
 prevent collisions.
 
+For a pre-registered repeated evaluation, run each trial under an explicit
+identifier such as `trial-1`, `trial-2`, and `trial-3`. Trial identity is local
+cache provenance: it creates an independent provider attempt but is never sent
+in the prompt or request body. Keep one output directory per trial for primary
+experiments. The evaluator also appends one non-secret row per item to
+`attempts.jsonl`, including request and response hashes, provider metadata,
+status, and cache use.
+
 Comparison adapters use the same workflow:
 
 ```bash
@@ -96,6 +105,7 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --data benchmark/childesc_v0_1.jsonl \
   --provider openai \
   --model MODEL_ID \
+  --trial-id trial-1 \
   --cache .cache/childesc/openai-model \
   --output results/llm/openai-model
 
@@ -104,6 +114,7 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --data benchmark/childesc_v0_1.jsonl \
   --provider anthropic \
   --model MODEL_ID \
+  --trial-id trial-1 \
   --cache .cache/childesc/anthropic-model \
   --output results/llm/anthropic-model
 
@@ -112,6 +123,7 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --data benchmark/childesc_v0_1.jsonl \
   --provider openrouter \
   --model openai/gpt-4o-mini \
+  --trial-id trial-1 \
   --cache .cache/childesc/openrouter-gpt-4o-mini \
   --output results/llm/openrouter-gpt-4o-mini
 ```
@@ -151,6 +163,7 @@ Cache entries are content-addressed by the complete non-secret request:
 - provider and API contract version;
 - endpoint and non-secret headers;
 - exact model ID and generation settings;
+- local trial identifier, which is excluded from the provider payload;
 - system prompt and response schema; and
 - canonical synthetic conversation payload.
 
@@ -159,13 +172,19 @@ keys are used only in HTTP headers and are excluded from both hashes and files.
 Writes are atomic. Cache verification fails if the stored request, request hash,
 raw response, or response hash is modified.
 
+Trial-aware evaluation uses cache format version 2. Caches created before trial
+identity was introduced are intentionally not reused because they cannot prove
+which independent attempt produced a response.
+
 ## Output and Reporting Rules
 
 `routing_predictions.jsonl` records every benchmark item, route or null route,
 status, cache hit, request hash, bounded error, and limited provider metadata.
 `routing_metrics.json` records the provider/model/settings, prompt/schema hashes,
 API contract, dataset and evaluated-item hashes, completion counts, and routing
-metrics.
+metrics. `attempts.jsonl` is append-only and records every observed attempt,
+including incomplete trials. Use a fresh output directory for each primary
+trial so its predictions and metrics cannot overwrite another trial.
 
 Standard comparative metrics and grouped bootstrap intervals are reported only
 when every requested item yields a valid route. If any response is refused,

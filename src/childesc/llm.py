@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import tempfile
 import urllib.error
 import urllib.parse
@@ -52,7 +53,7 @@ ROUTE_SCHEMA: dict[str, object] = {
     "required": ["action", "targets"],
     "additionalProperties": False,
 }
-CACHE_FORMAT_VERSION = 1
+CACHE_FORMAT_VERSION = 2
 MAX_CONVERSATION_CHARS = 100_000
 MAX_RESPONSE_BYTES = 1024 * 1024
 
@@ -625,6 +626,7 @@ class RoutingAttempt:
     status: str
     cache_hit: bool
     request_hash: str
+    response_hash: str | None = None
     error: str | None = None
     provider_metadata: Mapping[str, object] | None = None
 
@@ -644,6 +646,7 @@ class CachedRoutingClient:
         timeout: float = 60.0,
         max_output_tokens: int = 256,
         temperature: float | None = None,
+        trial_id: str = "trial-1",
     ) -> None:
         self.adapter = adapter
         self.model = model
@@ -654,8 +657,13 @@ class CachedRoutingClient:
         self.timeout = timeout
         self.max_output_tokens = max_output_tokens
         self.temperature = temperature
+        self.trial_id = trial_id
         if timeout <= 0:
             raise ValueError("timeout must be positive")
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,63}", trial_id):
+            raise ValueError(
+                "trial_id must be 1-64 letters, digits, dots, underscores, or hyphens"
+            )
 
     def _request(self, messages: Sequence[Mapping[str, str]]) -> RoutingRequest:
         return RoutingRequest.create(
@@ -667,11 +675,17 @@ class CachedRoutingClient:
 
     def request_hash(self, messages: Sequence[Mapping[str, str]]) -> str:
         request = self._request(messages)
-        return _sha256(self.adapter.cache_material(request))
+        return _sha256(self._cache_material(request))
+
+    def _cache_material(self, request: RoutingRequest) -> dict[str, object]:
+        return {
+            "provider_request": self.adapter.cache_material(request),
+            "trial_id": self.trial_id,
+        }
 
     def classify(self, messages: Sequence[Mapping[str, str]]) -> RoutingAttempt:
         request = self._request(messages)
-        material = self.adapter.cache_material(request)
+        material = self._cache_material(request)
         request_hash = _sha256(material)
         response = self.cache.load(request_hash, material)
         cache_hit = response is not None
@@ -691,6 +705,7 @@ class CachedRoutingClient:
                     error=_bounded_error(error),
                 )
             self.cache.store(request_hash, material, response)
+        response_hash = _sha256(response)
         try:
             raw_text = self.adapter.extract_text(response)
             decision = parse_route(raw_text)
@@ -700,6 +715,7 @@ class CachedRoutingClient:
                 status="invalid_response",
                 cache_hit=cache_hit,
                 request_hash=request_hash,
+                response_hash=response_hash,
                 error=_bounded_error(error),
                 provider_metadata=self.adapter.audit_metadata(response),
             )
@@ -708,5 +724,6 @@ class CachedRoutingClient:
             status="ok",
             cache_hit=cache_hit,
             request_hash=request_hash,
+            response_hash=response_hash,
             provider_metadata=self.adapter.audit_metadata(response),
         )

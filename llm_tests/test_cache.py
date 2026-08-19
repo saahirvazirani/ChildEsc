@@ -91,6 +91,62 @@ class CacheTests(unittest.TestCase):
                 ),
             )
 
+    def test_trial_ids_create_independent_attempts_and_replay_offline(self) -> None:
+        messages = [{"role": "user", "content": "I need help tonight."}]
+        with tempfile.TemporaryDirectory() as directory:
+            cache = ResponseCache(Path(directory))
+            transport = RecordingTransport()
+            online_clients = [
+                CachedRoutingClient(
+                    GeminiAdapter(),
+                    "test-model",
+                    cache,
+                    transport,
+                    api_key="secret",
+                    trial_id=f"trial-{index}",
+                )
+                for index in range(1, 4)
+            ]
+
+            attempts = [client.classify(messages) for client in online_clients]
+
+            self.assertEqual(len(transport.calls), 3)
+            self.assertEqual(len({attempt.request_hash for attempt in attempts}), 3)
+            self.assertEqual(len(list(Path(directory).glob("*.json"))), 3)
+
+            for index, online in enumerate(online_clients, start=1):
+                offline = CachedRoutingClient(
+                    GeminiAdapter(),
+                    "test-model",
+                    cache,
+                    FailingTransport(),
+                    cache_only=True,
+                    trial_id=f"trial-{index}",
+                )
+                replay = offline.classify(messages)
+                self.assertTrue(replay.cache_hit)
+                self.assertEqual(
+                    replay.response_hash, attempts[index - 1].response_hash
+                )
+
+            sent_bodies = json.dumps(
+                [request.body for request in transport.calls], sort_keys=True
+            )
+            self.assertNotIn("trial-1", sent_bodies)
+            self.assertNotIn("trial-2", sent_bodies)
+            self.assertNotIn("trial-3", sent_bodies)
+
+    def test_trial_id_is_validated(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(ValueError):
+                CachedRoutingClient(
+                    GeminiAdapter(),
+                    "test-model",
+                    ResponseCache(Path(directory)),
+                    RecordingTransport(),
+                    trial_id="contains spaces",
+                )
+
     def test_cache_only_miss_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             client = CachedRoutingClient(

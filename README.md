@@ -99,6 +99,7 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --data benchmark/childesc_v0_1.jsonl \
   --provider gemini \
   --model gemini-2.5-flash-lite \
+  --trial-id trial-1 \
   --limit 4 \
   --cache .cache/childesc/gemini-2.5-flash-lite \
   --output results/llm/gemini-2.5-flash-lite-smoke
@@ -112,6 +113,7 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --data benchmark/childesc_v0_1.jsonl \
   --provider gemini \
   --model gemini-2.5-flash-lite \
+  --trial-id trial-1 \
   --limit 4 \
   --cache .cache/childesc/gemini-2.5-flash-lite \
   --cache-only \
@@ -128,6 +130,7 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --data benchmark/childesc_v0_1.jsonl \
   --provider openrouter \
   --model openai/gpt-4o-mini \
+  --trial-id trial-1 \
   --limit 4 \
   --cache .cache/childesc/openrouter-gpt-4o-mini \
   --output results/llm/openrouter-gpt-4o-mini-smoke
@@ -136,9 +139,14 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
 The selected OpenRouter model and upstream endpoint must support
 `structured_outputs` and `response_format`. The adapter requires parameter-
 compatible routing and rejects nonconforming responses. The evaluator writes
-`routing_predictions.jsonl` and `routing_metrics.json`. Comparative routing
+`routing_predictions.jsonl`, append-only `attempts.jsonl`, and
+`routing_metrics.json`. Comparative routing
 metrics are withheld unless every item has a valid route; refusals, transport
 failures, and malformed outputs remain visible as incomplete results.
+
+Use a distinct `--trial-id` and output directory for each repeated run. Trial
+identity changes local cache provenance but is never included in the provider
+payload.
 
 Cache files contain prompts, synthetic conversations, and raw provider
 responses, but never API keys. They are ignored by Git. Do not use this command

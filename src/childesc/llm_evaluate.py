@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Mapping
 
@@ -104,6 +105,7 @@ def evaluate_item(
         "status": attempt.status,
         "cache_hit": attempt.cache_hit,
         "request_hash": attempt.request_hash,
+        "response_sha256": attempt.response_hash,
         "error": attempt.error,
         "provider_metadata": attempt.provider_metadata or {},
     }
@@ -130,8 +132,29 @@ def run(
     if not items:
         raise ValueError("evaluation requires at least one benchmark item")
 
-    rows = [evaluate_item(item, client) for item in items]
     output_dir.mkdir(parents=True, exist_ok=True)
+    rows: list[dict[str, object]] = []
+    attempts_path = output_dir / "attempts.jsonl"
+    with attempts_path.open("a", encoding="utf-8", buffering=1) as attempts:
+        for item in items:
+            row = evaluate_item(item, client)
+            rows.append(row)
+            attempt_record = {
+                "timestamp_utc": datetime.now(timezone.utc)
+                .isoformat()
+                .replace("+00:00", "Z"),
+                "trial_id": client.trial_id,
+                "provider": client.adapter.name,
+                "model": client.model,
+                "item_id": row["id"],
+                "request_hash": row["request_hash"],
+                "response_sha256": row["response_sha256"],
+                "status": row["status"],
+                "cache_hit": row["cache_hit"],
+                "error": row["error"],
+                "provider_metadata": row["provider_metadata"],
+            }
+            attempts.write(json.dumps(attempt_record, sort_keys=True) + "\n")
     predictions_path = output_dir / "routing_predictions.jsonl"
     predictions_path.write_text(
         "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
@@ -159,6 +182,7 @@ def run(
         ),
         "provider": client.adapter.name,
         "model": client.model,
+        "trial_id": client.trial_id,
         "api_contract": client.adapter.api_contract,
         "data_sha256": _sha256_text(data_text),
         "evaluated_item_ids_sha256": _sha256_text(
@@ -210,6 +234,7 @@ def main() -> None:
         required=True,
     )
     parser.add_argument("--model", required=True)
+    parser.add_argument("--trial-id", default="trial-1")
     parser.add_argument(
         "--cache", type=Path, default=Path(".cache/childesc/llm-responses")
     )
@@ -236,6 +261,7 @@ def main() -> None:
         timeout=args.timeout,
         max_output_tokens=args.max_output_tokens,
         temperature=args.temperature,
+        trial_id=args.trial_id,
     )
     try:
         result = run(args.data, args.output, client, limit=args.limit)

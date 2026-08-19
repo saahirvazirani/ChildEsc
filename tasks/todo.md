@@ -380,15 +380,15 @@ context-safe recipient. Write one explicit chain from phenomenon to task,
 items, metrics, and permitted claims before adding new evidence.
 
 **Acceptance criteria:**
-- [ ] The title-level contribution is safe-recipient routing, not ordinal labels
+- [x] The title-level contribution is safe-recipient routing, not ordinal labels
   or action timing alone.
-- [ ] Permitted and prohibited claims are recorded in one source of truth.
-- [ ] The page ledger reserves one main table and one concise failure example.
+- [x] Permitted and prohibited claims are recorded in one source of truth.
+- [x] The page ledger reserves one main table and one concise failure example.
 
 **Verification:**
-- [ ] Manual check: a fresh reader can state the paper's unique question after
+- [x] Manual check: a fresh reader can state the paper's unique question after
   reading only the proposed title, abstract skeleton, and contribution list.
-- [ ] Search check: no planning text calls the benchmark validated, realistic,
+- [x] Search check: no planning text calls the benchmark validated, realistic,
   clinical, representative, or deployment-ready.
 
 **Dependencies:** Task 30
@@ -408,18 +408,18 @@ generation settings, completion and retry policy, primary estimands, statistical
 analysis, result-inspection rule, and fallback ladder before any full live run.
 
 **Acceptance criteria:**
-- [ ] The manifest names exact model IDs and records whether each ID is a pinned
+- [x] The manifest names exact model IDs and records whether each ID is a pinned
   snapshot, stable release, preview, or provider-routed alias.
-- [ ] Primary metrics include under-escalation, urgent recall, strict target
+- [x] Primary metrics include under-escalation, urgent recall, strict target
   validity, action-route gap, implicated-adult unsafe-target rate, and exact
   route accuracy with explicit denominators.
-- [ ] The protocol states that prompt, schema, labels, and primary analysis will
+- [x] The protocol states that prompt, schema, labels, and primary analysis will
   not be changed after results are inspected.
 
 **Verification:**
-- [ ] Hash check: benchmark, prompt, schema, protocol, and analysis-plan hashes
+- [x] Hash check: benchmark, prompt, schema, protocol, and analysis-plan hashes
   are written to the experiment manifest.
-- [ ] Manual check: unavailable models or credentials map to a documented
+- [x] Manual check: unavailable models or credentials map to a documented
   fallback rather than an unrecorded substitution.
 
 **Dependencies:** Task 31
@@ -432,6 +432,9 @@ analysis, result-inspection rule, and fallback ladder before any full live run.
 **Estimated scope:** Medium: 3 files
 
 ## Conditional Task 32A: Seal an independently authored holdout
+
+**Status:** Skipped at the protocol freeze because no eligible unexposed author
+is documented. No holdout is reported.
 
 **Description:** If an eligible adult collaborator is available by the protocol
 freeze, have that person create a small set of counterfactual families without
@@ -453,7 +456,7 @@ failure and skip the task.
   has not received current item text, predictions, or rules.
 - [ ] Structural tests pass on the sealed families before any model output is
   inspected.
-- [ ] Manual check: if eligibility fails, the paper says no independently
+- [x] Manual check: if eligibility fails, the paper says no independently
   authored holdout is reported.
 
 **Dependencies:** Task 32 and an eligible unexposed collaborator
@@ -468,11 +471,11 @@ failure and skip the task.
 
 ## Checkpoint: Protocol Freeze
 
-- [ ] Tasks 31-32 and the Task 32A eligibility decision are reviewed and
+- [x] Tasks 31-32 and the Task 32A eligibility decision are reviewed and
   approved before any full provider run.
-- [ ] No full prompted-model run output has been inspected; existing
+- [x] No full prompted-model run output has been inspected; existing
   deterministic checksum results remain explicitly policy-exposed.
-- [ ] Provider data terms and raw-response release constraints are recorded.
+- [x] Provider data terms and raw-response release constraints are recorded.
 - [ ] Cost and credential availability are confirmed for at least one primary
   model.
 
@@ -483,18 +486,18 @@ and append-only attempt ledger so three identical visible requests create three
 auditable provider attempts rather than one cache entry reused three times.
 
 **Acceptance criteria:**
-- [ ] Trial identity is part of cache provenance but not leaked into the visible
+- [x] Trial identity is part of cache provenance but not leaked into the visible
   child conversation or routing instructions.
-- [ ] Every provider attempt records status, timestamp, request hash, response
+- [x] Every provider attempt records status, timestamp, request hash, response
   hash, bounded error, and returned model metadata without credentials.
-- [ ] Cache-only replay reconstructs each trial and fails closed on any missing
+- [x] Cache-only replay reconstructs each trial and fails closed on any missing
   or altered entry.
 
 **Verification:**
-- [ ] Tests pass: `make llm-test`.
-- [ ] Regression test: three trial IDs produce three transport calls online and
+- [x] Tests pass: `make llm-test`.
+- [x] Regression test: three trial IDs produce three transport calls online and
   zero transport calls during complete replay.
-- [ ] Regression test: the serialized provider body contains no trial ID or
+- [x] Regression test: the serialized provider body contains no trial ID or
   benchmark label.
 
 **Dependencies:** Task 32
