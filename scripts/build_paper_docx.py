@@ -196,12 +196,11 @@ def build() -> Path:
         "Child-facing AI must decide not only whether to escalate, but who is safe to involve. Action-only evaluation can reward "
         "the right urgency while directing a child toward an inappropriate recipient. ChildEsc is a works-in-progress testbed of "
         "80 LLM-assisted synthetic conversations in 20 counterfactual families. Each item specifies one of four actions plus "
-        "permitted and forbidden handoff targets. We define the action-route gap: exact action accuracy minus exact action-plus-target "
-        "routing. A policy-exposed checksum achieves 65.0% action accuracy but 53.8% exact routing, an 11.3% gap; 9/37 action-correct "
-        "handoffs violate target constraints. A frozen relational contract audit passes 36/39 assertions across 7/9 families. We "
-        "provide a provider-neutral, cache-replayable protocol but report no live-model comparison because frozen credentials were "
-        "unavailable. ChildEsc is not a validated benchmark: practitioner and youth validation have not occurred, and no result "
-        "supports deployment."
+        "permitted and forbidden handoff targets. The action-route gap is exact action accuracy minus exact action-plus-target routing. "
+        "Across three complete, cache-replayable trials of one pinned prompted router, mean action accuracy is 80.8% but exact routing "
+        "is 51.7%, a 29.2-point gap; 40.7--43.6% of action-correct handoffs violate target constraints. Only 1.3% of items vary in action "
+        "across trials, while 22.5% vary in full route. A deterministic checksum independently exhibits an 11.3-point gap. ChildEsc is "
+        "not a validated benchmark: practitioner and youth validation have not occurred, and no result supports deployment."
     )
     set_font(abstract.add_run(abstract_text))
 
@@ -217,7 +216,7 @@ def build() -> Path:
     add_body(doc, "Under-escalation is conditioned on the 58 items requiring human or urgent support. Strict target validity requires a nonempty predicted set that is a subset of permitted targets and contains no forbidden target; targetless actions must emit none. Exact routing requires the exact action and a valid target decision. The action-route gap is action accuracy minus exact-route accuracy. Reaction delay is omitted because v0.1 fixes the decisive cue turn.", "Failure-oriented metrics. ")
 
     add_heading(doc, "3 Diagnostic implementation and audit")
-    add_body(doc, "Keyword, Agnostic, and ChildEsc-Rules are policy-exposed checksum policies. A provider-neutral harness sends only conversation text and requests the same action-target schema from Gemini, OpenAI, Anthropic, or OpenRouter. It supports independent trial IDs, append-only logs, strict parsing, and cache-only replay; invalid outputs make a run incomplete. No live provider result is reported because credentials were unavailable at protocol freeze. Supportive-response quality is outside scope.", "Policies and evaluator. ")
+    add_body(doc, "Keyword, Agnostic, and ChildEsc-Rules are policy-exposed checksum policies. A provider-neutral harness sends only conversation text and requests the same action-target schema from Gemini, OpenAI, Anthropic, or OpenRouter. The reported prompted system uses a dated Claude Sonnet 5 slug through OpenRouter, pinned to Anthropic with fallbacks disabled. It supports independent trial IDs, append-only logs, strict parsing, and cache-only replay; invalid outputs make a run incomplete. Supportive-response quality is outside scope.", "Policies and evaluator. ")
 
     caption = doc.add_paragraph()
     set_paragraph_spacing(caption, before=5.5, after=5.5)
@@ -227,6 +226,7 @@ def build() -> Path:
         ["Keyword", ".225", ".189", ".879", ".121", ".000", ".225"],
         ["Agnostic", ".250", ".000", ".862", ".345", ".013", ".238"],
         ["ChildEsc-Rules", ".650", ".757", ".328", ".552", ".113", ".538"],
+        ["Prompted router", ".808", "1.000", ".017", ".540", ".292", ".517"],
     ]
     table = doc.add_table(rows=1, cols=len(headers))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -254,8 +254,8 @@ def build() -> Path:
     set_paragraph_spacing(note, after=5.5, line=9)
     set_font(note.add_run("Action and Exact use all 80 items; Under and Valid use 58 escalation-required items; Gap is Action minus Exact."), size=8, italic=True)
 
-    add_body(doc, "ChildEsc-Rules produces the exact action on 52/80 items but the exact action-plus-target route on only 43/80. Action-only scoring therefore hides nine failures, an 11.3-point action-route gap. Conditioned on 37 action-correct handoffs, 9/37 (24.3%) violate target constraints. Family-bootstrap intervals are [.537, .762] for action accuracy, [.062, .163] for the gap, and [.438, .638] for exact routing.", "Action-route gap. ")
-    add_body(doc, "In an abuse/coercion family, a generic safe-adult target can match human_support yet violate a constraint requiring a non-implicated adult. Across escalation-required items, target sets are valid for 32, missing for 17, and contain extra unpermitted targets for nine; two targetless items receive spurious targets.", "Concrete failure. ")
+    add_body(doc, "The prompted router's action accuracy is 80.0--81.3% across trials, but exact routing is 51.3--52.5%, a mean 29.2-point action-route gap. In each trial, 22--24 of 54--55 action-correct handoffs are target-invalid (40.7--43.6%). Only 1/80 items varies in action across trials, while 18/80 vary in full route. The deterministic checksum independently shows an 11.3-point gap and 9/37 action-correct handoffs with invalid targets.", "Action-route gap. ")
+    add_body(doc, "In one self-harm item, the prompted router selects the correct human-support action but adds an unpermitted crisis-service target. Urgent recall is 100% and no forbidden target is emitted, yet mean strict target validity is only 54.0% because missing and extra unpermitted recipients still invalidate routes.", "Concrete failure. ")
     add_body(doc, "These tests probe the frozen checksum without retuning it and are not held-out evidence. Latest-turn-only input under-escalates all 58 escalation-required items. Disabling only adult-implication inference leaves actions unchanged but produces a forbidden safe-adult target in 7/12 implicated-adult cases. Uppercasing preserves every route; doubling spaces reduces action agreement to 45.0% and urgent recall from 75.7% to 10.8%.", "Diagnostic stress tests. ")
 
     add_heading(doc, "4 Source-informed relational contract audit")
@@ -295,7 +295,7 @@ def build() -> Path:
             set_font(cell.paragraphs[0].add_run(value), size=7.5)
     set_table_borders(contract_table)
     add_body(doc, "Overall, 36/39 assertions and 7/9 families pass. The phrase 'safe right now' triggers urgency despite explicit negation because 'right now' is matched globally; physical deterioration triggers urgency but omits health_professional. Both failures are retained and the checksum is not modified. The supported use is auditing implementation conformance to an inspectable routing contract, not ranking models or certifying safety.")
-    add_body(doc, "Before inspecting provider output, we froze exact candidate model IDs, prompt and schema hashes, three independent trials per model, a 256-token output cap, and omission of temperature. Each item is one API attempt: hidden retries and repair are disallowed, and any provider error, refusal, or invalid schema makes a trial incomplete. Complete trials use trial means and ranges, item-level instability, and family-paired bootstrap differences. Content-addressed caches exclude credentials and must replay every item. Because credentials were unavailable at freeze, no prompted-model performance claim is made.", "Pre-registered prompted-router audit. ")
+    add_body(doc, "The first frozen protocol's 256-token allowance was exhausted by provider-default reasoning on pilot items, and later attempts exhausted credits; those incomplete runs remain unscored. Version 1.1 was pre-specified after that failed pilot. Before any v1.1 call it fixed the dated model, first-party provider, low reasoning, 1,024-token cap, prompt/schema hashes, three trials, one call per item, and no repair. A metadata-only amendment documented OpenRouter's public model-alias mapping after the smoke and before full trials. All 240 full-trial calls returned valid routes, and credential-free replay reproduced every normalized decision hash.", "Post-pilot prompted-router audit. ")
 
     add_heading(doc, "5 Validity, impact, and next evaluation")
     add_body(doc, "The central validity threat is circularity: scenarios, labels, lexical rules, probes, and prose were drafted in one LLM-assisted workflow. Source traceability improves auditability, not validity. The English convenience set omits dialect, code-switching, disability, culture, long relationships, and adversarial obfuscation. Severity is operational rather than clinical; v0.1 also does not isolate information-seeking as an action. Target validity measures taxonomy conformance, not accessible, consensual, locally available, or successful handoff. No practitioner or youth validation has occurred. Child-centered is a design objective, not a measured property.")
@@ -329,7 +329,7 @@ def build() -> Path:
         add_reference(doc, reference)
 
     add_heading(doc, "Appendix A. Artifact and schema")
-    add_body(doc, "The research package contains standard-library Python source, 48 tests for the frozen scientific and manuscript path, 22 provider-path tests, 20 source families, a source register, family rationale map, controlled authoring protocol, frozen contract probes, deterministic generation, item-level predictions and assertions, aggregate metrics, error analysis, ablations, a gated follow-up specification, and orthographic checks. Running make reproduce regenerates all 80 items and every reported value.", size=9.5, after=4, line=10)
+    add_body(doc, "The research package contains standard-library Python source, 49 tests for the frozen scientific and manuscript path, 25 provider-path tests, 20 source families, a source register, family rationale map, controlled authoring protocol, frozen contract probes, deterministic generation, item-level predictions and assertions, aggregate metrics, error analysis, ablations, a gated follow-up specification, and orthographic checks. Running make reproduce regenerates all 80 items and every deterministic reported value; prompted results replay from content-addressed caches.", size=9.5, after=4, line=10)
 
     add_heading(doc, "Appendix B. Metric details")
     add_body(doc, "Under-escalation is conditioned on items requiring human or urgent support. Strict valid-target rate requires a nonempty predicted set that is a subset of permitted targets and disjoint from forbidden targets. Exact route additionally requires the exact action and requires no emitted target for targetless actions. The action-route gap equals exact action accuracy minus exact-route accuracy.", size=9.5, after=4, line=10)
@@ -379,7 +379,7 @@ def build() -> Path:
     add_body(doc, "No independently authored holdout is reported. The prospective procedure requires an author who has not inspected router rules, existing scenario text, or item-level failures. Current authors and coding agents are ineligible. A future holdout must be evaluated once without router tuning and reported separately from v0.1.", size=9.5, after=4, line=10)
 
     add_heading(doc, "Appendix G. Compute, ethics, and LLM usage")
-    add_body(doc, "Reported experiments use no GPU, model API, training, or external service and complete in under one second on a laptop-class CPU. The prompted-router harness was tested with mock transports; no live provider result is reported. A general-purpose LLM coding assistant drafted candidate scenarios and labels, implementation, literature notes, and manuscript text. No LLM judged outputs or generated reported measurements. Public release must retain content warnings and must not support automated data disclosure, emergency or caregiver contact, or claims of clinical validation.", size=9.5, after=4, line=10)
+    add_body(doc, "Deterministic experiments use no GPU or training and complete in under one second on a laptop-class CPU. The reported prompted smoke plus three full trials made 244 OpenRouter calls, cost $0.635, and used no tools or generated counseling text; failed development pilots cost another $0.215. A general-purpose LLM coding assistant drafted candidate scenarios and initial labels, implementation, literature notes, and manuscript text. The prompted router generated reported routing decisions, but no LLM judged outputs. Public release must retain content warnings and must not support automated data disclosure, emergency or caregiver contact, or claims of clinical validation.", size=9.5, after=4, line=10)
 
     add_heading(doc, "Appendix H. Source traceability and future authoring")
     add_body(doc, "The source register records what each source supports and does not support. The v0.1 family map is retrospective and domain-level; it does not make individual cases source-grounded. The prospective protocol requires one-factor isolation, information-state timing, age and locale metadata, source-to-case rationale, non-procedural content, independent first-pass labels without router output, retained disagreement, and family-locked development, validation, public-test, and controlled-access splits.", size=9.5, after=4, line=10)

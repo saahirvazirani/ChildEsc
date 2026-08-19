@@ -52,9 +52,9 @@ requires authorized GitHub access. The command deterministically generates the
 benchmark, evaluates the baselines and rule checksum, runs the frozen analyses
 and relational contracts, executes all tests, and audits the release boundary.
 
-Expected output includes 46 passing scientific-artifact tests, five passing
-repository-release tests, and `Release audit passed.` Keeping the suites separate
-preserves the paper's frozen 46-test count.
+Expected output includes 49 passing scientific/manuscript tests, five passing
+repository-release tests, and `Release audit passed.` The optional provider
+path is tested separately by `make llm-test`, which currently runs 25 tests.
 
 ## Commands
 
@@ -136,9 +136,29 @@ PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --output results/llm/openrouter-gpt-4o-mini-smoke
 ```
 
+To pin an OpenRouter experiment to one upstream provider and an explicit
+reasoning policy, pass the controls below. Provider pinning disables fallbacks:
+
+```bash
+PYTHONPATH=src python3 -m childesc.llm_evaluate \
+  --data benchmark/childesc_v0_1.jsonl \
+  --provider openrouter \
+  --model anthropic/claude-sonnet-5-20260630 \
+  --openrouter-provider anthropic \
+  --reasoning-effort low \
+  --max-output-tokens 1024 \
+  --protocol-version 1.1.1 \
+  --trial-id v1-1-smoke-1 \
+  --limit 4 \
+  --cache .cache/childesc/openrouter-claude-sonnet-5-v1-1 \
+  --output results/llm/openrouter-claude-sonnet-5-v1-1/smoke-1
+```
+
 The selected OpenRouter model and upstream endpoint must support
 `structured_outputs` and `response_format`. The adapter requires parameter-
-compatible routing and rejects nonconforming responses. The evaluator writes
+compatible routing and rejects nonconforming responses. Reasoning text is
+excluded when an explicit reasoning effort is supplied, but token usage remains
+in provider metadata. The evaluator writes
 `routing_predictions.jsonl`, append-only `attempts.jsonl`, and
 `routing_metrics.json`. Comparative routing
 metrics are withheld unless every item has a valid route; refusals, transport
@@ -178,6 +198,7 @@ provider API sources, full-run workflow, and interpretation limits.
 | `results/contract_results.json` | Aggregate relational-contract outcomes. |
 | `results/contract_assertions.csv` | Every retained contract pass and failure. |
 | `results/contract_table.csv` | Compact contract summary for the paper. |
+| `results/llm_v1_1_summary.json` | Versioned aggregate for the complete, replayed prompted-router experiment. |
 
 Do not interpret these outputs as model capability estimates. The source
 scenarios, initial reference labels, and lexical router were developed in the
@@ -199,6 +220,7 @@ disclosed as incomplete.
 |---|---|---|
 | Schema, deterministic generation, leakage, metrics, and synchronization tests | Complete | The implementation satisfies its tested technical contract. |
 | Relational contract audit | Complete; developer-authored | 36/39 atomic assertions passed across 7/9 families; this is mechanistic conformance only. |
+| Prompted-router routing audit | Complete for one pinned system; post-pilot protocol | Three 80-item trials are complete and cache-replayable; findings apply only to the provisional synthetic specification. |
 | Independent holdout | Not completed | No generalization claim. |
 | Practitioner construct review | Protocol prepared; not started | No expert consensus, clinical validity, or practitioner validation claim. |
 | Youth-participatory review | Protocol prepared; not started | No `youth-informed` or `youth-validated` claim. |

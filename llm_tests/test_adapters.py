@@ -68,6 +68,48 @@ class AdapterTests(unittest.TestCase):
             http_request.body["provider"], {"require_parameters": True}
         )
 
+    def test_openrouter_can_pin_provider_and_reasoning_policy(self) -> None:
+        request = RoutingRequest.create(
+            model="anthropic/claude-sonnet-5-20260630",
+            messages=MESSAGES,
+            max_output_tokens=1024,
+        )
+        adapter = OpenRouterAdapter(
+            provider_slug="anthropic",
+            reasoning_effort="low",
+        )
+
+        http_request = adapter.build_http_request(request, "secret")
+
+        self.assertEqual(http_request.body["max_tokens"], 1024)
+        self.assertEqual(
+            http_request.body["provider"],
+            {
+                "allow_fallbacks": False,
+                "only": ["anthropic"],
+                "require_parameters": True,
+            },
+        )
+        self.assertEqual(
+            http_request.body["reasoning"],
+            {"effort": "low", "exclude": True},
+        )
+        self.assertEqual(
+            adapter.execution_config(),
+            {
+                "openrouter_provider": "anthropic",
+                "provider_fallbacks": False,
+                "reasoning_effort": "low",
+                "reasoning_excluded": True,
+            },
+        )
+
+    def test_openrouter_rejects_invalid_policy_values(self) -> None:
+        with self.assertRaises(ValueError):
+            OpenRouterAdapter(provider_slug="Anthropic provider")
+        with self.assertRaises(ValueError):
+            OpenRouterAdapter(reasoning_effort="automatic")
+
     def test_all_adapters_extract_the_same_route_json(self) -> None:
         route = json.dumps(
             {"action": "human_support", "targets": ["safe_adult"]}

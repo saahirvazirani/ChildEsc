@@ -97,34 +97,34 @@ full run replays from verified cache entries.
 
 ## Acceptance-focused execution, 2026-08-19
 
-No provider credential became available after the protocol freeze. The
-pre-registered checksum fallback was therefore used without a smoke request,
-partial model run, model substitution, or prompted-model score. The final
-artifact reports this limitation in the abstract, technical protocol, appendix,
-and experiment manifest.
+OpenRouter credentials became available after the original freeze. Protocol
+v1.0.1 was executed without silent repair: a Gemini smoke was incomplete because
+reasoning exhausted the 256-token allowance, and three Claude attempts remained
+incomplete after credit exhaustion. They receive no comparative score.
 
-`make reproduce` passed 48 frozen scientific/manuscript tests and 5 release
-tests; `make llm-test` passed 22 provider-path tests. Tectonic compiled the
-official `dblblindworkshop` source to 14 pages: content pages 1--4, references
-beginning on page 5, followed by the optional appendix and checklist. All four
-content pages and the first reference page were rendered and visually inspected.
-The collaboration DOCX was independently rendered to five pages and inspected.
-The committed tree was archived as the anonymous supplement, extracted to a
-fresh temporary directory, and rerun without credentials. All benchmark and
-result files matched the workspace byte-for-byte; all 75 tests passed in that
-clean copy.
+A new v1.1 configuration was specified after those failed pilots but before any
+v1.1 call. It pinned the dated Claude Sonnet 5 slug to OpenRouter's first-party
+Anthropic endpoint, disabled fallbacks, set low reasoning with reasoning text
+excluded, raised the output cap to 1,024 tokens, and retained one attempt per
+item with no response repair. The four-item smoke returned OpenRouter's short
+model alias. Before any full v1.1 trial, amendment 1.1.1 defined a metadata-only
+identity gate using a frozen public alias-to-canonical snapshot; no prompt,
+label, metric, generation setting, or correctness-dependent rule changed.
+
+Three sequential 80-item v1.1.1 trials then completed with 240/240 valid routes,
+no provider errors, and first-party provider label `Anthropic`. Credential-free
+cache replay reproduced each normalized decision hash. The paper reports trial
+means and ranges, not pooled pseudo-replication: action accuracy 80.8%, exact
+route accuracy 51.7%, a 29.2-point action-route gap, and 40.7--43.6% target
+failure among action-correct handoffs. This is a routing-only diagnostic against
+the same provisional synthetic specification, not a model comparison, holdout,
+clinical result, or deployment claim.
 
 ```text
-2a758ea9a0e9449c57e187d9902b01ee007a42b57175432e002db6cb2c06cdab  src/childesc/metrics.py
-912f6c4edaf89563df7096aa8245af24489f7af4cc1343d6b849915686ccf16c  src/childesc/llm.py
-22eace55c259d91187bf026d46b0a286421e66737c8d51e8513f955c7ff44817  src/childesc/llm_evaluate.py
-70c47506e9db8b98e13bfa7b294d39bec0de2136719a574b6de368216a6d704b  src/childesc/llm_analysis.py
-8a3b44e01e28400155eeb0d5461a5f460d0978f06c89c4f33f08ab0eaf923539  results/metrics.json
-5558834e02206e86c04d97bd81ce137a5903dddeb964abda7f8ab7a88a4b3974  results/paper_table.csv
-aa1efdb76142ed7c6bbccbf72ee128d37502e4b4b49b356f7c0219ebe339c99c  paper/main.tex
-98f63314d09c54ed33f7715247a219b6949f21b0563f8ef13d856f2a78ab33b0  paper/manuscript.md
-430df645fd7b8ff88bd330837c239017b4b9e10f84c8c4b0650cd286a04ead13  scripts/build_paper_docx.py
-2087d5ec6b9cc3fb7005580c61ba2ddcefd3a1593deff3d71d1eec41bd037028  tests/test_artifacts.py
-bae59495ad1d8d9cea21a4e1ff4df704015d87395907b3e971d03fd65c362ee1  llm_tests/test_llm_analysis.py
-5148fb94c432b82ec75d2fe61102d2989e10910e25d3f1e7802df5ae3db41d05  experiments/llm_manifest.json
+759bca00b868059589124f323c04fe86e5e56ea2ff8f75bbbf63825f3325863d  tasks/llm_evaluation_protocol_v1_1.md
+b31166cf3f977d512519e79513e557c6d0cadfb05639a7fb121d7e618ce60562  experiments/openrouter_claude_sonnet_5_snapshot_2026-08-19.json
+88826b7e21d660066de0b17814fc793a306da498c156fc53a2866c621406ca3c  results/llm_v1_1_summary.json
+30630d7cc83b8302b74cfddf31f1cf8936c403656cdb8e4adb6ccea80415cce0  normalized replay v1-1-trial-1
+117e194d46ddf8d06fa10cf7689a45f66f988b8ec1c00eed04b93c2a1c035d8d  normalized replay v1-1-trial-2
+12b8fd755e781c1c7b960a47dab0680a2c2eb8c1058ba86430b93c04c1899257  normalized replay v1-1-trial-3
 ```

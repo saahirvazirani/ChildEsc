@@ -11,8 +11,12 @@ immutable after release; corrections create a new candidate version.
   replay with cache-integrity checks.
 - Added a routing-only evaluator that withholds comparative metrics when any
   requested item lacks a valid route.
-- Added 15 isolated adapter, cache, leakage, and evaluator tests without
-  changing the frozen 46-test scientific suite.
+- Added explicit OpenRouter provider pinning, fallback control, and reasoning
+  policy capture.
+- Completed three 80-item routing-only trials under post-pilot protocol v1.1.1;
+  all 240 decisions replay from content-addressed caches.
+- Added 25 isolated adapter, cache, leakage, analysis, and evaluator tests plus
+  a manuscript synchronization guard for the versioned prompted-router result.
 
 Supportive-response quality remains outside scope and requires a separate
 rubric and human-validation study.

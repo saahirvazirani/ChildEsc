@@ -22,8 +22,8 @@ class ArtifactSynchronizationTests(unittest.TestCase):
 
     def test_manuscript_reports_current_test_count(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
-        self.assertIn("48 tests for the frozen scientific and manuscript path", manuscript)
-        self.assertIn("22 provider-path tests", manuscript)
+        self.assertIn("49 tests for the frozen scientific and manuscript path", manuscript)
+        self.assertIn("25 provider-path tests", manuscript)
 
     def test_latex_table_matches_versioned_metrics(self) -> None:
         systems = json.loads(
@@ -49,6 +49,34 @@ class ArtifactSynchronizationTests(unittest.TestCase):
                 [label, *(paper_number(float(point[field])) for field in fields)]
             )
             self.assertIn(expected, manuscript)
+
+    def test_latex_table_and_claims_match_prompted_router_summary(self) -> None:
+        result = json.loads(
+            (ROOT / "results" / "llm_v1_1_summary.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        metrics = result["metrics"]
+        manuscript = self.manuscript()
+        fields = (
+            "action_accuracy",
+            "urgent_recall",
+            "under_escalation_rate",
+            "valid_target_rate",
+            "action_route_gap",
+            "exact_route_accuracy",
+        )
+        expected = " & ".join(
+            [
+                "Prompted router$^{\\dagger}$",
+                *(paper_number(float(metrics[field]["mean"])) for field in fields),
+            ]
+        )
+        self.assertIn(expected, manuscript)
+        self.assertIn("29.2-point action-route gap", manuscript)
+        self.assertIn("22.5\\% of items varied in full route", manuscript)
+        self.assertIn("1.3\\% varied in action", manuscript)
+        self.assertIn("pre-specified after a failed pilot", manuscript)
 
     def test_title_and_abstract_center_safe_recipient_gap(self) -> None:
         systems = json.loads(

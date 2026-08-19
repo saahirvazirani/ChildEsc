@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Mapping
 
 from .llm import (
+    OPENROUTER_REASONING_EFFORTS,
     PROMPT_VERSION,
     PROMPT_EFFECTIVE_SHA256,
     PROMPT_FILE_SHA256,
@@ -194,6 +195,8 @@ def run(
         "model": client.model,
         "trial_id": client.trial_id,
         "api_contract": client.adapter.api_contract,
+        "protocol_version": client.protocol_version,
+        "request_policy": client.adapter.execution_config(),
         "data_sha256": _sha256_text(data_text),
         "evaluated_item_ids_sha256": _sha256_text(
             json.dumps([row["id"] for row in rows], separators=(",", ":"))
@@ -254,9 +257,22 @@ def main() -> None:
     parser.add_argument("--timeout", type=float, default=60.0)
     parser.add_argument("--max-output-tokens", type=int, default=256)
     parser.add_argument("--temperature", type=float)
+    parser.add_argument("--protocol-version", default="unversioned")
+    parser.add_argument("--openrouter-provider")
+    parser.add_argument(
+        "--reasoning-effort",
+        choices=tuple(sorted(OPENROUTER_REASONING_EFFORTS)),
+    )
     args = parser.parse_args()
 
-    adapter = get_adapter(args.provider)
+    try:
+        adapter = get_adapter(
+            args.provider,
+            openrouter_provider=args.openrouter_provider,
+            reasoning_effort=args.reasoning_effort,
+        )
+    except ValueError as error:
+        parser.error(str(error))
     api_key = None if args.cache_only else os.environ.get(adapter.api_key_env)
     if not args.cache_only and not api_key:
         parser.error(
@@ -273,6 +289,7 @@ def main() -> None:
         max_output_tokens=args.max_output_tokens,
         temperature=args.temperature,
         trial_id=args.trial_id,
+        protocol_version=args.protocol_version,
     )
     try:
         result = run(args.data, args.output, client, limit=args.limit)

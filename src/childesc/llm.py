@@ -58,6 +58,9 @@ ROUTE_SCHEMA: dict[str, object] = {
 CACHE_FORMAT_VERSION = 2
 MAX_CONVERSATION_CHARS = 100_000
 MAX_RESPONSE_BYTES = 1024 * 1024
+OPENROUTER_REASONING_EFFORTS = frozenset(
+    {"max", "xhigh", "high", "medium", "low", "minimal", "none"}
+)
 
 
 class LLMError(RuntimeError):
@@ -215,6 +218,10 @@ class ProviderAdapter:
         raise NotImplementedError
 
     def audit_metadata(self, response: Mapping[str, object]) -> dict[str, object]:
+        return {}
+
+    def execution_config(self) -> dict[str, object]:
+        """Return non-secret provider controls that define an experiment."""
         return {}
 
     def cache_material(self, request: RoutingRequest) -> dict[str, object]:
@@ -452,9 +459,35 @@ class OpenRouterAdapter(ProviderAdapter):
     api_key_env = "OPENROUTER_API_KEY"
     api_contract = "chat-completions-v1-json-schema-2026-08"
 
+    def __init__(
+        self,
+        *,
+        provider_slug: str | None = None,
+        reasoning_effort: str | None = None,
+    ) -> None:
+        if provider_slug is not None and not re.fullmatch(
+            r"[a-z0-9][a-z0-9._/-]{0,99}", provider_slug
+        ):
+            raise ValueError("OpenRouter provider slug has an invalid format")
+        if (
+            reasoning_effort is not None
+            and reasoning_effort not in OPENROUTER_REASONING_EFFORTS
+        ):
+            raise ValueError("unsupported OpenRouter reasoning effort")
+        self.provider_slug = provider_slug
+        self.reasoning_effort = reasoning_effort
+
     def build_http_request(
         self, request: RoutingRequest, api_key: str | None
     ) -> HttpRequest:
+        provider: dict[str, object] = {"require_parameters": True}
+        if self.provider_slug is not None:
+            provider.update(
+                {
+                    "allow_fallbacks": False,
+                    "only": [self.provider_slug],
+                }
+            )
         body: dict[str, object] = {
             "model": request.model,
             "messages": [
@@ -470,8 +503,13 @@ class OpenRouterAdapter(ProviderAdapter):
                     "schema": request.schema,
                 },
             },
-            "provider": {"require_parameters": True},
+            "provider": provider,
         }
+        if self.reasoning_effort is not None:
+            body["reasoning"] = {
+                "effort": self.reasoning_effort,
+                "exclude": True,
+            }
         if request.temperature is not None:
             body["temperature"] = request.temperature
         headers = {"Content-Type": "application/json"}
@@ -512,6 +550,24 @@ class OpenRouterAdapter(ProviderAdapter):
             if key in response
         }
 
+    def execution_config(self) -> dict[str, object]:
+        config: dict[str, object] = {}
+        if self.provider_slug is not None:
+            config.update(
+                {
+                    "openrouter_provider": self.provider_slug,
+                    "provider_fallbacks": False,
+                }
+            )
+        if self.reasoning_effort is not None:
+            config.update(
+                {
+                    "reasoning_effort": self.reasoning_effort,
+                    "reasoning_excluded": True,
+                }
+            )
+        return config
+
 
 PROVIDERS: dict[str, type[ProviderAdapter]] = {
     "gemini": GeminiAdapter,
@@ -521,7 +577,21 @@ PROVIDERS: dict[str, type[ProviderAdapter]] = {
 }
 
 
-def get_adapter(name: str) -> ProviderAdapter:
+def get_adapter(
+    name: str,
+    *,
+    openrouter_provider: str | None = None,
+    reasoning_effort: str | None = None,
+) -> ProviderAdapter:
+    if name != "openrouter" and (
+        openrouter_provider is not None or reasoning_effort is not None
+    ):
+        raise ValueError("OpenRouter policy controls require provider=openrouter")
+    if name == "openrouter":
+        return OpenRouterAdapter(
+            provider_slug=openrouter_provider,
+            reasoning_effort=reasoning_effort,
+        )
     try:
         return PROVIDERS[name]()
     except KeyError as error:
@@ -649,6 +719,7 @@ class CachedRoutingClient:
         max_output_tokens: int = 256,
         temperature: float | None = None,
         trial_id: str = "trial-1",
+        protocol_version: str = "unversioned",
     ) -> None:
         self.adapter = adapter
         self.model = model
@@ -660,11 +731,19 @@ class CachedRoutingClient:
         self.max_output_tokens = max_output_tokens
         self.temperature = temperature
         self.trial_id = trial_id
+        self.protocol_version = protocol_version
         if timeout <= 0:
             raise ValueError("timeout must be positive")
         if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,63}", trial_id):
             raise ValueError(
                 "trial_id must be 1-64 letters, digits, dots, underscores, or hyphens"
+            )
+        if not re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9._-]{0,63}", protocol_version
+        ):
+            raise ValueError(
+                "protocol_version must be 1-64 letters, digits, dots, "
+                "underscores, or hyphens"
             )
 
     def _request(self, messages: Sequence[Mapping[str, str]]) -> RoutingRequest:

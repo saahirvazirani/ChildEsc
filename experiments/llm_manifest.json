@@ -19,6 +19,20 @@
     "included": false,
     "status": "not_authored"
   },
+  "historical_protocols": [
+    {
+      "path": "tasks/llm_evaluation_protocol.md",
+      "sha256": "3bbef0f0e32850f8ae4ee885a4611f81aa057b85615656221419056639ecfe04",
+      "version": "1.0.1"
+    }
+  ],
+  "historical_v1_0_settings": {
+    "max_output_tokens": 256,
+    "reasoning_effort": null,
+    "temperature": null,
+    "timeout_seconds": 60,
+    "trials_per_model": 3
+  },
   "models": [
     {
       "id": "gemini-3.1-pro-preview",
@@ -84,6 +98,28 @@
       "Amazon Bedrock",
       "Claude Platform on AWS"
     ],
+    "v1_1_smoke": {
+      "complete": true,
+      "cost_usd": 0.010292,
+      "invalid_outputs": 0,
+      "items": 4,
+      "protocol_version": "1.1.0",
+      "provider_errors": 0,
+      "requested_model": "anthropic/claude-sonnet-5-20260630",
+      "returned_model": "anthropic/claude-sonnet-5",
+      "returned_provider": "Anthropic",
+      "status": "identity_gate_passed_under_amendment_1.1.1",
+      "valid_outputs": 4
+    },
+    "v1_1_full_trials": {
+      "complete_trials": 3,
+      "provider_errors": 0,
+      "reported_cost_usd": 0.624476,
+      "returned_model": "anthropic/claude-sonnet-5",
+      "returned_provider": "Anthropic",
+      "total_calls": 240,
+      "valid_outputs": 240
+    },
     "smoke_runs": [
       {
         "complete": false,
@@ -115,18 +151,43 @@
     "version": "childesc-routing-v1"
   },
   "protocol": {
-    "path": "tasks/llm_evaluation_protocol.md",
-    "sha256": "3bbef0f0e32850f8ae4ee885a4611f81aa057b85615656221419056639ecfe04",
-    "version": "1.0.1"
+    "path": "tasks/llm_evaluation_protocol_v1_1.md",
+    "sha256": "759bca00b868059589124f323c04fe86e5e56ea2ff8f75bbbf63825f3325863d",
+    "version": "1.1.1"
   },
   "schema": {
     "sha256": "bdda4a89ac8353aa487cf0dd60dc854e8d5b4e3c1f53cb9ddf28fc4842dbd2c7"
   },
   "settings": {
-    "max_output_tokens": 256,
+    "max_output_tokens": 1024,
+    "reasoning_effort": "low",
+    "reasoning_excluded": true,
     "temperature": null,
     "timeout_seconds": 60,
     "trials_per_model": 3
   },
-  "status": "openrouter_trials_incomplete_no_live_comparative_results"
+  "result": {
+    "path": "results/llm_v1_1_summary.json",
+    "sha256": "88826b7e21d660066de0b17814fc793a306da498c156fc53a2866c621406ca3c"
+  },
+  "status": "v1_1_complete_replayed_routing_only",
+  "v1_1_system": {
+    "accepted_returned_model": "anthropic/claude-sonnet-5",
+    "gateway": "openrouter",
+    "identity_snapshot": {
+      "path": "experiments/openrouter_claude_sonnet_5_snapshot_2026-08-19.json",
+      "sha256": "b31166cf3f977d512519e79513e557c6d0cadfb05639a7fb121d7e618ce60562"
+    },
+    "model": "anthropic/claude-sonnet-5-20260630",
+    "provider_allowlist": [
+      "anthropic"
+    ],
+    "provider_fallbacks": false,
+    "require_parameters": true,
+    "trial_ids": [
+      "v1-1-trial-1",
+      "v1-1-trial-2",
+      "v1-1-trial-3"
+    ]
+  }
 }

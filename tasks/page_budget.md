@@ -20,9 +20,9 @@ Source: https://childsafety-ai.github.io/
 - Total compiled pages: 14.
 
 The acceptance-focused paper is compliant and uses the full four-page content
-allowance without changing the official template. The prompted-router protocol,
-no-credentials fallback, and prospective validation outputs occupy the fourth
-page; the 988 follow-up proposal appears only in the appendix.
+allowance without changing the official template. The completed prompted-router
+diagnostic, its post-pilot validity boundary, and prospective validation outputs
+occupy the fourth page; the 988 follow-up proposal appears only in the appendix.
 
 ## Revision allocation
 
@@ -51,9 +51,9 @@ replace checksum breadth rather than add another table:
 
 Keyword and severity-agnostic rows, full intervals, stress tests, the complete
 contract audit, procedural validation detail, and delegated 988 follow-up move
-to the appendix. If no live provider run completes, the current checksum table
-and contract audit remain, and the paper must not imply that model evaluation
-has occurred.
+to the appendix. The live-result branch is active: one pinned prompted router
+has three complete replayable trials. The checksum remains as an independent
+mechanistic diagnostic rather than the headline result.
 
 ## Verification rule
 

@@ -92,4 +92,49 @@ Gemini CLI was run in read-only plan mode. After repeated provider `503` and quo
 
 ### Full-trial execution outcome
 
-Three 80-item OpenRouter trial attempts were retained but are incomplete. The account exhausted its available credits after 66 valid responses and three length-truncated responses across the trials; the other 171 calls returned HTTP 402. Valid calls also reported two AWS upstream labels. No recovery call was made, no incomplete trial receives comparative metrics, and no live model result is added to the paper. A future execution must use new trial IDs and retain these failures. If it changes the token budget, reasoning setting, or upstream routing policy, it must be declared as a new protocol version rather than a repair to these trials.
+Three 80-item OpenRouter trial attempts were retained but are incomplete. The account exhausted its available credits after 66 valid responses and three length-truncated responses across the trials; the other 171 calls returned HTTP 402. Valid calls also reported two AWS upstream labels. No recovery call was made, and no score from these incomplete v1.0.1 attempts is added to the paper. A future execution must use new trial IDs and retain these failures. If it changes the token budget, reasoning setting, or upstream routing policy, it must be declared as a new protocol version rather than a repair to these trials.
+
+## Post-pilot v1.1.1 review, 2026-08-19
+
+### Confirmed validity defects repaired
+
+1. **The failed pilot could not be silently resumed.** The v1.0.1 runs remain
+   incomplete and unscored. The 1,024-token allowance, low reasoning policy,
+   Anthropic-only routing, and new trial IDs are explicitly versioned as v1.1.
+2. **Returned model identity required an auditable gate.** The v1.1 smoke
+   returned OpenRouter's short alias despite a dated requested slug. Before any
+   full trial, amendment v1.1.1 accepted that alias only with provider
+   `Anthropic` and a frozen public alias-to-canonical snapshot. The amendment
+   changed metadata validation only, not the prompt, labels, settings, metrics,
+   or correctness criteria.
+
+### Plausible reviewer concerns retained
+
+1. **The configuration is post-pilot.** It was pre-specified only after failed
+   operational pilots, so the paper says this directly and avoids a stronger
+   preregistration claim.
+2. **The evaluation covers one prompted router on the exposed v0.1 labels.**
+   Three trials measure repeatability, not cross-model superiority or external
+   generalization.
+3. **High urgent recall does not establish safe routing.** Exact routes remain
+   only 51.7% accurate because missing and extra unpermitted recipients count as
+   failures even when the action is correct.
+
+### Optional improvements deferred
+
+1. Add a separately authored holdout only through the documented contributor
+   eligibility and freeze process; the current author and coding agents are not
+   eligible holdout authors.
+2. Add a direct-provider or multi-model panel only under a new frozen protocol;
+   it is not needed to support the current construct-level finding.
+3. Evaluate supportive-response quality only with a separate rubric and
+   appropriately governed practitioner and youth study.
+
+### Verified outcome
+
+All three v1.1.1 trials completed with 80/80 valid routes and replayed from
+content-addressed caches without credentials. Across trials, mean action
+accuracy was 80.8%, exact route accuracy was 51.7%, and the action-route gap was
+29.2 points. Only 1/80 items varied in action, while 18/80 varied in full route.
+These values are routing-specification diagnostics, not clinical or deployment
+evidence.

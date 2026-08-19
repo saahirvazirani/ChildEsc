@@ -1,0 +1,48 @@
+{
+  "endpoint": {
+    "model_id": "anthropic/claude-sonnet-5",
+    "name": "Anthropic | anthropic/claude-sonnet-5-20260630",
+    "provider_name": "Anthropic",
+    "status": 0,
+    "supported_parameters": [
+      "include_reasoning",
+      "max_tokens",
+      "reasoning",
+      "reasoning_effort",
+      "response_format",
+      "structured_outputs",
+      "tool_choice",
+      "tools",
+      "verbosity",
+      "stop"
+    ],
+    "tag": "anthropic"
+  },
+  "model": {
+    "canonical_slug": "anthropic/claude-sonnet-5-20260630",
+    "id": "anthropic/claude-sonnet-5",
+    "reasoning": {
+      "default_effort": "high",
+      "default_enabled": true,
+      "mandatory": false,
+      "supported_efforts": [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low"
+      ]
+    }
+  },
+  "retrieved_utc_date": "2026-08-19",
+  "sources": [
+    {
+      "raw_response_sha256": "85cd4949a2fdb2c213f3dc7b7d17c2cea08bb7d730ac27776e957593c4955053",
+      "url": "https://openrouter.ai/api/v1/models"
+    },
+    {
+      "raw_response_sha256": "33751a01d0b0076ac476a506ecf29cdaec6fe6e51d7633fc73620ebe386e7fa4",
+      "url": "https://openrouter.ai/api/v1/models/anthropic/claude-sonnet-5/endpoints"
+    }
+  ]
+}

@@ -512,9 +512,8 @@ auditable provider attempts rather than one cache entry reused three times.
 
 ## Task 34: Execute complete prompted-router audits
 
-**Status:** Pre-registered fallback used. No provider credential was available,
-so no live smoke or full run was attempted and no prompted-model result is
-reported.
+**Status:** Completed for one pinned prompted router under post-pilot protocol
+v1.1.1. Historical v1.0.1 failures are retained and unscored.
 
 **Description:** Run a four-item smoke test for each available direct provider,
 inspect payload isolation and structured outputs, then execute three complete
@@ -524,15 +523,15 @@ test unless upstream provenance is pinned.
 **Acceptance criteria:**
 - [x] Every reported model has the protocol-required number of complete trials,
   or the manuscript uses the pre-registered fallback and discloses the reason.
-- [ ] Raw attempts and normalized predictions account for every item without
+- [x] Raw attempts and normalized predictions account for every item without
   selective exclusion or silent response repair.
-- [ ] Exact provider, model, returned model version, prompt/schema hashes,
+- [x] Exact provider, model, returned model version, prompt/schema hashes,
   settings, timestamps, and cache hashes are present in each run manifest.
 
 **Verification:**
-- [ ] Live smoke commands finish with valid two-field routes for four items.
-- [ ] Full-run cache-only commands finish without API keys or network access.
-- [ ] Manual check: invalid output and provider-error counts reconcile with the
+- [x] Live smoke commands finish with valid two-field routes for four items.
+- [x] Full-run cache-only commands finish without API keys or network access.
+- [x] Manual check: invalid output and provider-error counts reconcile with the
   attempt ledger.
 
 **Dependencies:** Task 33 and configured provider credentials
@@ -577,10 +576,10 @@ errors, three-trial instability, and paired family-bootstrap differences.
 
 ## Checkpoint: Evidence Integrity
 
-- [x] Tasks 33 and 35 pass all focused and frozen tests; Task 34 uses the
-  pre-registered no-credentials fallback rather than an incomplete live run.
-- [ ] All proposed paper values replay from cache without credentials.
-- [ ] No prompt, label, model setting, or primary metric changed after result
+- [x] Tasks 33--35 pass all focused and frozen tests; Task 34 reports three
+  complete v1.1.1 trials while retaining the incomplete v1.0.1 history.
+- [x] All proposed paper values replay from cache without credentials.
+- [x] No prompt, label, model setting, or primary metric changed after v1.1
   inspection.
 - [x] Any deviation from the frozen protocol is logged and kept out of primary
   claims unless the entire affected analysis is rerun under a new version.
@@ -745,8 +744,8 @@ defer attractive new experiments that would create post-hoc validity risk.
 
 ## Task 41: Build and audit the anonymous submission package
 
-**Status:** Completed with the pre-registered no-live-model fallback. The
-submission package contains no provider output because none is reported.
+**Status:** Completed for the v1.1.1 aggregate and prompted-result manuscript
+revision. Raw provider responses remain outside the anonymous repository.
 
 **Description:** Produce the final PDF and anonymous supplement, replay model
 results in a clean environment, and audit page limits, identity, secrets,
@@ -778,7 +777,7 @@ provider terms, local paths, stale outputs, and unsupported claims.
 
 ## Final Acceptance Checkpoint
 
-- [ ] At least one prompted model router has a complete replayable full result;
+- [x] At least one prompted model router has a complete replayable full result;
   the preferred result is three providers with three trials each.
 - [x] The action-route gap and implicated-adult target failures are visible in
   the main paper.

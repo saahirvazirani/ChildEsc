@@ -69,19 +69,24 @@ First run the no-network adapter tests:
 make llm-test
 ```
 
-Then make a small paid/provider-account smoke run. Gemini is the initial primary
-provider; the exact model ID remains an explicit experiment choice:
+Then make a small paid/provider-account smoke run. The reported v1.1.1 study
+used OpenRouter with a dated model slug, the first-party Anthropic endpoint,
+fallbacks disabled, low reasoning effort, and a 1,024-token output cap:
 
 ```bash
-export GEMINI_API_KEY="your-key"
+export OPENROUTER_API_KEY="your-key"
 PYTHONPATH=src python3 -m childesc.llm_evaluate \
   --data benchmark/childesc_v0_1.jsonl \
-  --provider gemini \
-  --model gemini-2.5-flash-lite \
-  --trial-id trial-1 \
+  --provider openrouter \
+  --model anthropic/claude-sonnet-5-20260630 \
+  --openrouter-provider anthropic \
+  --reasoning-effort low \
+  --max-output-tokens 1024 \
+  --protocol-version 1.1.1 \
+  --trial-id v1-1-smoke-1 \
   --limit 4 \
-  --cache .cache/childesc/gemini-2.5-flash-lite \
-  --output results/llm/gemini-2.5-flash-lite-smoke
+  --cache .cache/childesc/openrouter-claude-sonnet-5-v1-1 \
+  --output results/llm/openrouter-claude-sonnet-5-v1-1/smoke-1
 ```
 
 Inspect `routing_predictions.jsonl` before removing `--limit`. A full run uses
@@ -138,13 +143,13 @@ policy used for direct providers. Response-healing plugins are deliberately not
 enabled because they would introduce a provider-specific transformation between
 the model output and the evaluated route.
 
-`require_parameters` constrains capability, not necessarily one upstream
-vendor endpoint. OpenRouter may still choose among compatible endpoints for a
-model slug. Cached replay exactly preserves the returned response, but a study
-that treats upstream-provider identity as an experimental variable should pin
-that routing through a separately versioned adapter configuration or use the
-direct-provider adapters. Report any upstream provider metadata returned by
-OpenRouter; do not infer missing provenance.
+`require_parameters` constrains capability but does not itself select one
+upstream vendor. Use `--openrouter-provider PROVIDER_SLUG` to send an `only`
+allowlist and disable provider fallbacks. Record both the requested model and
+the returned model/provider metadata. Protocol v1.1.1 accepts OpenRouter's
+short returned alias only through the dated public identity snapshot in
+`experiments/openrouter_claude_sonnet_5_snapshot_2026-08-19.json`; do not infer
+missing provenance for a different run.
 
 `temperature` is omitted by default because model support differs. If a study
 sets `--temperature`, use the same supported value across comparison runs and
@@ -174,7 +179,9 @@ raw response, or response hash is modified.
 
 Trial-aware evaluation uses cache format version 2. Caches created before trial
 identity was introduced are intentionally not reused because they cannot prove
-which independent attempt produced a response.
+which independent attempt produced a response. The run record also stores the
+protocol version and non-secret request policy. Protocol version is not provider
+payload material, which preserves exact replay of legacy provider requests.
 
 ## Output and Reporting Rules
 
@@ -196,6 +203,23 @@ Do not compare a four-item smoke run with a full 80-item run. Do not compare liv
 results collected under different prompt/schema hashes as if they were the same
 evaluation. Provider/model names and cache files are experiment provenance, not
 evidence of clinical validity or deployment safety.
+
+## Reported v1.1.1 Result
+
+After incomplete v1.0 pilots exposed reasoning-budget and credit failures, a
+new protocol fixed the provider, model identity rule, reasoning policy, token
+budget, three sequential trials, and no-repair gate. This is transparently a
+post-pilot configuration, not a pre-output preregistration or independent
+holdout.
+
+All three 80-item trials completed with valid structured routes and replayed
+without credentials. Across trials, mean action accuracy was 80.8% and mean
+exact route accuracy was 51.7%, producing a 29.2-point action-route gap.
+Action-correct target failures ranged from 40.7% to 43.6% of handoffs. Action
+instability was 1/80 items, while full-route instability was 18/80. These are
+diagnostics against the same provisional, policy-exposed synthetic labels; they
+do not establish generalization or real-world safety. The checked-in aggregate
+is `results/llm_v1_1_summary.json`; raw responses remain excluded from Git.
 
 ## Repeated-Trial Analysis
 

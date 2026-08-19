@@ -1,0 +1,107 @@
+{
+  "artifact": "ChildEsc prompted-router v1.1 aggregate",
+  "complete_trials": 3,
+  "cost_usd": {
+    "reported_full_trials": 0.624476,
+    "reported_smoke_and_full_trials": 0.634768,
+    "trial_1": 0.207872,
+    "trial_2": 0.208502,
+    "trial_3": 0.208102
+  },
+  "items_per_trial": 80,
+  "metrics": {
+    "action_accuracy": {
+      "mean": 0.8083333333333332,
+      "range": [
+        0.8,
+        0.8125
+      ]
+    },
+    "action_correct_target_failure_rate": {
+      "mean": 0.42671156004489336,
+      "range": [
+        0.4074074074074074,
+        0.43636363636363634
+      ]
+    },
+    "action_route_gap": {
+      "mean": 0.2916666666666667,
+      "range": [
+        0.275,
+        0.3
+      ]
+    },
+    "exact_route_accuracy": {
+      "mean": 0.5166666666666666,
+      "range": [
+        0.5125,
+        0.525
+      ]
+    },
+    "under_escalation_rate": {
+      "mean": 0.017241379310344827,
+      "range": [
+        0.017241379310344827,
+        0.017241379310344827
+      ]
+    },
+    "unsafe_target_rate": {
+      "mean": 0.0,
+      "range": [
+        0.0,
+        0.0
+      ]
+    },
+    "urgent_recall": {
+      "mean": 1.0,
+      "range": [
+        1.0,
+        1.0
+      ]
+    },
+    "valid_target_rate": {
+      "mean": 0.5402298850574713,
+      "range": [
+        0.5344827586206896,
+        0.5517241379310345
+      ]
+    }
+  },
+  "model": {
+    "accepted_returned_id": "anthropic/claude-sonnet-5",
+    "requested_canonical_slug": "anthropic/claude-sonnet-5-20260630"
+  },
+  "normalized_replay_sha256": {
+    "v1-1-trial-1": "30630d7cc83b8302b74cfddf31f1cf8936c403656cdb8e4adb6ccea80415cce0",
+    "v1-1-trial-2": "117e194d46ddf8d06fa10cf7689a45f66f988b8ec1c00eed04b93c2a1c035d8d",
+    "v1-1-trial-3": "12b8fd755e781c1c7b960a47dab0680a2c2eb8c1058ba86430b93c04c1899257"
+  },
+  "protocol": {
+    "path": "tasks/llm_evaluation_protocol_v1_1.md",
+    "version": "1.1.1"
+  },
+  "provenance": {
+    "data_sha256": "2acae4d6b88b5651454e9b07fafa9163d91c9e612794df8382443110300cba44",
+    "prompt_sha256": "b4c7e591a37a532fe10cbd84a8636deae6a90e5571ed7f1be263a805a29b6277",
+    "schema_sha256": "bdda4a89ac8353aa487cf0dd60dc854e8d5b4e3c1f53cb9ddf28fc4842dbd2c7"
+  },
+  "provider": {
+    "fallbacks": false,
+    "gateway": "openrouter",
+    "returned_provider": "Anthropic"
+  },
+  "scope": "routing_decisions_only",
+  "stability": {
+    "action_instability_count": 1,
+    "action_instability_rate": 0.0125,
+    "route_instability_count": 18,
+    "route_instability_rate": 0.225
+  },
+  "supportive_response_quality_evaluated": false,
+  "trial_ids": [
+    "v1-1-trial-1",
+    "v1-1-trial-2",
+    "v1-1-trial-3"
+  ],
+  "valid_responses": 240
+}
