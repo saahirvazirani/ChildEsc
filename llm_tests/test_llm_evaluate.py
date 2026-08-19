@@ -7,6 +7,8 @@ from childesc.llm import (
     CachedRoutingClient,
     GeminiAdapter,
     JsonTransport,
+    PROMPT_EFFECTIVE_SHA256,
+    PROMPT_FILE_SHA256,
     ResponseCache,
     get_adapter,
 )
@@ -88,6 +90,9 @@ class LLMEvaluateTests(unittest.TestCase):
             self.assertEqual(result["scope"], "routing_decisions_only")
             self.assertFalse(result["supportive_response_quality_evaluated"])
             self.assertEqual(result["trial_id"], "trial-2")
+            self.assertEqual(result["prompt_sha256"], PROMPT_EFFECTIVE_SHA256)
+            self.assertEqual(result["prompt_file_sha256"], PROMPT_FILE_SHA256)
+            self.assertNotEqual(result["prompt_sha256"], result["prompt_file_sha256"])
             self.assertTrue((root / "results" / "routing_predictions.jsonl").exists())
             attempts = [
                 json.loads(line)

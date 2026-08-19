@@ -75,3 +75,21 @@ The reviewer also raised plausible concerns about independently unverifiable pre
 ### External review status
 
 Gemini CLI was run in read-only plan mode. After repeated provider `503` and quota retries, the fallback model produced eight findings. The two router failures were confirmed but were already retained and reported; circularity, construct validity, novelty, and the 988 pathway remained plausible concerns already bounded in the paper. One new confirmed framework defect was repaired: the contract harness now accepts interleaved user/assistant turns instead of rejecting every non-user message, with a regression test. The optional B3 analogy was removed from the main paper to keep workshop fit focused. The artifact then passed 46 tests, page-boundary scans, visual renders, anonymity scans, and a zero-finding DOCX accessibility audit.
+
+## OpenRouter smoke review, 2026-08-19
+
+### Confirmed validity defect repaired
+
+1. **Ambiguous prompt-hash semantics.** The frozen manifest hashed the prompt file bytes, including its trailing newline, while evaluator run records hashed the stripped text actually sent to providers. Protocol 1.0.1 now records both hashes explicitly. This is a metadata-only repair; the transmitted prompt and all experimental settings are unchanged.
+
+### Plausible reviewer concern retained
+
+1. **Reasoning-token exhaustion.** A frozen four-item OpenRouter smoke of `google/gemini-3.1-pro-preview` produced two valid routes and two length-truncated outputs because provider-default reasoning consumed nearly all of the 256-token completion allowance. The trial remains incomplete, receives no metrics, and will not be silently retried or repaired.
+
+### Optional improvement deferred
+
+1. A future protocol version may pre-specify a larger output budget or an explicit reasoning setting. Making that change after seeing this smoke would define a new experiment, so protocol 1.0.1 keeps the frozen 256-token budget and default reasoning behavior.
+
+### Full-trial execution outcome
+
+Three 80-item OpenRouter trial attempts were retained but are incomplete. The account exhausted its available credits after 66 valid responses and three length-truncated responses across the trials; the other 171 calls returned HTTP 402. Valid calls also reported two AWS upstream labels. No recovery call was made, no incomplete trial receives comparative metrics, and no live model result is added to the paper. A future execution must use new trial IDs and retain these failures. If it changes the token budget, reasoning setting, or upstream routing policy, it must be declared as a new protocol version rather than a repair to these trials.

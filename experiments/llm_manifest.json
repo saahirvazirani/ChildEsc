@@ -48,15 +48,76 @@
     "action_correct_target_failure_rate",
     "exact_route_accuracy"
   ],
+  "post_freeze_execution": {
+    "credential_configured": "openrouter",
+    "full_trial_attempts": [
+      {
+        "complete": false,
+        "invalid_outputs": 1,
+        "items": 80,
+        "provider_errors": 55,
+        "status": "incomplete_credit_exhaustion_and_length_truncation",
+        "trial_id": "trial-1",
+        "valid_outputs": 24
+      },
+      {
+        "complete": false,
+        "invalid_outputs": 2,
+        "items": 80,
+        "provider_errors": 60,
+        "status": "incomplete_credit_exhaustion_and_length_truncation",
+        "trial_id": "trial-2",
+        "valid_outputs": 18
+      },
+      {
+        "complete": false,
+        "invalid_outputs": 0,
+        "items": 80,
+        "provider_errors": 56,
+        "status": "incomplete_credit_exhaustion",
+        "trial_id": "trial-3",
+        "valid_outputs": 24
+      }
+    ],
+    "full_trial_model": "anthropic/claude-sonnet-5",
+    "full_trial_upstream_labels": [
+      "Amazon Bedrock",
+      "Claude Platform on AWS"
+    ],
+    "smoke_runs": [
+      {
+        "complete": false,
+        "invalid_outputs": 2,
+        "items": 4,
+        "requested_model": "google/gemini-3.1-pro-preview",
+        "returned_model": "google/gemini-3.1-pro-preview",
+        "returned_provider": "Google",
+        "status": "incomplete_length_truncation",
+        "valid_outputs": 2
+      },
+      {
+        "complete": true,
+        "exact_route_accuracy": 0.75,
+        "invalid_outputs": 0,
+        "items": 4,
+        "requested_model": "anthropic/claude-sonnet-5",
+        "returned_model": "anthropic/claude-sonnet-5",
+        "returned_provider": "Claude Platform on AWS",
+        "status": "complete_smoke_not_comparative",
+        "valid_outputs": 4
+      }
+    ]
+  },
   "prompt": {
+    "effective_sha256": "b4c7e591a37a532fe10cbd84a8636deae6a90e5571ed7f1be263a805a29b6277",
+    "file_sha256": "186e9e055eb71599866c89d1eef1eb6cdd44b861a214cd94bbb0b8077ba35ec3",
     "path": "src/childesc/prompts/childesc_routing_v1.txt",
-    "sha256": "186e9e055eb71599866c89d1eef1eb6cdd44b861a214cd94bbb0b8077ba35ec3",
     "version": "childesc-routing-v1"
   },
   "protocol": {
     "path": "tasks/llm_evaluation_protocol.md",
-    "sha256": "bc7e83ab1fe42b6a153aea3b21a2b72a366ed0533c3e6df7d4e14084527b7f5c",
-    "version": "1.0.0"
+    "sha256": "3bbef0f0e32850f8ae4ee885a4611f81aa057b85615656221419056639ecfe04",
+    "version": "1.0.1"
   },
   "schema": {
     "sha256": "bdda4a89ac8353aa487cf0dd60dc854e8d5b4e3c1f53cb9ddf28fc4842dbd2c7"
@@ -67,5 +128,5 @@
     "timeout_seconds": 60,
     "trials_per_model": 3
   },
-  "status": "fallback_checksum_no_credentials_no_live_results"
+  "status": "openrouter_trials_incomplete_no_live_comparative_results"
 }

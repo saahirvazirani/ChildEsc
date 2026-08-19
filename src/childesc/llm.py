@@ -19,12 +19,14 @@ from .router import Action, RouteDecision
 
 
 PROMPT_VERSION = "childesc-routing-v1"
-SYSTEM_PROMPT = (
+_PROMPT_BYTES = (
     resources.files("childesc.prompts")
     .joinpath("childesc_routing_v1.txt")
-    .read_text(encoding="utf-8")
-    .strip()
+    .read_bytes()
 )
+PROMPT_FILE_SHA256 = hashlib.sha256(_PROMPT_BYTES).hexdigest()
+SYSTEM_PROMPT = _PROMPT_BYTES.decode("utf-8").strip()
+PROMPT_EFFECTIVE_SHA256 = hashlib.sha256(SYSTEM_PROMPT.encode("utf-8")).hexdigest()
 TARGETS = (
     "safe_adult",
     "safe_adult_not_implicated",

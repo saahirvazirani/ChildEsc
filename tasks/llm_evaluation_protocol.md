@@ -1,10 +1,30 @@
 # Pre-Registered ChildEsc Prompted-Router Evaluation Protocol
 
-Protocol version: 1.0.0
+Protocol version: 1.0.1
 
 Freeze date: 2026-08-19
 
-Status: frozen before any full live prompted-model result
+Status: frozen before any full live prompted-model result; metadata-only amendment
+after an incomplete four-item smoke run
+
+## Amendment 1.0.1 (2026-08-19)
+
+The first OpenRouter smoke run of `google/gemini-3.1-pro-preview` retained two
+valid routes and two invalid outputs. Both invalid outputs ended with provider
+`finish_reason=length`: the provider reported that 242-246 of 252 completion
+tokens were reasoning tokens, leaving no complete JSON object. The smoke is
+retained as incomplete and receives no comparative metric row. It is not
+recovered, retried, or presented as a model result.
+
+This amendment repairs provenance metadata discovered during that smoke. The
+original manifest's prompt hash identified the exact prompt file bytes, while
+the evaluator hashed the stripped text actually transmitted to providers. The
+implementation and manifest now record both `file_sha256` and
+`effective_sha256`; `prompt_sha256` in run records continues to identify the
+effective transmitted text. The prompt text, schema, labels, systems, settings,
+trial policy, metrics, and analysis are unchanged. Because no full live result
+had been produced or inspected, this metadata-only repair does not select on a
+comparative result. Every subsequent full run must use protocol 1.0.1.
 
 ## Objective
 
@@ -141,6 +161,11 @@ claimed. Raw provider responses are private by default until provider terms and
 the anonymous-release boundary are reviewed. Normalized routes, hashes, and
 aggregate metrics may be released if permitted.
 
+After freeze, the author configured an OpenRouter credential. Its availability
+does not alter the historical credential-at-freeze record. The incomplete
+Gemini smoke described in Amendment 1.0.1 is the only live execution observed
+at the time of this amendment.
+
 ## Fallback ladder
 
 1. Three providers complete: report all three with trial stability.
@@ -149,4 +174,3 @@ aggregate metrics may be released if permitted.
 3. Only Gemini completes: report one prompted-router case study plus checksum.
 4. No live provider completes: retain the checksum and report the prompted-model
    protocol and implementation as prospective, with no model result.
-

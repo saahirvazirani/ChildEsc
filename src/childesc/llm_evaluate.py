@@ -12,6 +12,8 @@ from typing import Mapping
 
 from .llm import (
     PROMPT_VERSION,
+    PROMPT_EFFECTIVE_SHA256,
+    PROMPT_FILE_SHA256,
     ROUTE_SCHEMA,
     SYSTEM_PROMPT,
     CacheMissError,
@@ -198,7 +200,8 @@ def run(
         ),
         "requested_limit": limit,
         "prompt_version": PROMPT_VERSION,
-        "prompt_sha256": _sha256_text(SYSTEM_PROMPT),
+        "prompt_sha256": PROMPT_EFFECTIVE_SHA256,
+        "prompt_file_sha256": PROMPT_FILE_SHA256,
         "schema_sha256": _sha256_text(
             json.dumps(ROUTE_SCHEMA, separators=(",", ":"), sort_keys=True)
         ),
