@@ -165,7 +165,7 @@ def build() -> Path:
     title.paragraph_format.space_before = Pt(18)
     title.paragraph_format.space_after = Pt(18)
     title_run = title.add_run(
-        "ChildEsc: Auditing Child-Specific Escalation and Context-Safe Human Handoff"
+        "Who Is Safe to Involve? ChildEsc Audits Escalation and Handoff Routing in Child-Facing AI"
     )
     set_font(title_run, size=17, bold=True)
     p_pr = title._p.get_or_add_pPr()
@@ -193,18 +193,15 @@ def build() -> Path:
     abstract.paragraph_format.right_indent = Inches(0.5)
     set_paragraph_spacing(abstract, after=11)
     abstract_text = (
-        "Child-facing conversational AI must decide not only whether content is allowed, but whether to continue support, "
-        "set a boundary, or connect a young person to context-appropriate human help. Existing child-safety evaluations cover "
-        "refusal, developmental response quality, and crisis support, while recent medical-triage work evaluates ordered action "
-        "timing. Child handoff adds a distinct constraint: who is safe to involve? We introduce ChildEsc, a preliminary testbed "
-        "of 80 LLM-assisted synthetic conversations in 20 counterfactual families spanning eight vulnerability domains and four "
-        "severity levels. Each item specifies one of four routing actions plus permitted and forbidden handoff targets. We define "
-        "failure-oriented metrics and release a deterministic router as a diagnostic checksum. It under-escalates 32.8% of cases "
-        "requiring human help, achieves 55.2% strict target validity, and misses 24.3% of urgent cases. A frozen, source-informed "
-        "contract audit passes 36/39 atomic assertions across 7/9 families, exposing a negation-scope failure and an omitted "
-        "health-professional target. Because scenarios, labels, rules, and probes were developed in one policy-exposed workflow, "
-        "these are not generalization or safety estimates. ChildEsc contributes an auditable specification and validation pathway, "
-        "not a validated benchmark or deployment-ready safeguard."
+        "Child-facing AI must decide not only whether to escalate, but who is safe to involve. Action-only evaluation can reward "
+        "the right urgency while directing a child toward an inappropriate recipient. ChildEsc is a works-in-progress testbed of "
+        "80 LLM-assisted synthetic conversations in 20 counterfactual families. Each item specifies one of four actions plus "
+        "permitted and forbidden handoff targets. We define the action-route gap: exact action accuracy minus exact action-plus-target "
+        "routing. A policy-exposed checksum achieves 65.0% action accuracy but 53.8% exact routing, an 11.3% gap; 9/37 action-correct "
+        "handoffs violate target constraints. A frozen relational contract audit passes 36/39 assertions across 7/9 families. We "
+        "provide a provider-neutral, cache-replayable protocol but report no live-model comparison because frozen credentials were "
+        "unavailable. ChildEsc is not a validated benchmark: practitioner and youth validation have not occurred, and no result "
+        "supports deployment."
     )
     set_font(abstract.add_run(abstract_text))
 
@@ -217,25 +214,25 @@ def build() -> Path:
     add_body(doc, "ChildEsc applies to text-based consumer assistants, companions, tutors, and wellness or mental-health-adjacent systems used by or accessible to people under 18. It evaluates an application-layer router before or alongside response generation. It does not diagnose, recommend treatment, or automatically contact any person or service.", "Scope. ")
     add_body(doc, "Under a written specification, an LLM coding assistant drafted 20 scenario families across eight vulnerability domains. Each family contains a shared context and four severity cues, expanded deterministically into three-user-turn conversations. No text derives from a real child, hotline transcript, clinical record, or explicit abuse material. A dated register maps domain-level rationales to public sources, but this retrospective mapping is source-informed rather than item-level grounding. The same workflow drafted labels and rules, making all results policy-exposed and unsuitable for estimating generalization.", "Construction and provenance. ")
     add_body(doc, "The ordinal action space is continue_support (0), boundary_redirect (1), human_support (2), and urgent_handoff (3). Escalated items permit one or more target classes. Forbidden targets use the same vocabulary a router can emit; safe_adult is forbidden when the conversation implicates an adult, while safe_adult_not_implicated may be permitted.", "Actions and targets. ")
-    add_body(doc, "Under-escalation is conditioned on the 58 items requiring human or urgent support; severe under-escalation requires a gap of at least two action levels. Counterfactual sensitivity measures upward prediction changes when the reference action rises. Strict target validity requires a nonempty predicted set that is a subset of permitted targets and contains no forbidden target. Targetless actions must emit no target for exact routing. Reaction delay is omitted because v0.1 fixes the decisive cue turn.", "Failure-oriented metrics. ")
+    add_body(doc, "Under-escalation is conditioned on the 58 items requiring human or urgent support. Strict target validity requires a nonempty predicted set that is a subset of permitted targets and contains no forbidden target; targetless actions must emit none. Exact routing requires the exact action and a valid target decision. The action-route gap is action accuracy minus exact-route accuracy. Reaction delay is omitted because v0.1 fixes the decisive cue turn.", "Failure-oriented metrics. ")
 
     add_heading(doc, "3 Diagnostic implementation and audit")
-    add_body(doc, "Keyword reacts only to explicit self-harm terms. Agnostic routes detected distress to non-urgent human support and dependency, exploitation, or unsafe-request cues to a boundary. ChildEsc-Rules uses phrase evidence, guards, conversation accumulation, domain rules, and conversation-derived adult-implication cues. The evaluator passes only conversation text, never audit labels. The router returns structured actions, targets, evidence, and response requirements but no counseling text.", "Policies. ")
+    add_body(doc, "Keyword, Agnostic, and ChildEsc-Rules are policy-exposed checksum policies. A provider-neutral harness sends only conversation text and requests the same action-target schema from Gemini, OpenAI, Anthropic, or OpenRouter. It supports independent trial IDs, append-only logs, strict parsing, and cache-only replay; invalid outputs make a run incomplete. No live provider result is reported because credentials were unavailable at protocol freeze. Supportive-response quality is outside scope.", "Policies and evaluator. ")
 
     caption = doc.add_paragraph()
     set_paragraph_spacing(caption, before=5.5, after=5.5)
     set_font(caption.add_run("Table 1: Policy-exposed diagnostic results on 80 synthetic items."), bold=True)
-    headers = ["Policy", "F1", "Urgent", "Under", "Severe", "Sens.", "Valid", "Exact"]
+    headers = ["Policy", "Action", "Urgent", "Under", "Valid", "Gap", "Exact"]
     data = [
-        ["Keyword", ".145", ".189", ".879", ".879", ".132", ".121", ".225"],
-        ["Agnostic", ".248", ".000", ".862", ".466", ".368", ".345", ".238"],
-        ["ChildEsc-Rules", ".581", ".757", ".328", ".224", ".711", ".552", ".538"],
+        ["Keyword", ".225", ".189", ".879", ".121", ".000", ".225"],
+        ["Agnostic", ".250", ".000", ".862", ".345", ".013", ".238"],
+        ["ChildEsc-Rules", ".650", ".757", ".328", ".552", ".113", ".538"],
     ]
     table = doc.add_table(rows=1, cols=len(headers))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = False
     mark_table_header(table.rows[0])
-    widths = [Inches(1.22)] + [Inches(0.61)] * 7
+    widths = [Inches(1.22)] + [Inches(0.71)] * 6
     for index, header in enumerate(headers):
         cell = table.rows[0].cells[index]
         cell.width = widths[index]
@@ -255,10 +252,10 @@ def build() -> Path:
     set_table_borders(table)
     note = doc.add_paragraph()
     set_paragraph_spacing(note, after=5.5, line=9)
-    set_font(note.add_run("Under and Severe are conditioned on escalation-required items; Sens. is upward counterfactual sensitivity; Valid requires every target to be permitted."), size=8, italic=True)
+    set_font(note.add_run("Action and Exact use all 80 items; Under and Valid use 58 escalation-required items; Gap is Action minus Exact."), size=8, italic=True)
 
-    add_body(doc, "These values verify that generation, routing, constraints, and metrics execute end to end; they do not establish that one policy is better. ChildEsc-Rules was exposed to the scenario vocabulary and still under-escalates 19/58 escalation-required items, including 9/37 urgent items. Only 32/58 escalated items have a strictly valid target set, and exact routing succeeds on 43/80. It has 27/38 upward-sensitive transitions and 7/60 monotonicity violations. Family-bootstrap intervals remain wide: [.207, .441] for under-escalation, [.455, .645] for valid-target rate, and [.438, .638] for exact routing.", "Diagnostic checksum. ")
-    add_body(doc, "ChildEsc-Rules produces 52 exact actions, 11 one-level under-escalations, 13 severe under-escalations, and four over-escalations. Among the 58 escalation-required items, target sets are strictly valid for 32, missing for 17, and contain extra unpermitted targets for nine; two targetless items receive spurious targets.", "Failure decomposition. ")
+    add_body(doc, "ChildEsc-Rules produces the exact action on 52/80 items but the exact action-plus-target route on only 43/80. Action-only scoring therefore hides nine failures, an 11.3-point action-route gap. Conditioned on 37 action-correct handoffs, 9/37 (24.3%) violate target constraints. Family-bootstrap intervals are [.537, .762] for action accuracy, [.062, .163] for the gap, and [.438, .638] for exact routing.", "Action-route gap. ")
+    add_body(doc, "In an abuse/coercion family, a generic safe-adult target can match human_support yet violate a constraint requiring a non-implicated adult. Across escalation-required items, target sets are valid for 32, missing for 17, and contain extra unpermitted targets for nine; two targetless items receive spurious targets.", "Concrete failure. ")
     add_body(doc, "These tests probe the frozen checksum without retuning it and are not held-out evidence. Latest-turn-only input under-escalates all 58 escalation-required items. Disabling only adult-implication inference leaves actions unchanged but produces a forbidden safe-adult target in 7/12 implicated-adult cases. Uppercasing preserves every route; doubling spaces reduces action agreement to 45.0% and urgent recall from 75.7% to 10.8%.", "Diagnostic stress tests. ")
 
     add_heading(doc, "4 Source-informed relational contract audit")
@@ -298,12 +295,15 @@ def build() -> Path:
             set_font(cell.paragraphs[0].add_run(value), size=7.5)
     set_table_borders(contract_table)
     add_body(doc, "Overall, 36/39 assertions and 7/9 families pass. The phrase 'safe right now' triggers urgency despite explicit negation because 'right now' is matched globally; physical deterioration triggers urgency but omits health_professional. Both failures are retained and the checksum is not modified. The supported use is auditing implementation conformance to an inspectable routing contract, not ranking models or certifying safety.")
+    add_body(doc, "Before inspecting provider output, we froze exact candidate model IDs, prompt and schema hashes, three independent trials per model, a 256-token output cap, and omission of temperature. Each item is one API attempt: hidden retries and repair are disallowed, and any provider error, refusal, or invalid schema makes a trial incomplete. Complete trials use trial means and ranges, item-level instability, and family-paired bootstrap differences. Content-addressed caches exclude credentials and must replay every item. Because credentials were unavailable at freeze, no prompted-model performance claim is made.", "Pre-registered prompted-router audit. ")
 
     add_heading(doc, "5 Validity, impact, and next evaluation")
     add_body(doc, "The central validity threat is circularity: scenarios, labels, lexical rules, probes, and prose were drafted in one LLM-assisted workflow. Source traceability improves auditability, not validity. The English convenience set omits dialect, code-switching, disability, culture, long relationships, and adversarial obfuscation. Severity is operational rather than clinical; v0.1 also does not isolate information-seeking as an action. Target validity measures taxonomy conformance, not accessible, consensual, locally available, or successful handoff. No practitioner or youth validation has occurred. Child-centered is a design objective, not a measured property.")
-    add_body(doc, "Before model comparison, qualified practitioners must independently review the construct, action thresholds, target constraints, missing context, and jurisdictional feasibility. Youth advisors must separately review plausibility, agency, and accessibility without personal disclosure. Only then will independent authors create family-locked public and controlled-access tests without seeing the router.")
+    add_body(doc, "Before comparative or generalization claims, qualified practitioners must independently review the construct, action thresholds, target constraints, missing context, and jurisdictional feasibility. Youth advisors must separately review plausibility, agency, and accessibility without personal disclosure. Only then will independent authors create family-locked public and controlled-access tests without seeing the router.")
     add_body(doc, "Evidence gates version practitioner revisions and retain disagreement; keep youth and professional judgments separate; reserve a controlled-access family-locked test; and audit any response mapper against independent human coding. Failure at any gate blocks claims that depend on the next one, and no gate alone certifies deployment safety.", "Evidence gates. ")
-    add_body(doc, "ChildEsc's impact path is deliberately narrow: give developers, hotlines, and child-safety reviewers a shared object for debating escalation and unsafe-default handoff. One prospective extension would study opt-in, human-approved crisis-service follow-up within a candidate 1-24 hour window that shortens monotonically with independently validated concern. This is not an established 988 policy, and no cutoff is validated. Any pilot requires a formal service partnership, separate affirmative and age-appropriate consent rather than a bundled term, minimum-necessary disclosure, legal/privacy review, and evidence that it does not chill help-seeking. Imminent danger is excluded from a delayed queue. Until those gates pass, ChildEsc may only recommend or offer 988; it must not collect PII, schedule follow-up, transmit data, or initiate contact.")
+    add_body(doc, "Practitioner review would produce independent action and permitted/forbidden-target labels, missing-context flags, and jurisdictional-feasibility notes. Youth review would separately produce plausibility, agency, accessibility, and handoff-acceptability judgments without personal disclosure. ChildEsc would retain pre-review labels, revisions, uncertainty, and disagreement rather than collapsing perspectives into one consensus gold label. This is a protocol, not completed validation.", "Prospective validation outputs. ")
+    add_body(doc, "ChildEsc's practical use is narrow: give developers and child-safety reviewers an executable object for debating escalation thresholds, unsafe-default recipients, and evidence missing before a handoff. It cannot determine clinical risk, select a real person, assess response quality, or authorize disclosure.")
+    add_body(doc, "(1) When context is insufficient, should a router clarify, abstain, or emit multiple consent-preserving routes? (2) Which judgments belong separately to practitioners and youth advisors, and how should disagreement appear in scoring? (3) What evidence and governance must precede any operational handoff when a nominally trusted adult may be implicated?", "Questions for the workshop. ")
 
     add_heading(doc, "References")
     references = [
@@ -329,10 +329,10 @@ def build() -> Path:
         add_reference(doc, reference)
 
     add_heading(doc, "Appendix A. Artifact and schema")
-    add_body(doc, "The research package contains standard-library Python source, 46 tests, 20 source families, a source register, family rationale map, controlled authoring protocol, frozen contract probes, deterministic generation, item-level predictions and assertions, aggregate metrics, error analysis, ablations, a gated follow-up specification, and orthographic checks. Running make reproduce regenerates all 80 items and every reported value.", size=9.5, after=4, line=10)
+    add_body(doc, "The research package contains standard-library Python source, 48 tests for the frozen scientific and manuscript path, 22 provider-path tests, 20 source families, a source register, family rationale map, controlled authoring protocol, frozen contract probes, deterministic generation, item-level predictions and assertions, aggregate metrics, error analysis, ablations, a gated follow-up specification, and orthographic checks. Running make reproduce regenerates all 80 items and every reported value.", size=9.5, after=4, line=10)
 
     add_heading(doc, "Appendix B. Metric details")
-    add_body(doc, "Under-escalation and severe under-escalation are conditioned on items requiring human or urgent support. Counterfactual sensitivity is conditioned on adjacent transitions where the reference action increases. Strict valid-target rate requires a nonempty predicted set that is a subset of permitted targets and disjoint from forbidden targets. Exact route additionally requires the exact action and requires no emitted target for targetless actions.", size=9.5, after=4, line=10)
+    add_body(doc, "Under-escalation is conditioned on items requiring human or urgent support. Strict valid-target rate requires a nonempty predicted set that is a subset of permitted targets and disjoint from forbidden targets. Exact route additionally requires the exact action and requires no emitted target for targetless actions. The action-route gap equals exact action accuracy minus exact-route accuracy.", size=9.5, after=4, line=10)
 
     doc.add_page_break()
     add_heading(doc, "Appendix C. Diagnostic failure analysis")
@@ -373,13 +373,13 @@ def build() -> Path:
     add_body(doc, "No recruitment or data collection is authorized in this workspace. Subject to an appropriate external determination, practitioners would independently label action, permitted and forbidden targets, missing context, and coercion risk. Youth advisors would review plausibility, agency, accessibility, and handoff framing without being asked to disclose personal experiences. Disagreement and pre-review labels would be retained. Protocol preparation is not validation.", size=9.5, after=4, line=10)
 
     add_heading(doc, "Appendix E. Prospective delegated follow-up extension")
-    add_body(doc, "The proposed 1-24 hour crisis-service follow-up is a non-operational governance specification. It requires a written 988/center partnership, independent safeguarding and legal review, separate revocable consent that does not condition account access, human crisis-professional approval, minimum-necessary transfer, receiving-service capacity guarantees, and prospective measurement of false alerts, missed urgency, chilling effects, coercion, and disparities. A multidisciplinary committee including 988 operations, child-safety, clinical, privacy, disability, cultural, and youth representatives must pre-register and validate any deadline function. Imminent danger bypasses the delayed queue. No current component collects PII, transfers data, or initiates outreach.", size=9.5, after=4, line=10)
+    add_body(doc, "The proposed 1-24 hour crisis-service follow-up is a non-operational governance specification, not an established 988 policy; no cutoff is validated. It requires a written 988/center partnership, independent safeguarding and legal review, separate revocable consent, human crisis-professional approval, minimum-necessary transfer, receiving-service capacity guarantees, and prospective measurement of false alerts, missed urgency, chilling effects, coercion, and disparities. Imminent danger is excluded from a delayed queue. Until these gates pass, ChildEsc must not collect PII, schedule follow-up, transmit data, or initiate contact.", size=9.5, after=4, line=10)
 
     add_heading(doc, "Appendix F. Independent holdout status")
     add_body(doc, "No independently authored holdout is reported. The prospective procedure requires an author who has not inspected router rules, existing scenario text, or item-level failures. Current authors and coding agents are ineligible. A future holdout must be evaluated once without router tuning and reported separately from v0.1.", size=9.5, after=4, line=10)
 
     add_heading(doc, "Appendix G. Compute, ethics, and LLM usage")
-    add_body(doc, "Experiments use no GPU, model API, training, or external service and complete in under one second on a laptop-class CPU. The seeded family bootstrap uses seed 20260829 and 1,000 repetitions. A general-purpose LLM coding assistant drafted candidate scenarios and labels, implementation, literature notes, and manuscript text. No LLM judged outputs or generated reported measurements. The artifact is a draft pending author and independent stakeholder review. Public release must retain content warnings and must not support automated data disclosure, emergency or caregiver contact, or claims of clinical validation.", size=9.5, after=4, line=10)
+    add_body(doc, "Reported experiments use no GPU, model API, training, or external service and complete in under one second on a laptop-class CPU. The prompted-router harness was tested with mock transports; no live provider result is reported. A general-purpose LLM coding assistant drafted candidate scenarios and labels, implementation, literature notes, and manuscript text. No LLM judged outputs or generated reported measurements. Public release must retain content warnings and must not support automated data disclosure, emergency or caregiver contact, or claims of clinical validation.", size=9.5, after=4, line=10)
 
     add_heading(doc, "Appendix H. Source traceability and future authoring")
     add_body(doc, "The source register records what each source supports and does not support. The v0.1 family map is retrospective and domain-level; it does not make individual cases source-grounded. The prospective protocol requires one-factor isolation, information-state timing, age and locale metadata, source-to-case rationale, non-procedural content, independent first-pass labels without router output, retained disagreement, and family-locked development, validation, public-test, and controlled-access splits.", size=9.5, after=4, line=10)

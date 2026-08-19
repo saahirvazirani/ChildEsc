@@ -512,13 +512,17 @@ auditable provider attempts rather than one cache entry reused three times.
 
 ## Task 34: Execute complete prompted-router audits
 
+**Status:** Pre-registered fallback used. No provider credential was available,
+so no live smoke or full run was attempted and no prompted-model result is
+reported.
+
 **Description:** Run a four-item smoke test for each available direct provider,
 inspect payload isolation and structured outputs, then execute three complete
 80-item trials per frozen primary model. OpenRouter remains a portability smoke
 test unless upstream provenance is pinned.
 
 **Acceptance criteria:**
-- [ ] Every reported model has the protocol-required number of complete trials,
+- [x] Every reported model has the protocol-required number of complete trials,
   or the manuscript uses the pre-registered fallback and discloses the reason.
 - [ ] Raw attempts and normalized predictions account for every item without
   selective exclusion or silent response repair.
@@ -578,7 +582,7 @@ errors, three-trial instability, and paired family-bootstrap differences.
 - [ ] All proposed paper values replay from cache without credentials.
 - [ ] No prompt, label, model setting, or primary metric changed after result
   inspection.
-- [ ] Any deviation from the frozen protocol is logged and kept out of primary
+- [x] Any deviation from the frozen protocol is logged and kept out of primary
   claims unless the entire affected analysis is rerun under a new version.
 
 ## Task 36: Rewrite the title and abstract around one finding
@@ -589,14 +593,14 @@ model-audit setup, one concrete action-route-gap finding, and the validation
 boundary.
 
 **Acceptance criteria:**
-- [ ] The title distinguishes ChildEsc from refusal and action-only benchmarks.
-- [ ] The abstract reports only results regenerated from frozen artifacts.
-- [ ] The final sentence states that practitioner and youth validation have not
+- [x] The title distinguishes ChildEsc from refusal and action-only benchmarks.
+- [x] The abstract reports only results regenerated from frozen artifacts.
+- [x] The final sentence states that practitioner and youth validation have not
   occurred and blocks deployment interpretation.
 
 **Verification:**
-- [ ] Manuscript synchronization tests cover every abstract number.
-- [ ] Manual check: the abstract contains problem, gap, method, result,
+- [x] Manuscript synchronization tests cover every abstract number.
+- [x] Manual check: the abstract contains problem, gap, method, result,
   contribution, and limitation without a model-ranking claim.
 
 **Dependencies:** Task 35
@@ -618,17 +622,17 @@ targets, and exact routing; move diagnostic baselines and full intervals to the
 appendix.
 
 **Acceptance criteria:**
-- [ ] The main table has no more than the columns needed to support the central
+- [x] The main table has no more than the columns needed to support the central
   claim and remains legible at the official template size.
-- [ ] One concise example shows how an action-correct route can still select an
+- [x] One concise example shows how an action-correct route can still select an
   inappropriate recipient.
-- [ ] Keyword, severity-agnostic, stress-test, and full contract details remain
+- [x] Keyword, severity-agnostic, stress-test, and full contract details remain
   reproducible in the appendix rather than being deleted.
 
 **Verification:**
-- [ ] Build succeeds with the NeurIPS 2026 `dblblindworkshop` option.
-- [ ] Visual check: table text and the failure example are readable at 100%.
-- [ ] Data check: every table cell is derived from the frozen result files.
+- [x] Build succeeds with the NeurIPS 2026 `dblblindworkshop` option.
+- [x] Visual check: table text and the failure example are readable at 100%.
+- [x] Data check: every table cell is derived from the frozen result files.
 
 **Dependencies:** Tasks 35-36
 
@@ -648,18 +652,18 @@ actionable impact, and three precise workshop questions. Move the prospective
 they do not dilute or destabilize the core paper.
 
 **Acceptance criteria:**
-- [ ] The main text names practitioner and youth validation as incomplete and
+- [x] The main text names practitioner and youth validation as incomplete and
   does not imply a hotline partnership or operational referral pathway.
-- [ ] Three discussion questions address abstention or clarification, separate
+- [x] Three discussion questions address abstention or clarification, separate
   practitioner and youth judgments, and governance before operational handoff.
-- [ ] References begin on page five without changing template margins, font
+- [x] References begin on page five without changing template margins, font
   sizes, or spacing.
 
 **Verification:**
-- [ ] Compile and inspect all four content pages and the first reference page.
-- [ ] Phrase scan finds no unsupported 988 policy, validated cutoff, automated
+- [x] Compile and inspect all four content pages and the first reference page.
+- [x] Phrase scan finds no unsupported 988 policy, validated cutoff, automated
   outreach, or deployment-readiness statement in the main paper.
-- [ ] Appendix cross-references remain correct.
+- [x] Appendix cross-references remain correct.
 
 **Dependencies:** Task 37
 
@@ -673,12 +677,12 @@ they do not dilute or destabilize the core paper.
 
 ## Checkpoint: Reviewer Read
 
-- [ ] Tasks 36-38 produce a self-contained four-page paper.
-- [ ] A fresh reader identifies the construct, model evidence, strongest
+- [x] Tasks 36-38 produce a self-contained four-page paper.
+- [x] A fresh reader identifies the construct, available diagnostic evidence, strongest
   failure, and evidence boundary from the title, abstract, and main table.
-- [ ] Closest-work text distinguishes ChildEsc from CAREBench, KIDBench,
+- [x] Closest-work text distinguishes ChildEsc from CAREBench, KIDBench,
   MinorBench, MindEval, and CARE-Bench without novelty overreach.
-- [ ] The appendix adds reproducibility depth but is not needed to discover the
+- [x] The appendix adds reproducibility depth but is not needed to discover the
   central contribution.
 
 ## Task 39: Obtain independent editorial reviews

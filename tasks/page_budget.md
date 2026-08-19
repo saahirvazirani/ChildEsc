@@ -11,7 +11,7 @@ Verified on 2026-08-17 from the NeurIPS 2026 Child Safety in AI workshop call:
 
 Source: https://childsafety-ai.github.io/
 
-## Final compiled boundary (2026-08-18)
+## Final acceptance build boundary (2026-08-19)
 
 - Content pages: 1-4.
 - References begin: page 5.
@@ -19,7 +19,10 @@ Source: https://childsafety-ai.github.io/
 - Checklist begins: page 8.
 - Total compiled pages: 14.
 
-The current paper is compliant and uses the full four-page content allowance without changing the official template.
+The acceptance-focused paper is compliant and uses the full four-page content
+allowance without changing the official template. The prompted-router protocol,
+no-credentials fallback, and prospective validation outputs occupy the fourth
+page; the 988 follow-up proposal appears only in the appendix.
 
 ## Revision allocation
 

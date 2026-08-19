@@ -94,3 +94,33 @@ per item per trial, no hidden retries, complete-run gating, family-level
 resampling, deterministic route scoring, and the action-route gap as the central
 target analysis. No prompted-model score may be added to the paper until its
 full run replays from verified cache entries.
+
+## Acceptance-focused execution, 2026-08-19
+
+No provider credential became available after the protocol freeze. The
+pre-registered checksum fallback was therefore used without a smoke request,
+partial model run, model substitution, or prompted-model score. The final
+artifact reports this limitation in the abstract, technical protocol, appendix,
+and experiment manifest.
+
+`make reproduce` passed 48 frozen scientific/manuscript tests and 5 release
+tests; `make llm-test` passed 22 provider-path tests. Tectonic compiled the
+official `dblblindworkshop` source to 14 pages: content pages 1--4, references
+beginning on page 5, followed by the optional appendix and checklist. All four
+content pages and the first reference page were rendered and visually inspected.
+The collaboration DOCX was independently rendered to five pages and inspected.
+
+```text
+2a758ea9a0e9449c57e187d9902b01ee007a42b57175432e002db6cb2c06cdab  src/childesc/metrics.py
+912f6c4edaf89563df7096aa8245af24489f7af4cc1343d6b849915686ccf16c  src/childesc/llm.py
+22eace55c259d91187bf026d46b0a286421e66737c8d51e8513f955c7ff44817  src/childesc/llm_evaluate.py
+70c47506e9db8b98e13bfa7b294d39bec0de2136719a574b6de368216a6d704b  src/childesc/llm_analysis.py
+8a3b44e01e28400155eeb0d5461a5f460d0978f06c89c4f33f08ab0eaf923539  results/metrics.json
+5558834e02206e86c04d97bd81ce137a5903dddeb964abda7f8ab7a88a4b3974  results/paper_table.csv
+aa1efdb76142ed7c6bbccbf72ee128d37502e4b4b49b356f7c0219ebe339c99c  paper/main.tex
+98f63314d09c54ed33f7715247a219b6949f21b0563f8ef13d856f2a78ab33b0  paper/manuscript.md
+430df645fd7b8ff88bd330837c239017b4b9e10f84c8c4b0650cd286a04ead13  scripts/build_paper_docx.py
+2087d5ec6b9cc3fb7005580c61ba2ddcefd3a1593deff3d71d1eec41bd037028  tests/test_artifacts.py
+bae59495ad1d8d9cea21a4e1ff4df704015d87395907b3e971d03fd65c362ee1  llm_tests/test_llm_analysis.py
+5148fb94c432b82ec75d2fe61102d2989e10910e25d3f1e7802df5ae3db41d05  experiments/llm_manifest.json
+```

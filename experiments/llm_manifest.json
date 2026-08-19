@@ -67,5 +67,5 @@
     "timeout_seconds": 60,
     "trials_per_model": 3
   },
-  "status": "frozen_no_live_results"
+  "status": "fallback_checksum_no_credentials_no_live_results"
 }

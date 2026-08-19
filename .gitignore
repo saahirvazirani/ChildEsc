@@ -53,6 +53,7 @@ venv/
 /validation/consent/
 
 # Temporary files
+/tmp/
 *.tmp
 *.temp
 *.bak

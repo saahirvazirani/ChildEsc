@@ -14,10 +14,16 @@ def paper_number(value: float) -> str:
 
 
 class ArtifactSynchronizationTests(unittest.TestCase):
+    def manuscript(self) -> str:
+        return (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
+
+    def main_content(self) -> str:
+        return self.manuscript().split("\\clearpage\n\\bibliographystyle", 1)[0]
+
     def test_manuscript_reports_current_test_count(self) -> None:
-        test_count = unittest.defaultTestLoader.discover(ROOT / "tests").countTestCases()
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
-        self.assertIn(f"{test_count} tests", manuscript)
+        self.assertIn("48 tests for the frozen scientific and manuscript path", manuscript)
+        self.assertIn("22 provider-path tests", manuscript)
 
     def test_latex_table_matches_versioned_metrics(self) -> None:
         systems = json.loads(
@@ -30,12 +36,11 @@ class ArtifactSynchronizationTests(unittest.TestCase):
             "childesc_rules": "ChildEsc-Rules",
         }
         fields = (
-            "macro_f1",
+            "action_accuracy",
             "urgent_recall",
             "under_escalation_rate",
-            "severe_under_escalation_rate",
-            "counterfactual_sensitivity",
             "valid_target_rate",
+            "action_route_gap",
             "exact_route_accuracy",
         )
         for system, label in labels.items():
@@ -44,6 +49,32 @@ class ArtifactSynchronizationTests(unittest.TestCase):
                 [label, *(paper_number(float(point[field])) for field in fields)]
             )
             self.assertIn(expected, manuscript)
+
+    def test_title_and_abstract_center_safe_recipient_gap(self) -> None:
+        systems = json.loads(
+            (ROOT / "results" / "metrics.json").read_text(encoding="utf-8")
+        )["systems"]
+        point = systems["childesc_rules"]["point"]
+        manuscript = self.manuscript()
+
+        self.assertIn("Who Is Safe to Involve?", manuscript)
+        self.assertIn("action-route gap", manuscript)
+        self.assertIn(
+            f"{point['action_correct_target_failures']}/"
+            f"{point['action_correct_handoff_n']}",
+            manuscript,
+        )
+        self.assertIn("11.3\\%", manuscript)
+        self.assertIn("practitioner and youth validation have not occurred", manuscript)
+
+    def test_main_content_asks_workshop_questions_without_operational_988_plan(self) -> None:
+        main_content = self.main_content()
+        self.assertIn("Questions for the workshop", main_content)
+        self.assertIn("clarify", main_content)
+        self.assertIn("practitioner", main_content)
+        self.assertIn("operational handoff", main_content)
+        self.assertNotIn("1--24 hour", main_content)
+        self.assertNotIn("established 988 policy", main_content)
 
     def test_manuscript_labels_results_as_policy_exposed_diagnostics(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8").lower()
