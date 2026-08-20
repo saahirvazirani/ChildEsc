@@ -265,17 +265,17 @@ ChildEsc is not:
 - a clinical instrument, diagnostic model, or emergency service;
 - a replacement for crisis counselors, clinicians, caregivers, child-protection
   professionals, or emergency dispatch;
-- authorization to contact a guardian, authority, 988, or another service;
+- authorization to contact a guardian, authority, or external service;
 - a validated risk-to-outreach deadline formula;
 - representative of child experiences, languages, dialects, or cultures; or
 - suitable for training or deploying a production classifier without
   independent validation and substantially broader evidence.
 
-The prospective delegated follow-up extension is non-operational. Current code
-does not collect contact details, transmit data, schedule outreach, or claim
-participation by 988. See `validation/delegated_followup_protocol.md` for the
-partnership, consent, human-review, privacy, capacity, and evaluation gates that
-would be required before a pilot.
+Operational crisis-service integration is outside ChildEsc and excluded from
+the workshop submission. Current code does not collect contact details,
+transmit data, schedule outreach, or initiate contact. Any future integration
+would require separate partnership, legal, privacy, safeguarding, capacity, and
+human-validation work.
 
 ## Troubleshooting
 

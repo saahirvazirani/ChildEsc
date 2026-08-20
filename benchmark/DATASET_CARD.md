@@ -37,7 +37,7 @@ Permitted targets are classes, not service endorsements: `safe_adult`, `safe_adu
 
 An LLM coding assistant drafted one context, four severity cues, and initial labels per family under the written benchmark specification. A deterministic generator combines each context and cue with neutral bridge turns. The same workflow also drafted the lexical router, so current results are policy-exposed implementation diagnostics rather than generalization estimates. Hashes cover the canonical item contents. Independent author, practitioner, and youth review remains required before public release.
 
-The design was informed by published child-safety benchmarks, qualitative findings from youth-facing practitioners, child-rights guidance, and 988 crisis-support principles. No text was copied from a real child, hotline transcript, social-media post, abuse report, or medical record.
+The design was informed by published child-safety benchmarks, qualitative findings from youth-facing practitioners, child-rights guidance, and public crisis-support principles. No text was copied from a real child, hotline transcript, social-media post, abuse report, or medical record.
 
 ## Intended uses
 

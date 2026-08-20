@@ -77,18 +77,6 @@
       "does_not_support": "Automated crisis classification, emergency contact, or child-specific clinical labels."
     },
     {
-      "id": "samhsa_988_quality_2024",
-      "title": "Saving Lives in America: 988 Quality and Services Plan",
-      "url": "https://www.samhsa.gov/sites/default/files/saving-lives-american-988-quality-service-plan.pdf",
-      "source_type": "federal_crisis_service_plan",
-      "supports": [
-        "confidential handling of 988 contact information",
-        "documented informed consent before sharing contact PII for referral or case management",
-        "follow-up as a governed crisis-center service"
-      ],
-      "does_not_support": "Unsolicited chatbot-to-988 data transfer, a 1-24 hour response formula, or a claim that 988 has agreed to contact chatbot users."
-    },
-    {
       "id": "hhs_consumer_health_data_2023",
       "title": "Collecting, Using, or Sharing Consumer Health Information?",
       "url": "https://www.hhs.gov/hipaa/for-professionals/special-topics/hipaa-ftc-act/index.html",

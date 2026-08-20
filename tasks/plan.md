@@ -766,9 +766,9 @@ to debate.
 - Keep the current checksum as an auditable reference implementation. Move the
   Keyword and Agnostic rows, stress tests, full contract table, and secondary
   metrics to the appendix if space is needed.
-- Remove the prospective 1--24 hour 988 mechanism from the four-page main text.
-  The appendix may retain it as explicitly non-operational governance work, but
-  it is not evidence for ChildEsc and should not compete with the central claim.
+- Remove the prospective timed-outreach mechanism from the complete submission
+  package. It is not evidence for ChildEsc and should not compete with the
+  central claim.
 
 ## Pre-Registered Evaluation Contract
 
@@ -898,9 +898,9 @@ Model evidence + four-page rewrite
 - [ ] Task 37: Replace the current three-rule table with one compact model-plus-
   checksum table and a paired action-versus-route failure visualization or
   concise error table.
-- [ ] Task 38: Rebalance page four around limitations, actionable impact, and
-  three workshop questions; move the delegated 988 mechanism and procedural
-  validation detail to the appendix.
+- [x] Task 38: Rebalance page four around limitations, actionable impact, and
+  four workshop questions; keep procedural validation detail prospective and
+  remove the delegated-outreach mechanism from the submission package.
 
 ### Checkpoint: Reviewer Read
 
@@ -1010,7 +1010,7 @@ concrete rather than generic future work:
 | Target scoring appears arbitrary | High | Show the phenomenon-to-claim chain and one implicated-adult counterexample |
 | A rushed holdout repeats circular authoring | High | Require an unexposed independent author or report no holdout |
 | Validation language outruns completed evidence | Critical | Preserve protocol-only wording and run a phrase-level claim audit |
-| The 988 extension dominates reviewer attention | High | Remove it from main-text contributions and keep it non-operational in the appendix |
+| The outreach extension dominates reviewer attention | High | Exclude it from the complete submission package |
 | Provider terms prohibit releasing raw responses | Medium | Review terms before the run and release normalized outputs plus hashes if raw cache release is not permitted |
 
 ## Definition of Done
@@ -1025,3 +1025,48 @@ concrete rather than generic future work:
   operational policy proposal.
 - The submission remains at most four content pages, anonymous, reproducible,
   and free of unsupported practitioner, youth, clinical, or service claims.
+
+## Acceptance-Focused Submission Revision, 2026-08-19
+
+### Objective
+
+Submit ChildEsc as a works-in-progress technical measurement paper whose single
+claim is that action-only evaluation can conceal recipient-selection failures.
+The prompted-router evidence remains a one-system specification-conformance
+case study. This revision does not change the benchmark, prompt, model outputs,
+or metrics.
+
+### Ordered Tasks
+
+1. Freeze a claim-evidence matrix tying the abstract, result, and conclusion to
+   current artifacts and prohibiting prevalence, clinical-validity, model-safety,
+   supportive-response, and deployment claims.
+2. Remove the prospective delegated-follow-up/988 proposal from the paper,
+   collaboration DOCX, and anonymous supplement. Retain `crisis_service` only as
+   a generic target class.
+3. Make the two-layer architecture explicit: ChildEsc evaluates action and
+   recipient routing, while supportive-language generation requires a separate
+   rubric and governed human study.
+4. End the paper with four actionable questions covering abstention,
+   practitioner/youth disagreement, universal versus jurisdiction-specific
+   target constraints, and operational-evidence gates.
+5. Rebuild and visually inspect the four-page PDF and DOCX, reproduce the
+   anonymous supplement in a clean directory, and scan for identity, secrets,
+   988, timed outreach, and unsupported claims.
+
+### External Gates
+
+- Obtain a written institutional determination before practitioner recruitment.
+- If authorized, conduct a blinded 3--5-practitioner audit on a stratified
+  24--32-item subset and retain disagreement rather than manufacturing a gold
+  consensus.
+- Do not conduct youth participation without separate minors-specific ethics,
+  safeguarding, consent, and facilitation approval.
+
+### Checkpoint
+
+- The paper and submission package contain no operational crisis-service
+  integration proposal.
+- The central 29.2-point action-route gap remains the primary empirical result.
+- Practitioner and youth validation remain unmistakably incomplete.
+- References begin on page five and all technical values remain synchronized.

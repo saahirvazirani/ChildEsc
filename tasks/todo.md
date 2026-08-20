@@ -646,15 +646,16 @@ appendix.
 ## Task 38: Rebalance page four for workshop discussion
 
 **Description:** Use the final content page for construct limitations,
-actionable impact, and three precise workshop questions. Move the prospective
-1--24 hour 988 mechanism and detailed validation protocol to the appendix so
-they do not dilute or destabilize the core paper.
+actionable impact, and four precise workshop questions. Keep the detailed
+validation protocol prospective and remove the delegated-outreach mechanism
+from the complete submission package.
 
 **Acceptance criteria:**
 - [x] The main text names practitioner and youth validation as incomplete and
   does not imply a hotline partnership or operational referral pathway.
-- [x] Three discussion questions address abstention or clarification, separate
-  practitioner and youth judgments, and governance before operational handoff.
+- [x] Four discussion questions address clarification or abstention, separate
+  practitioner and youth judgments, jurisdictional constraints, and evidence
+  before operational handoff.
 - [x] References begin on page five without changing template margins, font
   sizes, or spacing.
 
@@ -786,3 +787,42 @@ provider terms, local paths, stale outputs, and unsupported claims.
 - [x] Practitioner and youth validation remain prospective and are correctly
   disclosed as incomplete.
 - [x] The final package is anonymous, four-page compliant, and reproducible.
+
+## Acceptance-Focused Revision Tasks, 2026-08-19
+
+### Task 42: Freeze the claim-evidence matrix
+
+- [x] Map each headline claim to a current versioned result or explicit scope
+  boundary.
+- [x] Prohibit prevalence, clinical-validity, broad model-safety,
+  supportive-response, and deployment interpretations.
+
+### Task 43: Remove delegated follow-up from the submission
+
+- [x] Remove the 988/timed-outreach extension from LaTeX, DOCX, and the
+  anonymous supplement.
+- [x] Retain `crisis_service` only as a generic target category.
+- [x] Keep internal governance notes out of submission packaging rather than
+  representing them as paper evidence.
+
+### Task 44: Clarify the safeguard architecture
+
+- [x] Define routing as action-plus-recipient selection.
+- [x] Define supportive response generation as a separate, unevaluated layer.
+- [x] End with four workshop questions that can guide v0.2 validation.
+
+### Task 45: Preserve human-validation gates
+
+- [x] Record that an institutional determination is required before any
+  practitioner recruitment or response collection.
+- [x] Keep the proposed 3--5-practitioner, 24--32-item blinded audit prospective.
+- [x] Keep youth participation prospective pending separate approval.
+
+### Task 46: Rebuild and audit the submission
+
+- [x] All 49 manuscript/scientific, 25 provider-path, and 5 release tests pass.
+- [x] PDF has four content pages and references begin on page five.
+- [x] PDF and DOCX render cleanly; anonymous supplement reproduces in a clean
+  directory and contains no identity, secret, raw response, operational service
+  proposal, or timed-contact material. Public crisis-practice sources may remain
+  as bounded design provenance.

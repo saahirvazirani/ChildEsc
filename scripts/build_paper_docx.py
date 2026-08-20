@@ -216,7 +216,7 @@ def build() -> Path:
     add_body(doc, "Under-escalation is conditioned on the 58 items requiring human or urgent support. Strict target validity requires a nonempty predicted set that is a subset of permitted targets and contains no forbidden target; targetless actions must emit none. Exact routing requires the exact action and a valid target decision. The action-route gap is action accuracy minus exact-route accuracy. Reaction delay is omitted because v0.1 fixes the decisive cue turn.", "Failure-oriented metrics. ")
 
     add_heading(doc, "3 Diagnostic implementation and audit")
-    add_body(doc, "Keyword, Agnostic, and ChildEsc-Rules are policy-exposed checksum policies. A provider-neutral harness sends only conversation text and requests the same action-target schema from Gemini, OpenAI, Anthropic, or OpenRouter. The reported prompted system uses a dated Claude Sonnet 5 slug through OpenRouter, pinned to Anthropic with fallbacks disabled. It supports independent trial IDs, append-only logs, strict parsing, and cache-only replay; invalid outputs make a run incomplete. Supportive-response quality is outside scope.", "Policies and evaluator. ")
+    add_body(doc, "Keyword, Agnostic, and ChildEsc-Rules are policy-exposed checksum policies. A provider-neutral harness sends only conversation text and requests the same action-target schema from Gemini, OpenAI, Anthropic, or OpenRouter. The reported prompted system uses a dated Claude Sonnet 5 slug through OpenRouter, pinned to Anthropic with fallbacks disabled. It supports independent trial IDs, append-only logs, strict parsing, and cache-only replay; invalid outputs make a run incomplete. Layer 1 selects an action and recipient, and ChildEsc evaluates only that routing decision. Layer 2 generates supportive language, which requires a separate rubric and governed human validation.", "Policies and evaluator. ")
 
     caption = doc.add_paragraph()
     set_paragraph_spacing(caption, before=5.5, after=5.5)
@@ -259,7 +259,7 @@ def build() -> Path:
     add_body(doc, "These tests probe the frozen checksum without retuning it and are not held-out evidence. Latest-turn-only input under-escalates all 58 escalation-required items. Disabling only adult-implication inference leaves actions unchanged but produces a forbidden safe-adult target in 7/12 implicated-adult cases. Uppercasing preserves every route; doubling spaces reduces action agreement to 45.0% and urgent recall from 75.7% to 10.8%.", "Diagnostic stress tests. ")
 
     add_heading(doc, "4 Source-informed relational contract audit")
-    add_body(doc, "Aggregate labels cannot state how a route should change when one operational factor changes. We froze nine matched, non-procedural probe families after v0.1 and before their first execution. Public sources motivate each relation but do not supply ground-truth labels. Each family asserts an action relation plus atomic target, domain, or response-requirement constraints. The author had inspected the router, so this is a post-freeze mechanistic audit, not held-out evaluation.")
+    add_body(doc, "Aggregate labels cannot state how a route should change when one operational factor changes. We froze nine matched, non-procedural probe families after v0.1 and before their first execution. Public sources motivate each relation but do not determine reference labels. Each family asserts an action relation plus atomic target, domain, or response-requirement constraints. The author had inspected the router, so this is a post-freeze mechanistic audit, not held-out evaluation.")
     contract_caption = doc.add_paragraph()
     set_paragraph_spacing(contract_caption, before=4, after=4)
     set_font(contract_caption.add_run("Table 2: Frozen contract audit."), bold=True)
@@ -303,7 +303,7 @@ def build() -> Path:
     add_body(doc, "Evidence gates version practitioner revisions and retain disagreement; keep youth and professional judgments separate; reserve a controlled-access family-locked test; and audit any response mapper against independent human coding. Failure at any gate blocks claims that depend on the next one, and no gate alone certifies deployment safety.", "Evidence gates. ")
     add_body(doc, "Practitioner review would produce independent action and permitted/forbidden-target labels, missing-context flags, and jurisdictional-feasibility notes. Youth review would separately produce plausibility, agency, accessibility, and handoff-acceptability judgments without personal disclosure. ChildEsc would retain pre-review labels, revisions, uncertainty, and disagreement rather than collapsing perspectives into one consensus gold label. This is a protocol, not completed validation.", "Prospective validation outputs. ")
     add_body(doc, "ChildEsc's practical use is narrow: give developers and child-safety reviewers an executable object for debating escalation thresholds, unsafe-default recipients, and evidence missing before a handoff. It cannot determine clinical risk, select a real person, assess response quality, or authorize disclosure.")
-    add_body(doc, "(1) When context is insufficient, should a router clarify, abstain, or emit multiple consent-preserving routes? (2) Which judgments belong separately to practitioners and youth advisors, and how should disagreement appear in scoring? (3) What evidence and governance must precede any operational handoff when a nominally trusted adult may be implicated?", "Questions for the workshop. ")
+    add_body(doc, "(1) When context is insufficient, should a router clarify, abstain, or emit multiple consent-preserving routes? (2) How should practitioner and youth disagreement appear in scoring? (3) Which recipient constraints should be universal versus jurisdiction-specific? (4) What evidence should be required before a routing target becomes operational?", "Questions for the workshop. ")
 
     add_heading(doc, "References")
     references = [
@@ -317,9 +317,6 @@ def build() -> Path:
         "Krishna-Kumar, K., Lau, E., Robinson, V., Caldwell, J., Issaka, S., Wang, S., et al. (2026). CAREBench: A Child-Safety Risk Benchmark for Language Models. arXiv:2606.29685.",
         "Pombal, J., D'Eon, M., Guerreiro, N. M., Martins, P. H., Farinhas, A., & Rei, R. (2025). MindEval: Benchmarking language models on multi-turn mental health support. arXiv:2511.18491.",
         "Ragone, G., Buono, P., Good, J., & Lanzilotti, R. (2026). Do Children Trust AI, and Should They? Proceedings of CHI '26. https://doi.org/10.1145/3772318.3790765.",
-        "988 Suicide & Crisis Lifeline. (2024). Suicide Safety Policy. https://988lifeline.org/professionals/best-practices/.",
-        "Substance Abuse and Mental Health Services Administration. (2024). Saving Lives in America: 988 Quality and Services Plan.",
-        "U.S. Department of Health and Human Services. (2023). Collecting, Using, or Sharing Consumer Health Information?",
         "UNICEF. (2025). Guidance on AI and Children 3.0.",
         "UNICEF. (2026). When AI Becomes a Friend: Child Rights Risks, Harms, and Regulatory Responses to AI Chatbots and Companions.",
         "NeurIPS 2026 Workshop on Child Safety in AI. (2026). Call for Papers. https://childsafety-ai.github.io/.",
@@ -329,7 +326,7 @@ def build() -> Path:
         add_reference(doc, reference)
 
     add_heading(doc, "Appendix A. Artifact and schema")
-    add_body(doc, "The research package contains standard-library Python source, 49 tests for the frozen scientific and manuscript path, 25 provider-path tests, 20 source families, a source register, family rationale map, controlled authoring protocol, frozen contract probes, deterministic generation, item-level predictions and assertions, aggregate metrics, error analysis, ablations, a gated follow-up specification, and orthographic checks. Running make reproduce regenerates all 80 items and every deterministic reported value; prompted results replay from content-addressed caches.", size=9.5, after=4, line=10)
+    add_body(doc, "The research package contains standard-library Python source, 49 tests for the frozen scientific and manuscript path, 25 provider-path tests, 20 source families, a source register, family rationale map, controlled authoring protocol, frozen contract probes, deterministic generation, item-level predictions and assertions, aggregate metrics, error analysis, ablations, prospective validation materials, and orthographic checks. Running make reproduce regenerates all 80 items and every deterministic reported value; prompted results replay from content-addressed caches.", size=9.5, after=4, line=10)
 
     add_heading(doc, "Appendix B. Metric details")
     add_body(doc, "Under-escalation is conditioned on items requiring human or urgent support. Strict valid-target rate requires a nonempty predicted set that is a subset of permitted targets and disjoint from forbidden targets. Exact route additionally requires the exact action and requires no emitted target for targetless actions. The action-route gap equals exact action accuracy minus exact-route accuracy.", size=9.5, after=4, line=10)
@@ -372,16 +369,13 @@ def build() -> Path:
     add_heading(doc, "Appendix D. Prospective validation protocol")
     add_body(doc, "No recruitment or data collection is authorized in this workspace. Subject to an appropriate external determination, practitioners would independently label action, permitted and forbidden targets, missing context, and coercion risk. Youth advisors would review plausibility, agency, accessibility, and handoff framing without being asked to disclose personal experiences. Disagreement and pre-review labels would be retained. Protocol preparation is not validation.", size=9.5, after=4, line=10)
 
-    add_heading(doc, "Appendix E. Prospective delegated follow-up extension")
-    add_body(doc, "The proposed 1-24 hour crisis-service follow-up is a non-operational governance specification, not an established 988 policy; no cutoff is validated. It requires a written 988/center partnership, independent safeguarding and legal review, separate revocable consent, human crisis-professional approval, minimum-necessary transfer, receiving-service capacity guarantees, and prospective measurement of false alerts, missed urgency, chilling effects, coercion, and disparities. Imminent danger is excluded from a delayed queue. Until these gates pass, ChildEsc must not collect PII, schedule follow-up, transmit data, or initiate contact.", size=9.5, after=4, line=10)
-
-    add_heading(doc, "Appendix F. Independent holdout status")
+    add_heading(doc, "Appendix E. Independent holdout status")
     add_body(doc, "No independently authored holdout is reported. The prospective procedure requires an author who has not inspected router rules, existing scenario text, or item-level failures. Current authors and coding agents are ineligible. A future holdout must be evaluated once without router tuning and reported separately from v0.1.", size=9.5, after=4, line=10)
 
-    add_heading(doc, "Appendix G. Compute, ethics, and LLM usage")
+    add_heading(doc, "Appendix F. Compute, ethics, and LLM usage")
     add_body(doc, "Deterministic experiments use no GPU or training and complete in under one second on a laptop-class CPU. The reported prompted smoke plus three full trials made 244 OpenRouter calls, cost $0.635, and used no tools or generated counseling text; failed development pilots cost another $0.215. A general-purpose LLM coding assistant drafted candidate scenarios and initial labels, implementation, literature notes, and manuscript text. The prompted router generated reported routing decisions, but no LLM judged outputs. Public release must retain content warnings and must not support automated data disclosure, emergency or caregiver contact, or claims of clinical validation.", size=9.5, after=4, line=10)
 
-    add_heading(doc, "Appendix H. Source traceability and future authoring")
+    add_heading(doc, "Appendix G. Source traceability and future authoring")
     add_body(doc, "The source register records what each source supports and does not support. The v0.1 family map is retrospective and domain-level; it does not make individual cases source-grounded. The prospective protocol requires one-factor isolation, information-state timing, age and locale metadata, source-to-case rationale, non-procedural content, independent first-pass labels without router output, retained disagreement, and family-locked development, validation, public-test, and controlled-access splits.", size=9.5, after=4, line=10)
 
     footer = section.footer.paragraphs[0]

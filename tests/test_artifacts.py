@@ -95,14 +95,14 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         self.assertIn("11.3\\%", manuscript)
         self.assertIn("practitioner and youth validation have not occurred", manuscript)
 
-    def test_main_content_asks_workshop_questions_without_operational_988_plan(self) -> None:
+    def test_main_content_asks_four_actionable_workshop_questions(self) -> None:
         main_content = self.main_content()
         self.assertIn("Questions for the workshop", main_content)
         self.assertIn("clarify", main_content)
         self.assertIn("practitioner", main_content)
-        self.assertIn("operational handoff", main_content)
-        self.assertNotIn("1--24 hour", main_content)
-        self.assertNotIn("established 988 policy", main_content)
+        self.assertIn("universal", main_content)
+        self.assertIn("jurisdiction-specific", main_content)
+        self.assertIn("becomes operational", main_content)
 
     def test_manuscript_labels_results_as_policy_exposed_diagnostics(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8").lower()
@@ -166,29 +166,30 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         self.assertIn("CARE-Bench", manuscript)
         self.assertIn("hua2026caretriage", bibliography)
 
-    def test_delegated_followup_extension_defaults_to_no_action(self) -> None:
-        extension = json.loads(
-            (ROOT / "validation" / "delegated_followup_extension.json").read_text(
-                encoding="utf-8"
-            )
+    def test_submission_sources_exclude_delegated_followup_and_988(self) -> None:
+        submission_sources = (
+            ROOT / "paper" / "main.tex",
+            ROOT / "paper" / "references.bib",
+            ROOT / "scripts" / "build_paper_docx.py",
+            ROOT / "paper" / "SUPPLEMENT_README.md",
         )
-        self.assertEqual(extension["status"], "prospective_only_not_implemented")
-        self.assertFalse(extension["current_behavior"]["transmit_contact_data"])
-        self.assertFalse(extension["current_behavior"]["initiate_outreach"])
-        self.assertFalse(extension["eligibility"]["model_score_alone_can_trigger"])
-        self.assertFalse(
-            extension["consent_contract"]["bundled_terms_of_service_is_sufficient"]
-        )
+        prohibited = ("988", "delegated follow", "1--24", "1-24 hour")
+        for path in submission_sources:
+            content = path.read_text(encoding="utf-8").lower()
+            for phrase in prohibited:
+                self.assertNotIn(phrase, content, f"{phrase!r} found in {path}")
+        manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8").lower()
+        for phrase in ("ground truth", "ground-truth", "clinically valid", "model safety"):
+            self.assertNotIn(phrase, manuscript)
 
-    def test_manuscript_bounds_delegated_followup_claims(self) -> None:
+    def test_manuscript_explains_two_layer_safeguard_scope(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
-        self.assertIn("not an established 988 policy", manuscript)
-        self.assertIn("no cutoff is validated", manuscript)
-        self.assertIn(
-            "must not collect PII, schedule follow-up, transmit data, or initiate contact",
-            manuscript,
-        )
-        self.assertIn("Imminent danger is excluded from a delayed queue", manuscript)
+        self.assertIn("Layer 1", manuscript)
+        self.assertIn("action and recipient", manuscript)
+        self.assertIn("Layer 2", manuscript)
+        self.assertIn("supportive language", manuscript)
+        self.assertIn("separate rubric", manuscript)
+        self.assertIn("human validation", manuscript)
 
 
 if __name__ == "__main__":
