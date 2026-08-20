@@ -2,6 +2,11 @@
 
 Status: pre-specified protocol; no data collected
 
+The frozen base assignment uses eight reviewer packets with 30 items each, so
+all 80 items receive exactly three independent ratings. Any approved change in
+reviewer count requires a new pre-distribution assignment manifest and analysis
+version.
+
 ## Units
 
 - Item: one synthetic conversation.

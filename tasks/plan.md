@@ -1057,9 +1057,9 @@ or metrics.
 ### External Gates
 
 - Obtain a written institutional determination before practitioner recruitment.
-- If authorized, conduct a blinded 3--5-practitioner audit on a stratified
-  24--32-item subset and retain disagreement rather than manufacturing a gold
-  consensus.
+- If authorized, conduct the blinded 8--12-practitioner audit. The frozen base
+  assignment uses eight 30-item packets covering all 80 items with three ratings
+  per item; retain disagreement rather than manufacturing a gold consensus.
 - Do not conduct youth participation without separate minors-specific ethics,
   safeguarding, consent, and facilitation approval.
 

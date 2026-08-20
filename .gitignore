@@ -7,6 +7,7 @@ __pycache__/
 htmlcov/
 .venv/
 venv/
+node_modules
 /.cache/
 /results/llm/
 
@@ -51,6 +52,11 @@ venv/
 /validation/responses/
 /validation/recruitment/
 /validation/consent/
+/validation/practitioner_packet/reviewer_workbooks/
+/validation/practitioner_packet/reviewer_bundles/
+/validation/practitioner_packet/qa/
+/validation/practitioner_packet/*.docx
+/validation/practitioner_packet/*.zip
 
 # Temporary files
 /tmp/

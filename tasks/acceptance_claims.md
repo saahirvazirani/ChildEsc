@@ -86,8 +86,9 @@ and coding agents have inspected the router, scenarios, and item-level errors.
 
 Before any practitioner recruitment or response collection, the project must
 obtain a written institutional determination. If authorized, the proposed audit
-uses 3--5 qualified adult practitioners blinded to existing labels, rules, and
-model outputs on a stratified 24--32-item subset. It retains label distributions,
+uses 8--12 qualified adult practitioners blinded to existing labels, rules, and
+model outputs. The frozen base assignment uses eight 30-item packets over all
+80 items, yielding three ratings per item. It retains label distributions,
 missing-context judgments, revisions, and unresolved disagreement rather than
 manufacturing one consensus gold label. Youth participation remains prospective
 pending separate minors-specific ethics and safeguarding approval.

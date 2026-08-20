@@ -28,3 +28,8 @@ exists for ChildEsc.
 
 Protocol preparation does not satisfy any of these evidence gates. See
 `ethics_gate.md` for the controlling status and claim vocabulary.
+
+The prospective distribution materials are under `practitioner_packet/`.
+The base design contains eight blinded 30-item workbooks and gives each of the
+80 synthetic items exactly three independent ratings. These artifacts must not
+be distributed before the first gate is satisfied.

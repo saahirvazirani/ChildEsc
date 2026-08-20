@@ -20,17 +20,25 @@ Collect role and broad experience band only as needed for analysis. Do not colle
 
 - Freeze ChildEsc v0.1 before recruitment.
 - Use all 80 synthetic items in a balanced incomplete-block design.
-- Assign approximately 30 items per reviewer so every item receives at least three independent ratings where sample size permits.
+- The frozen base design uses eight reviewers with 30 items each, producing exactly three independent ratings per item.
+- If an approved protocol recruits 9-12 reviewers, regenerate and freeze a new assignment manifest before distribution rather than adding ad hoc duplicate ratings.
 - Balance each packet across domain, severity, age band, and implicated-adult status.
 - Randomize item order within packet with a recorded seed.
 - Do not show router predictions during independent labeling.
+
+The reproducible base assignment uses seed `childesc-practitioner-packet-v1`.
+Every packet includes all eight domains and 7-8 items at each severity. Across
+packets, each domain and implicated-adult category varies by at most one item;
+each age-band category varies by at most three items. Reviewer workbooks expose
+only packet item IDs and synthetic conversations; the administrator-only map
+retains source IDs for analysis.
 
 ## Review procedure
 
 1. Provide content warning, scope, target definitions, and the right to skip any item.
 2. Obtain consent under the approved protocol.
 3. Present synthetic conversations without reference action, target labels, or router output.
-4. Collect the structured rubric in `practitioner_rubric.csv`.
+4. Collect the structured rubric in the assigned workbook generated from `practitioner_rubric.csv`.
 5. Ask for optional concise rationale without requesting real-case details.
 6. Show no aggregate results until independent ratings are locked.
 7. Offer a debrief and researcher-wellness resources defined by the approved protocol.

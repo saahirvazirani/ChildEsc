@@ -79,7 +79,7 @@
 - [x] Disagreement and pre-review labels are retained.
 
 **Verification:**
-- [ ] Dry-run the packet on synthetic examples without collecting study data.
+- [x] Dry-run the packet on synthetic examples without collecting study data.
 - [x] Every response field maps to a planned analysis.
 
 **Dependencies:** Tasks 2 and 3
@@ -815,7 +815,8 @@ provider terms, local paths, stale outputs, and unsupported claims.
 
 - [x] Record that an institutional determination is required before any
   practitioner recruitment or response collection.
-- [x] Keep the proposed 3--5-practitioner, 24--32-item blinded audit prospective.
+- [x] Keep the proposed 8--12-practitioner full-set blinded audit prospective;
+  the frozen base assignment uses eight 30-item packets and three ratings per item.
 - [x] Keep youth participation prospective pending separate approval.
 
 ### Task 46: Rebuild and audit the submission

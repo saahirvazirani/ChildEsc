@@ -1,13 +1,16 @@
 PYTHON ?= python3
 export PYTHONPATH := src
 
-.PHONY: test llm-test release-test benchmark evaluate analysis contracts release-audit reproduce clean-results
+.PHONY: test llm-test packet-test release-test benchmark evaluate analysis contracts release-audit reproduce clean-results
 
 test:
 	$(PYTHON) -m unittest discover -s tests -v
 
 llm-test:
 	$(PYTHON) -m unittest discover -s llm_tests -v
+
+packet-test:
+	$(PYTHON) -m unittest discover -s packet_tests -v
 
 release-test:
 	$(PYTHON) -m unittest discover -s release_tests -v
