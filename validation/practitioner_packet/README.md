@@ -28,6 +28,14 @@ The assignment seed is `childesc-practitioner-packet-v1`. If an approved study
 uses 9-12 reviewers, create and freeze a new assignment manifest before any
 workbook is distributed.
 
+## Optional all-80 workbook
+
+Run `node scripts/build_practitioner_all_80_workbook.mjs` to create one blinded
+workbook containing each of the 80 scenarios exactly once. It is written to
+`outputs/childesc-practitioner-all-80/` and uses stable shuffle seed
+`childesc-practitioner-all-80-v1`. This convenience artifact does not replace
+the frozen eight-reviewer assignment or change the pre-specified analysis plan.
+
 ## Build and verify
 
 1. Run `python scripts/build_practitioner_packet.py` with the bundled document

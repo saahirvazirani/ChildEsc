@@ -2,6 +2,7 @@
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { SpreadsheetFile, Workbook } from "@oai/artifact-tool";
 
 const root = process.cwd();
@@ -97,14 +98,16 @@ function styleSection(range) {
   range.format.rowHeight = 24;
 }
 
-function buildInstructions(sheet, packetId) {
+export function buildInstructions(sheet, packetId, itemCount = 30) {
   sheet.showGridLines = false;
   sheet.getRange("A1:H1").merge();
   sheet.getRange("A1").values = [["ChildEsc Practitioner Construct Review"]];
   styleTitle(sheet.getRange("A1:H1"));
 
   sheet.getRange("A2:H2").merge();
-  sheet.getRange("A2").values = [[`Reviewer packet ${packetId} | 30 blinded synthetic items`]];
+  sheet.getRange("A2").values = [[
+    `Reviewer packet ${packetId} | ${itemCount} blinded synthetic items`,
+  ]];
   sheet.getRange("A2:H2").format = {
     fill: COLORS.light,
     font: { bold: true, color: COLORS.teal, size: 11 },
@@ -178,7 +181,7 @@ function buildInstructions(sheet, packetId) {
   sheet.freezePanes.freezeRows(2);
 }
 
-function buildDefinitions(sheet) {
+export function buildDefinitions(sheet) {
   sheet.showGridLines = false;
   sheet.getRange("A1:B1").merge();
   sheet.getRange("A1").values = [["Operational definitions"]];
@@ -225,15 +228,20 @@ function buildDefinitions(sheet) {
   sheet.freezePanes.freezeRows(3);
 }
 
-function buildReviewForm(sheet, packet) {
+export function buildReviewForm(sheet, packet) {
   sheet.showGridLines = false;
+  const endRow = packet.items.length + 1;
   const rows = packet.items.map((item) => [
     item.packet_item_id,
     item.conversation,
     ...Array(headers.length - 2).fill(null),
   ]);
-  sheet.getRange("A1:Y31").values = [headers, ...rows];
-  const table = sheet.tables.add("A1:Y31", true, `ReviewTable${packet.reviewer_packet}`);
+  sheet.getRange(`A1:Y${endRow}`).values = [headers, ...rows];
+  const table = sheet.tables.add(
+    `A1:Y${endRow}`,
+    true,
+    `ReviewTable${packet.reviewer_packet}`,
+  );
   table.style = "TableStyleMedium2";
   table.showBandedRows = true;
   table.showFilterButton = true;
@@ -251,77 +259,83 @@ function buildReviewForm(sheet, packet) {
   sheet.getRange("X1:Y1").format.fill = COLORS.muted;
   sheet.getRange("A1:Y1").format.rowHeight = 58;
 
-  sheet.getRange("A2:A31").format = {
+  sheet.getRange(`A2:A${endRow}`).format = {
     font: { bold: true, color: COLORS.navy },
     verticalAlignment: "top",
   };
-  sheet.getRange("B2:B31").format = {
+  sheet.getRange(`B2:B${endRow}`).format = {
     wrapText: true,
     verticalAlignment: "top",
     font: { color: COLORS.ink, size: 10 },
   };
-  sheet.getRange("C2:Y31").format = {
+  sheet.getRange(`C2:Y${endRow}`).format = {
     fill: COLORS.input,
     wrapText: true,
     verticalAlignment: "top",
   };
-  sheet.getRange("A2:Y31").format.rowHeight = 105;
+  sheet.getRange(`A2:Y${endRow}`).format.rowHeight = 105;
 
-  sheet.getRange("C2:C31").dataValidation = {
+  sheet.getRange(`C2:C${endRow}`).dataValidation = {
     rule: { type: "list", values: actionOptions },
   };
-  sheet.getRange("D2:K31").dataValidation = {
+  sheet.getRange(`D2:K${endRow}`).dataValidation = {
     rule: { type: "list", values: targetOptions },
   };
-  sheet.getRange("L2:L31").dataValidation = {
+  sheet.getRange(`L2:L${endRow}`).dataValidation = {
     rule: { type: "list", values: missingOptions },
   };
-  sheet.getRange("M2:R31").dataValidation = {
+  sheet.getRange(`M2:R${endRow}`).dataValidation = {
     rule: { type: "list", values: contextOptions },
   };
-  sheet.getRange("T2:T31").dataValidation = {
+  sheet.getRange(`T2:T${endRow}`).dataValidation = {
     rule: { type: "list", values: coercionOptions },
   };
-  sheet.getRange("U2:U31").dataValidation = {
+  sheet.getRange(`U2:U${endRow}`).dataValidation = {
     rule: { type: "list", values: labelabilityOptions },
   };
-  sheet.getRange("V2:V31").dataValidation = {
+  sheet.getRange(`V2:V${endRow}`).dataValidation = {
     rule: { type: "list", values: dependenceOptions },
   };
   sheet.dataValidations.add({
-    range: "W2:W31",
+    range: `W2:W${endRow}`,
     rule: { type: "whole", operator: "between", formula1: 1, formula2: 5 },
   });
 
-  sheet.getRange("A1:A31").format.columnWidth = 14;
-  sheet.getRange("B1:B31").format.columnWidth = 78;
-  sheet.getRange("C1:C31").format.columnWidth = 22;
-  sheet.getRange("D1:K31").format.columnWidth = 18;
-  sheet.getRange("L1:L31").format.columnWidth = 20;
-  sheet.getRange("M1:R31").format.columnWidth = 18;
-  sheet.getRange("S1:S31").format.columnWidth = 28;
-  sheet.getRange("T1:V31").format.columnWidth = 20;
-  sheet.getRange("W1:W31").format.columnWidth = 16;
-  sheet.getRange("X1:Y31").format.columnWidth = 38;
+  sheet.getRange(`A1:A${endRow}`).format.columnWidth = 14;
+  sheet.getRange(`B1:B${endRow}`).format.columnWidth = 78;
+  sheet.getRange(`C1:C${endRow}`).format.columnWidth = 22;
+  sheet.getRange(`D1:K${endRow}`).format.columnWidth = 18;
+  sheet.getRange(`L1:L${endRow}`).format.columnWidth = 20;
+  sheet.getRange(`M1:R${endRow}`).format.columnWidth = 18;
+  sheet.getRange(`S1:S${endRow}`).format.columnWidth = 28;
+  sheet.getRange(`T1:V${endRow}`).format.columnWidth = 20;
+  sheet.getRange(`W1:W${endRow}`).format.columnWidth = 16;
+  sheet.getRange(`X1:Y${endRow}`).format.columnWidth = 38;
   sheet.freezePanes.freezeRows(1);
   sheet.freezePanes.freezeColumns(2);
 }
 
-async function buildWorkbook(packet) {
+export async function buildWorkbook(packet, options = {}) {
+  const workbookOutput =
+    options.outputPath ??
+    path.join(
+      outputDir,
+      `ChildEsc_Practitioner_Review_${packet.reviewer_packet}.xlsx`,
+    );
+  const workbookQaDir = options.qaDir ?? qaDir;
+  const qaPrefix = options.qaPrefix ?? packet.reviewer_packet;
   const workbook = Workbook.create();
   const instructions = workbook.worksheets.add("Instructions");
   const review = workbook.worksheets.add("Review Form");
   const definitions = workbook.worksheets.add("Definitions");
-  buildInstructions(instructions, packet.reviewer_packet);
+  buildInstructions(instructions, packet.reviewer_packet, packet.items.length);
   buildReviewForm(review, packet);
   buildDefinitions(definitions);
 
-  const outputPath = path.join(
-    outputDir,
-    `ChildEsc_Practitioner_Review_${packet.reviewer_packet}.xlsx`,
-  );
+  await fs.mkdir(path.dirname(workbookOutput), { recursive: true });
+  await fs.mkdir(workbookQaDir, { recursive: true });
   const output = await SpreadsheetFile.exportXlsx(workbook);
-  await output.save(outputPath);
+  await output.save(workbookOutput);
 
   const checks = await workbook.inspect({
     kind: "table",
@@ -332,7 +346,7 @@ async function buildWorkbook(packet) {
     maxChars: 10000,
   });
   await fs.writeFile(
-    path.join(qaDir, `${packet.reviewer_packet}_inspect.ndjson`),
+    path.join(workbookQaDir, `${qaPrefix}_inspect.ndjson`),
     checks.ndjson,
   );
 
@@ -344,15 +358,18 @@ async function buildWorkbook(packet) {
   ]) {
     const preview = await workbook.render({ sheetName, range, scale, format: "png" });
     await fs.writeFile(
-      path.join(qaDir, `${packet.reviewer_packet}_${suffix}.png`),
+      path.join(workbookQaDir, `${qaPrefix}_${suffix}.png`),
       new Uint8Array(await preview.arrayBuffer()),
     );
   }
+  return workbook;
 }
 
-await fs.mkdir(outputDir, { recursive: true });
-await fs.mkdir(qaDir, { recursive: true });
-for (const packet of manifest.packets) {
-  await buildWorkbook(packet);
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  await fs.mkdir(outputDir, { recursive: true });
+  await fs.mkdir(qaDir, { recursive: true });
+  for (const packet of manifest.packets) {
+    await buildWorkbook(packet);
+  }
+  console.log(`wrote ${manifest.packets.length} reviewer workbooks to ${outputDir}`);
 }
-console.log(`wrote ${manifest.packets.length} reviewer workbooks to ${outputDir}`);

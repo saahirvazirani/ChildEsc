@@ -60,6 +60,7 @@ node_modules
 
 # Temporary files
 /tmp/
+/outputs/
 *.tmp
 *.temp
 *.bak
