@@ -1,7 +1,7 @@
 {
   "artifact": "ChildEsc source register",
   "version": "0.1",
-  "accessed_on": "2026-08-18",
+  "accessed_on": "2026-08-26",
   "claim_boundary": "Sources support bounded design rationales. They do not validate ChildEsc scenario wording, labels, target sets, realism, prevalence, or deployment safety.",
   "sources": [
     {
@@ -63,6 +63,18 @@
         "high-risk detection, internal escalation, privacy, and near-miss monitoring"
       ],
       "does_not_support": "That a lexical dependency cue is sufficient for a particular ChildEsc action."
+    },
+    {
+      "id": "openai_teens_2026",
+      "title": "Introducing ChatGPT for Teens: Built for Learning, Backed by Protections",
+      "url": "https://openai.com/index/chatgpt-for-teens/",
+      "source_type": "vendor_product_announcement",
+      "supports": [
+        "deployment of an age-conditioned teen product experience",
+        "automatic placement when a user is estimated to be under 18 or self-declares an age of 13-17",
+        "the ability for linked parents to receive safety notifications in limited high-risk situations as an operational recipient decision"
+      ],
+      "does_not_support": "ChildEsc's action or target taxonomy, the safety of parental notification in a specific case, product effectiveness, or deployment safety."
     },
     {
       "id": "lifeline_best_practices",

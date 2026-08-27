@@ -75,6 +75,38 @@ def set_table_borders(table):
         borders.append(node)
 
 
+def set_table_widths(table, widths: list[int]):
+    table.autofit = False
+    tbl_pr = table._tbl.tblPr
+    tbl_w = tbl_pr.find(qn("w:tblW"))
+    if tbl_w is None:
+        tbl_w = OxmlElement("w:tblW")
+        tbl_pr.append(tbl_w)
+    tbl_w.set(qn("w:w"), str(sum(widths)))
+    tbl_w.set(qn("w:type"), "dxa")
+    layout = tbl_pr.find(qn("w:tblLayout"))
+    if layout is None:
+        layout = OxmlElement("w:tblLayout")
+        tbl_pr.append(layout)
+    layout.set(qn("w:type"), "fixed")
+
+    grid = table._tbl.tblGrid
+    for child in list(grid):
+        grid.remove(child)
+    for width in widths:
+        column = OxmlElement("w:gridCol")
+        column.set(qn("w:w"), str(width))
+        grid.append(column)
+    for row in table.rows:
+        for cell, width in zip(row.cells, widths):
+            tc_w = cell._tc.get_or_add_tcPr().find(qn("w:tcW"))
+            if tc_w is None:
+                tc_w = OxmlElement("w:tcW")
+                cell._tc.get_or_add_tcPr().append(tc_w)
+            tc_w.set(qn("w:w"), str(width))
+            tc_w.set(qn("w:type"), "dxa")
+
+
 def mark_table_header(row):
     row_pr = row._tr.get_or_add_trPr()
     header = OxmlElement("w:tblHeader")
@@ -205,7 +237,7 @@ def build() -> Path:
     set_font(abstract.add_run(abstract_text))
 
     add_heading(doc, "1 Introduction")
-    add_body(doc, "Children use conversational AI for information, companionship, and emotional support, where a superficially safe response can still worsen a vulnerable situation (UNICEF, 2026; Cha et al., 2026). Binary respond/refuse policies are especially ill-suited to these interactions: refusal can close a rare help-seeking window, while unbounded engagement can reinforce dependency or miss imminent danger. Interviews with 19 youth-facing practitioners found that useful systems should gather context and bridge youth to tailored human support, but should not assume a parent is safe (Cha et al., 2026). The deployment decision is therefore not simply \"is this content allowed?\" but what support action is proportionate now, and who is safe to involve?")
+    add_body(doc, "Children use conversational AI for information, companionship, and emotional support, where a superficially safe response can still worsen a vulnerable situation (UNICEF, 2026; Cha et al., 2026). Binary respond/refuse policies are especially ill-suited to these interactions: refusal can close a rare help-seeking window, while unbounded engagement can reinforce dependency or miss imminent danger. Interviews with 19 youth-facing practitioners found that useful systems should gather context and bridge youth to tailored human support, but should not assume a parent is safe (Cha et al., 2026). This choice is already operational: OpenAI reports automatically placing users estimated to be under 18 or self-identifying as 13-17 into a teen experience; linked parents can receive safety notifications in limited high-risk situations (OpenAI, 2026). The deployment decision is therefore not simply \"is this content allowed?\" but what support action is proportionate now, and who is safe to involve?")
     add_body(doc, "Related benchmarks cover important parts of this problem. MinorBench and Safe-Child-LLM emphasize unsafe-request handling; KIDBench evaluates developmental response quality and trusted-adult redirection; CAREBench includes crisis referral and human-support behavior; and MindEval measures multi-turn adult mental-health support. CARE-Bench recently operationalized patient-facing medical triage as a four-label sequential current-action task, including whether more information is needed. Thus neither ordered routing nor action timing is our novelty. ChildEsc instead isolates child-specific severity-matched trajectories and explicit permitted and forbidden handoff sets. This maps directly to the workshop's restricted-data evaluation and deployment-safeguard themes.")
     add_body(doc, "We contribute: (1) a proposed four-action, context-constrained handoff specification instantiated as 80 synthetic trajectories; (2) metrics that separate escalation threshold errors from target-safety errors; and (3) a reproducible checksum, source-to-design register, and concrete validation protocol. We do not claim benchmark validity, child-centeredness, or system superiority before independent review.")
 
@@ -249,6 +281,7 @@ def build() -> Path:
             set_cell_margins(cell)
             cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.LEFT if index == 0 else WD_ALIGN_PARAGRAPH.CENTER
             set_font(cell.paragraphs[0].add_run(value), size=8.5)
+    set_table_widths(table, [1760] + [1026] * 6)
     set_table_borders(table)
     note = doc.add_paragraph()
     set_paragraph_spacing(note, after=5.5, line=9)
@@ -315,6 +348,7 @@ def build() -> Path:
         "Jiao, J., Afroogh, S., Chen, K., Murali, A., Atkinson, D., & Dhurandhar, A. (2025). Safe-Child-LLM: A developmental benchmark for evaluating LLM safety in child-AI interactions. arXiv:2506.13510.",
         "Khoo, S., Chua, G., & Shong, R. (2025). MinorBench: A hand-built benchmark for content-based risks for children. arXiv:2503.10242.",
         "Krishna-Kumar, K., Lau, E., Robinson, V., Caldwell, J., Issaka, S., Wang, S., et al. (2026). CAREBench: A Child-Safety Risk Benchmark for Language Models. arXiv:2606.29685.",
+        "OpenAI. (2026, August 18). Introducing ChatGPT for Teens: Built for learning, backed by protections. https://openai.com/index/chatgpt-for-teens/.",
         "Pombal, J., D'Eon, M., Guerreiro, N. M., Martins, P. H., Farinhas, A., & Rei, R. (2025). MindEval: Benchmarking language models on multi-turn mental health support. arXiv:2511.18491.",
         "Ragone, G., Buono, P., Good, J., & Lanzilotti, R. (2026). Do Children Trust AI, and Should They? Proceedings of CHI '26. https://doi.org/10.1145/3772318.3790765.",
         "UNICEF. (2025). Guidance on AI and Children 3.0.",
