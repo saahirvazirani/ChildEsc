@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
+\hypersetup{hidelinks}
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{amsmath}
@@ -20,7 +21,7 @@
 \maketitle
 
 \begin{abstract}
-Child-facing AI increasingly mediates emotional support and may route young users toward real-world help. Yet action-only evaluations can reward correct urgency while selecting an unsafe or inappropriate recipient. We introduce ChildEsc, a works-in-progress testbed of 80 LLM-assisted synthetic conversations in 20 counterfactual families, four ordered routing actions, and explicit permitted and forbidden targets. We audit one pinned prompted router over three cache-replayable trials using the \emph{action-route gap} between action accuracy and exact routing. The router attains 80.8\% mean action accuracy but only 51.7\% exact routing, a 29.2-point gap; 40.7--43.6\% of action-correct handoffs violate target constraints, and full routes vary on 22.5\% of items versus 1.3\% for actions. These findings show that action-only scoring can conceal recipient-level failures, but remain specification-conformance diagnostics: practitioner and youth validation have not occurred, and no result supports deployment.
+Child-facing AI increasingly mediates emotional support and may route young users toward real-world help. Yet action-only evaluations can reward correct urgency while selecting an unsafe or inappropriate recipient. We introduce ChildEsc, a works-in-progress testbed of 80 LLM-assisted synthetic conversations in 20 counterfactual families, four ordered routing actions, and explicit permitted and forbidden targets. A provider-neutral harness audits action-plus-recipient decisions using the \emph{action-route gap} between action accuracy and exact routing. Across eight complete, cache-replayable trials of three prompted systems, 80.0--83.1\% mean action accuracy contrasts with only 33.8--51.7\% exact routing, yielding 29.2--49.4-point gaps; 42.7--71.2\% of action-correct handoffs violate target constraints. These results show that recipient selection is a distinct safeguard failure surface, but remain policy-exposed specification-conformance diagnostics: practitioner and youth validation have not occurred, and no result supports deployment.
 \end{abstract}
 
 \section{Introduction}
@@ -29,7 +30,7 @@ Children use conversational AI for information, companionship, and emotional sup
 
 Related benchmarks cover important parts of this problem. MinorBench and Safe-Child-LLM emphasize unsafe-request handling \citep{khoo2025minorbench,jiao2025safechild}; KIDBench evaluates developmental response quality and trusted-adult redirection \citep{arif2026kidbench}; and CAREBench includes crisis referral, de-escalation, and human-support behavior across child-safety risks \citep{krishnakumar2026carebench}. MindEval measures multi-turn adult mental-health support \citep{pombal2025mindeval}. Most recently, CARE-Bench operationalized patient-facing medical triage as a four-label sequential current-action task, including whether more information is needed \citep{hua2026caretriage}. Thus neither ordered routing nor action timing is our novelty. ChildEsc instead isolates child-specific severity-matched trajectories and machine-checkable permitted and forbidden handoff sets. This focus maps directly to the workshop's restricted-data evaluation and deployment-safeguard themes \citep{childsafetyworkshop2026}.
 
-We contribute: (1) a proposed four-action, context-constrained handoff specification instantiated as 80 synthetic trajectories; (2) metrics and item-level audits that expose action-correct but target-invalid routes; and (3) a reproducible checksum, provider-neutral prompted-router harness, source-to-design register, and concrete validation protocol. We deliberately do not claim benchmark validity, child-centeredness, or system superiority before independent review.
+We contribute: (1) a proposed four-action, context-constrained handoff specification instantiated as 80 synthetic trajectories; (2) metrics and item-level audits that expose action-correct but target-invalid routes; and (3) a provider-neutral, cache-replayable audit across three prompted systems, plus an executable checksum and prospective validation protocol. We deliberately do not claim benchmark validity, child-centeredness, or system superiority before independent review.
 
 \section{ChildEsc testbed}
 
@@ -39,73 +40,68 @@ We contribute: (1) a proposed four-action, context-constrained handoff specifica
 
 \paragraph{Actions and targets.} The ordinal action space is $A=\{$\texttt{continue\_support} (0), \texttt{boundary\_redirect} (1), \texttt{human\_support} (2), \texttt{urgent\_handoff} (3)$\}$. These actions encode the handoff obligation, not whether supportive conversation continues: \texttt{continue\_support} requires no handoff, \texttt{human\_support} requires a non-urgent human pathway while support may continue, and \texttt{urgent\_handoff} prioritizes immediate connection. Escalated items additionally permit one or more target classes: safe adult, non-implicated safe adult, school support, health professional, crisis service, emergency service, child protection, or platform reporting. A target names a recommended recipient class and does not authorize autonomous contact or data disclosure. Items can forbid an emittable target; for example, \texttt{safe\_adult} is forbidden when the implicated adult appears in the conversation, while \texttt{safe\_adult\_not\_implicated} may be permitted.
 
-\paragraph{Failure-oriented metrics.} Let $g_i,p_i\in\{0,1,2,3\}$ be reference and predicted actions and $E=\{i:g_i\ge2\}$. Under-escalation is $|E|^{-1}\sum_{i\in E}\mathbb{1}[p_i<g_i]$. Urgent recall separately counts $3\rightarrow3$ decisions. A target is valid only when the predicted set is nonempty, is a subset of permitted targets, and excludes forbidden targets; targetless actions must emit none. Exact routing requires both the exact action and a valid target decision. The action-route gap is action accuracy minus exact-route accuracy. We also report counterfactual sensitivity and monotonicity across adjacent family variants. Reaction delay is omitted because v0.1 fixes the decisive cue turn.
+\paragraph{Failure-oriented metrics.} Let $g_i,p_i\in\{0,1,2,3\}$ be reference and predicted actions, and let $P_i,F_i,T_i$ be permitted, forbidden, and predicted target sets. Target validity is
+\[
+V_i=\begin{cases}
+1,&P_i=T_i=\varnothing,\ \text{or } P_i,T_i\ne\varnothing,\ T_i\subseteq P_i,\ T_i\cap F_i=\varnothing;\\
+0,&\text{otherwise.}
+\end{cases}
+\]
+Exact routing sets $R_i=V_i$ when $p_i=g_i$ and $R_i=0$ otherwise. For $E=\{i:g_i\ge2\}$, under-escalation is $|\{i\in E:p_i<g_i\}|/|E|$; urgent recall separately counts $3\rightarrow3$. The action-route gap is action accuracy minus exact-route accuracy. We also report counterfactual sensitivity and monotonicity across adjacent family variants. Reaction delay is omitted because v0.1 fixes the decisive cue turn.
 
 \section{Diagnostic implementation and audit}
 
-\paragraph{Policies and evaluator.} \textsc{Keyword} reacts only to explicit self-harm terms. \textsc{Agnostic} routes detected distress to non-urgent human support and dependency, exploitation, or unsafe-request cues to a boundary. \textsc{ChildEsc-Rules} uses phrase evidence, guards, conversation accumulation, domain rules, and conversation-derived adult-implication cues. A provider-neutral harness sends only conversation text and requests the same action-target schema; invalid outputs make a run incomplete. Our prompted case study uses dated Claude Sonnet 5 through OpenRouter, restricted to the first-party Anthropic endpoint with fallbacks disabled, low reasoning, a 1,024-token cap, and omitted temperature. Three trial IDs produce independent calls and content-addressed caches. \textbf{Layer 1} selects an action and recipient; ChildEsc evaluates only this routing decision. \textbf{Layer 2} generates supportive language, which requires a separate rubric and governed human validation. Neither the checksum nor prompted evaluator generates counseling text.
+\paragraph{Policies and evaluator.} \textsc{ChildEsc-Rules} is a transparent policy-exposed checksum using phrase evidence, guards, conversation accumulation, and conversation-derived adult-implication cues; two simpler baselines appear in the appendix. A provider-neutral harness sends only conversation text and requests the same action-target schema; invalid outputs make a run incomplete. We evaluate dated Claude Sonnet 5, Gemini 3.1 Pro Preview, and GPT-5.5 backends through OpenRouter. Each is pinned to its first-party endpoint with fallbacks disabled, low reasoning, a 1,024-token cap, omitted temperature, unique trial IDs, append-only attempts, and content-addressed caches. \textbf{Layer 1} selects an action and recipient; ChildEsc evaluates only this routing decision. \textbf{Layer 2} generates supportive language, which requires a separate rubric and governed human validation. No evaluated system generates counseling text.
 
 \begin{table}[t]
-  \caption{Policy-exposed diagnostics on 80 synthetic items. $^{\dagger}$Mean of three prompted-router trials; other rows are deterministic. Action and Exact use all 80; Under and Valid use the 58 escalation-required items. These are not effectiveness estimates.}
+  \caption{Prompted-system diagnostics on 80 synthetic items. Values are trial means; Fail conditions target invalidity on action-correct handoffs, and RouteVar is the fraction of items whose full route differs across repeated trials. These are not effectiveness estimates.}
   \label{tab:results}
   \centering
   \small
   \begin{tabular}{lrrrrrr}
     \toprule
-    Policy & Action & Urgent & Under & Valid & Gap & Exact \\
+    System & Trials & Action & Exact & Gap & Fail & RouteVar \\
     \midrule
-    Keyword & .225 & .189 & .879 & .121 & .000 & .225 \\
-    Agnostic & .250 & .000 & .862 & .345 & .013 & .238 \\
-    ChildEsc-Rules & .650 & .757 & .328 & .552 & .113 & .538 \\
-    Prompted router$^{\dagger}$ & .808 & 1.000 & .017 & .540 & .292 & .517 \\
+    Claude Sonnet 5 & 3 & .808 & .517 & .292 & .427 & .225 \\
+    Gemini 3.1 Pro & 3 & .800 & .392 & .408 & .612 & .513 \\
+    GPT-5.5 & 2 & .831 & .338 & .494 & .712 & .263 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\paragraph{The action-route gap.} The prompted router's action accuracy is 80.0--81.3\% across trials, but exact routing is only 51.3--52.5\%: a mean 29.2-point action-route gap. In each trial, 22--24 of 54--55 action-correct handoffs are target-invalid (40.7--43.6\%). Urgent recall is 100\% and no forbidden target is emitted, yet mean strict target validity is only 54.0\% because missing or extra unpermitted recipients still invalidate routes. Across trials, 22.5\% of items varied in full route while only 1.3\% varied in action, showing that action stability can conceal recipient instability. The deterministic diagnostic checksum corroborates the construct: 65.0\% action accuracy, 53.8\% exact routing, a separate 11.3-point (11.3\%) gap, and 9/37 action-correct handoffs with invalid targets. These are specification-conformance diagnostics, not evidence of clinical safety or policy superiority.
+\paragraph{The action-route gap recurs.} Across systems, mean action accuracy is 80.0--83.1\% while exact routing is 33.8--51.7\%, producing 29.2--49.4-point action-route gaps. Among action-correct handoffs, 42.7--71.2\% violate target constraints. Action instability is only 1.3--6.3\% of items, whereas full-route instability is 22.5--51.3\%. Urgent recall remains 97.3--100\%, showing why urgency alone is insufficient. The deterministic checksum independently exhibits an 11.3\% gap and 9/37 action-correct target failures. These are policy-exposed diagnostics, not evidence of clinical safety or model superiority.
 
-\paragraph{Concrete failure.} For a moderate self-harm cue, a trial predicts the correct \texttt{human\_support} action but adds \texttt{crisis\_service} beyond the permitted safe-adult, school, and health-professional set. In abuse/coercion cases, the distinction between a generic adult and a non-implicated adult is itself scoreable. ChildEsc therefore makes recipient choice inspectable rather than treating ``escalate'' as sufficient.
+\paragraph{What action-only scoring misses.} Every action-correct target failure includes at least one extra unpermitted class; none is caused only by an omitted target. Gemini also emits a forbidden target in two trial-items. For one moderate self-harm cue, a system selects the correct \texttt{human\_support} action but adds \texttt{crisis\_service} beyond the permitted safe-adult, school, and health-professional set. In abuse/coercion cases, the distinction between a generic adult and a non-implicated adult is itself scoreable. ChildEsc therefore makes recipient choice inspectable rather than treating ``escalate'' as sufficient.
 
-\paragraph{Developer-specified stress tests.} These tests probe the frozen checksum without retuning and are not held-out evidence. Using only the latest user turn under-escalates all 58 escalation-required items. Disabling adult-implication inference leaves actions unchanged but emits forbidden \texttt{safe\_adult} in 7/12 implicated-adult cases. Uppercasing preserves every route; doubled spaces reduce action agreement to 45.0\% and urgent recall from 75.7\% to 10.8\%. Full results appear in Appendix~\ref{app:diagnostics}.
-
-\section{Source-informed relational contract audit}
-
-Aggregate labels cannot state how a route should change when one operational factor changes. We therefore froze nine matched, non-procedural probe families after v0.1 and before their first execution. Public sources motivate relations such as non-implicated support \citep{cha2026beyond} and relational dependency \citep{unicef2026friend}, but do not determine reference labels. Each family asserts an action relation plus atomic target, domain, or response-requirement constraints. The author had inspected the router; this is a post-freeze mechanistic audit, \emph{not held-out} evaluation.
-
-\nolinenumbers
-\begin{center}
-  \refstepcounter{table}\label{tab:contracts}
-  \parbox{.95\linewidth}{\small Table~\thetable: Frozen contract audit. Arrows show observed base-to-variant actions; Pass is atomic assertions. Family pass requires all assertions.}
-  \vspace{4pt}
-  {\scriptsize
-  \begin{tabular}{@{}llll@{}}
+\begin{table}[t]
+  \caption{Failure decomposition across complete trials. Handoffs counts action-correct items requiring targets; failure reasons may co-occur. Missing reports failures caused only by emitting no target.}
+  \label{tab:failure-decomposition}
+  \centering
+  \small
+  \begin{tabular}{lrrrrr}
     \toprule
-    Controlled factor & Observed actions & Pass & Family \\
+    System & Handoffs & Failures & Unpermitted & Missing & Forbidden \\
     \midrule
-    Temporal immediacy & Urgent$\rightarrow$Urgent & 3/5 & fail \\
-    Resolved negation & Urgent$\rightarrow$Continue & 3/3 & pass \\
-    First/third person & Urgent$\rightarrow$Human & 4/4 & pass \\
-    Implicated adult & Human$\rightarrow$Human & 6/6 & pass \\
-    AI dependency & Continue$\rightarrow$Human & 4/4 & pass \\
-    Coercive secrecy & Continue$\rightarrow$Human & 4/4 & pass \\
-    Online threat & Boundary$\rightarrow$Urgent & 5/5 & pass \\
-    Medical deterioration & Boundary$\rightarrow$Urgent & 4/5 & fail \\
-    Explicit/implicit age & Human$\rightarrow$Human & 3/3 & pass \\
+    Claude Sonnet 5 & 164 & 70 & 70 & 0 & 0 \\
+    Gemini 3.1 Pro & 160 & 98 & 98 & 0 & 2 \\
+    GPT-5.5 & 111 & 79 & 79 & 0 & 0 \\
     \bottomrule
   \end{tabular}
-  }
-\end{center}
-\linenumbers
+\end{table}
 
-Overall, 36/39 assertions and 7/9 families pass. The two failures are actionable and distinct from benchmark accuracy: the phrase ``safe right now'' triggers urgency despite explicit negation because \texttt{right now} is matched globally; physical deterioration triggers urgency but omits \texttt{health\_professional}. We retain both failures and do not modify the checksum. This illustrates ChildEsc's presently supported use: auditing whether an implementation conforms to an inspectable routing contract, not ranking models or certifying safety.
+\paragraph{Protocol and replay.} Version 1.1 was \emph{pre-specified after a failed pilot}; it produced three complete Claude trials. Version 1.2 then froze the two comparison families, first-party endpoints, prompt/schema hashes, inclusion rules, and a result-dependent claim gate before new calls. Three Gemini trials and two GPT trials completed; one GPT trial failed at 79/80 and remains unscored without retry. Every scored trial replays credential-free with matching normalized hashes. Trial means and ranges are reported without pooling repetitions as independent items.
 
-\paragraph{Prompted-router protocol and replay.} The first frozen protocol's 256-token allowance was exhausted by provider-default reasoning on some pilot items; later attempts also exhausted account credits. We retain those incomplete runs without scores. Version 1.1 was \emph{pre-specified after a failed pilot}, not before all model-output inspection: before any v1.1 call it fixed the dated model, first-party provider, low reasoning, 1,024-token cap, prompt/schema hashes, three sequential trials, one call per item, no repair, and the incomplete-run rule. A metadata-only amendment then documented OpenRouter's public alias-to-canonical model mapping after the smoke exposed it. All 240 full-trial calls returned valid routes from Anthropic, and credential-free replay reproduced each normalized decision hash. Results are trial means and ranges; repetitions are not pooled as independent items.
+\section{Technical utility and review implications}
+
+ChildEsc accepts any router that emits the two-field action-target schema and produces item-level failures, grouped intervals, repeatability diagnostics, and a cache-replayable audit trail. This supports three bounded uses: pre-release comparison of routing-policy versions, diagnosis of action-correct recipient errors, and structured review of implicated-adult defaults. A post-freeze policy-exposed diagnostic checksum passes 36/39 assertions across 7/9 contract families and retains both implementation failures; full checksum, contract, and robustness tables appear in the appendix. This is an executable object for safeguard deliberation, not a deployment gate.
+
+An incomplete informal editorial read by a non-professional individual with mental-health knowledge revealed a dual interpretation of \texttt{continue\_support}: supportive conversation may continue even when a handoff is required. We therefore define actions as handoff obligations, not response style. The read also foregrounded missing medical/immediacy context and jurisdiction-dependent recipients, but is not validation, changes no v0.1 label, and provides no basis for automatic reporting, contact, or dispatch. Instead, it motivates an explicit abstain or clarify state and uncertainty-valued targets for v0.2.
 
 \section{Validity, impact, and next evaluation}
 
-The central validity threat is circularity: scenarios, initial labels, lexical rules, probes, and prose were drafted in one LLM-assisted workflow. Source traceability improves auditability, not validity. The prompted evidence covers one post-pilot-configured router on the same provisional synthetic specification, not a model comparison or independent holdout. The small English convenience set omits dialect, code-switching, disability, culture, long relationships, and adversarial obfuscation. Severity is operational rather than clinical; v0.1 also does not isolate information-seeking as an action, unlike CARE-Bench. Target validity measures taxonomy conformance, not accessible, consensual, locally available, or successful handoff. One incomplete informal editorial read by a non-professional individual with mental-health knowledge prompted the action-semantics clarification but is not validation; no response statistic, quotation, or relabeling is reported. No practitioner or youth validation has occurred. ``Child-centered'' is therefore a design objective, not a measured property.
+The central validity threat is circularity: scenarios, initial labels, lexical rules, probes, and prose were drafted in one LLM-assisted workflow. Source traceability improves auditability, not validity. The three prompted systems use the same provisional synthetic specification and prompt; this is construct replication, not an independent holdout or defensible leaderboard. The small English convenience set omits dialect, code-switching, disability, culture, long relationships, and adversarial obfuscation. Severity is operational rather than clinical; v0.1 also lacks a formal information-needed state, unlike CARE-Bench. Target validity measures taxonomy conformance, not accessible, consensual, locally available, or successful handoff. The incomplete informal editorial read is not validation; no response statistic, quotation, or relabeling is reported. No practitioner or youth validation has occurred. ``Child-centered'' is therefore a design objective, not a measured property.
 
-Before comparative or generalization claims, qualified practitioners must independently review the construct, action thresholds, target constraints, missing context, and jurisdictional feasibility; youth advisors must separately review plausibility, agency, and accessibility without personal disclosure. Disagreement and pre-review labels will be retained. Only then will independent authors create family-locked public and controlled-access tests without seeing the router. This sequence follows benchmark-validity guidance to connect phenomenon, task, items, metrics, and claims while separating development from test evidence \citep{bean2025construct}.
+Before superiority or generalization claims, qualified practitioners must independently review the construct, action thresholds, target constraints, missing context, and jurisdictional feasibility; youth advisors must separately review plausibility, agency, and accessibility without personal disclosure. Disagreement and pre-review labels will be retained. Only then will independent authors create family-locked public and controlled-access tests without seeing the router. This sequence follows benchmark-validity guidance to connect phenomenon, task, items, metrics, and claims while separating development from test evidence \citep{bean2025construct}.
 
 \paragraph{Evidence gates.} Gate 1 versions practitioner revisions rather than overwriting v0.1 and reports label distributions, uncertainty, and disagreement. Gate 2 keeps youth judgments of agency and plausibility separate from professional risk judgments. Gate 3 locks duplicate clusters by family, reserves a controlled-access test, and evaluates it once without router tuning. Gate 4 audits any mapper from open-ended responses into ChildEsc actions against independent human coding. Failure at any gate blocks claims that depend on the next one; no gate alone certifies deployment safety.
 
@@ -123,7 +119,72 @@ ChildEsc's practical use is deliberately narrow: give developers and child-safet
 
 \section{Artifact and schema}
 
-The anonymous supplement contains standard-library Python source, 51 tests for the frozen scientific and manuscript path, 25 provider-path tests, source families, a dated source register, retrospective family rationale map, controlled authoring protocol, frozen contract probes, generated data, item-level predictions and assertions, aggregate metrics, error analyses, ablations, robustness checks, prospective validation materials, and exact paper tables. Running \texttt{make reproduce} regenerates all 80 items and every deterministic reported value; prompted results replay from content-addressed caches. Regression tests verify input boundaries, source IDs, complete family mapping, and synchronization between versioned results and the manuscript.
+The anonymous supplement contains standard-library Python source, 53 tests for the frozen scientific and manuscript path, 26 provider-path tests, source families, a dated source register, retrospective family rationale map, controlled authoring protocol, frozen contract probes, generated data, item-level predictions and assertions, aggregate metrics, error analyses, ablations, robustness checks, prospective validation materials, and exact paper tables. Running \texttt{make reproduce} regenerates all 80 items and every deterministic reported value. All eight scored prompted runs were replayed from content-addressed caches before packaging; raw provider responses and caches are excluded. Regression tests verify input boundaries, source IDs, complete family mapping, target-failure reconciliation, and synchronization between versioned results and the manuscript.
+
+\section{Cross-system prompted audit}
+
+Protocol v1.2 preserved the v0.1 benchmark and v1 prompt/schema while freezing two comparison families before their first v1.2 call. OpenRouter routed Claude to Anthropic, Gemini to Google AI Studio, and GPT to OpenAI; fallbacks were disabled and returned identities were checked against dated public endpoint snapshots. Strict structured outputs, low reasoning, a 1,024-token cap, omitted temperature, one attempt per item, and no repair were common across systems. Five v1.2 full trials completed; a sixth GPT trial returned one provider error at 79/80 and remains incomplete and unscored. Together with three v1.1 Claude trials, all eight scored runs replay offline with matching normalized decision hashes.
+
+\begin{table}[h]
+  \caption{Complete prompted-system trial means and ranges. Fail is conditioned on action-correct handoffs.}
+  \centering
+  \scriptsize
+  \begin{tabular}{lrrrr}
+    \toprule
+    System & Action & Exact & Gap & Fail \\
+    \midrule
+    Claude Sonnet 5 & .808 [.800,.813] & .517 [.513,.525] & .292 [.275,.300] & .427 [.407,.436] \\
+    Gemini 3.1 Pro & .800 [.788,.813] & .392 [.388,.400] & .408 [.388,.425] & .612 [.585,.630] \\
+    GPT-5.5 & .831 [.813,.850] & .338 [.313,.363] & .494 [.488,.500] & .712 [.684,.741] \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+All 247 action-correct target failures across complete prompted trials include an extra unpermitted class. Gemini's 98 failures include two that also intersect a forbidden class; the other systems emit no forbidden class in scored trials. This decomposition is deterministic and reasons may co-occur. The result does not establish which provisional target set is substantively correct.
+
+\section{Deterministic diagnostic baselines}
+
+\begin{table}[h]
+  \caption{Policy-exposed deterministic results. Action and Exact use all 80 items; Under and Valid use the 58 escalation-required items.}
+  \centering
+  \scriptsize
+  \begin{tabular}{lrrrrrr}
+    \toprule
+    Policy & Action & Urgent & Under & Valid & Gap & Exact \\
+    \midrule
+    Keyword & .225 & .189 & .879 & .121 & .000 & .225 \\
+    Agnostic & .250 & .000 & .862 & .345 & .013 & .238 \\
+    ChildEsc-Rules & .650 & .757 & .328 & .552 & .113 & .538 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Source-informed relational contract audit}
+
+Aggregate labels cannot state how a route should change when one operational factor changes. We froze nine matched, non-procedural probe families after v0.1 and before their first execution. Public sources motivate each relation but do not determine reference labels. The author had inspected the checksum; this is a post-freeze mechanistic audit, \emph{not held-out} evaluation.
+
+\begin{table}[h]
+  \caption{Frozen checksum contract audit. Pass is atomic assertions; family pass requires all assertions.}
+  \centering
+  \scriptsize
+  \begin{tabular}{llll}
+    \toprule
+    Controlled factor & Observed actions & Pass & Family \\
+    \midrule
+    Temporal immediacy & Urgent$\rightarrow$Urgent & 3/5 & fail \\
+    Resolved negation & Urgent$\rightarrow$Continue & 3/3 & pass \\
+    First/third person & Urgent$\rightarrow$Human & 4/4 & pass \\
+    Implicated adult & Human$\rightarrow$Human & 6/6 & pass \\
+    AI dependency & Continue$\rightarrow$Human & 4/4 & pass \\
+    Coercive secrecy & Continue$\rightarrow$Human & 4/4 & pass \\
+    Online threat & Boundary$\rightarrow$Urgent & 5/5 & pass \\
+    Medical deterioration & Boundary$\rightarrow$Urgent & 4/5 & fail \\
+    Explicit/implicit age & Human$\rightarrow$Human & 3/3 & pass \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Overall, 36/39 assertions and 7/9 families pass. The phrase ``safe right now'' triggers urgency despite explicit negation because \texttt{right now} is matched globally; physical deterioration triggers urgency but omits \texttt{health\_professional}. Both failures remain unchanged.
 
 \section{Relationship to closest benchmarks}
 
@@ -149,12 +210,14 @@ CAREBench already evaluates crisis referral, de-escalation, and redirection towa
 
 \section{Metric details}
 
-Unsafe-target rate is conditioned on items with at least one forbidden target. Strict valid-target rate is conditioned on items with at least one permitted target. Exact route requires an exact action match; if permitted targets exist, the predicted set must be nonempty and a subset of the permitted set, with no forbidden intersection; otherwise it must be empty. The action-route gap equals exact action accuracy minus exact-route accuracy; the companion failure rate conditions target-invalid routes on action-correct handoffs. Counterfactual sensitivity is conditioned on adjacent family transitions where the reference action increases. Family bootstrap resampling keeps each four-item family intact and uses seed 20260829 for 1,000 repetitions.
+Unsafe-target rate is conditioned on items with at least one forbidden target. Strict valid-target rate is conditioned on items with at least one permitted target. Exact route requires an exact action match; if permitted targets exist, the predicted set must be nonempty and a subset of the permitted set, with no forbidden intersection; otherwise it must be empty. The action-route gap equals exact action accuracy minus exact-route accuracy; the companion failure rate conditions target-invalid routes on action-correct handoffs. Atomic failure reasons are no emitted target, an emitted target outside the permitted set, and intersection with a forbidden set. Counterfactual sensitivity is conditioned on adjacent family transitions where the reference action increases. Family bootstrap resampling keeps each four-item family intact and uses seed 20260829 for 1,000 repetitions.
 
 \section{Diagnostic failure analysis}
 \label{app:diagnostics}
 
 Table~\ref{tab:diagnostics} reports every developer-specified input-evidence ablation and orthographic transformation. Agree is action agreement with the untransformed full-conversation run. Under is conditioned on the 58 escalation-required items, Valid on those with permitted targets, and Unsafe on the 12 items with a forbidden target. The latest-turn condition is a deliberately destructive evidence ablation because every decisive cue occurs on the second user turn. Adult inference is disabled in a scoped call and restored afterward, leaving action logic and conversation text unchanged. Orthographic tests are developer-authored, policy-exposed diagnostics rather than paraphrase or dialect generalization tests.
+
+Disabling adult-implication inference produces a forbidden target in 7/12 implicated-adult items; doubled spaces reduce action agreement to 45.0\%. These failures remain unchanged.
 
 \begin{table}[h]
   \caption{Frozen-router diagnostic analyses.}
@@ -191,7 +254,7 @@ No independently authored holdout is reported. The supplement specifies a sealed
 
 \section{Compute, ethics, and LLM usage}
 
-Deterministic experiments use no GPU or training and complete in under one second on a laptop-class CPU. The reported prompted smoke plus three full trials made 244 OpenRouter calls, cost \$0.635, and used no tools or generated counseling text; failed development pilots cost another \$0.215. A general-purpose LLM coding assistant drafted candidate scenarios and initial labels, implementation, literature notes, and manuscript text. The prompted router generated reported routing decisions, but no LLM judged outputs. Public release must retain content warnings and must not support automated data disclosure, emergency or caregiver contact, or claims of clinical validation.
+Deterministic experiments use no GPU or training and complete in under one second on a laptop-class CPU. Reported-system smokes, complete trials, and the retained incomplete trial made 732 OpenRouter calls and cost \$2.635; earlier failed development pilots cost another \$0.215. Calls used no tools and generated only routing JSON, not counseling text. A general-purpose LLM coding assistant drafted candidate scenarios and initial labels, implementation, literature notes, and manuscript text. Prompted systems generated reported routing decisions, but no LLM judged outputs. Public release must retain content warnings and must not support automated data disclosure, emergency or caregiver contact, or claims of clinical validation.
 
 \clearpage
 \input{checklist}

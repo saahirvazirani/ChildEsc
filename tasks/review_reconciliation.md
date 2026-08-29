@@ -185,3 +185,50 @@ The paper will keep the review disclosure short, state the action-semantics
 repair, elevate missing-context and jurisdiction questions, and preserve the
 no-validation boundary. Details remain internal because the form is incomplete
 and not authorized research data.
+
+## Deadline-day final audit, 2026-08-29
+
+The final cross-system manuscript was reviewed against the earlier Gemini
+issues-only review, the incomplete informal editorial form, the frozen v1.2
+protocol, and the versioned result summary. Two additional headless Gemini CLI
+attempts were made in read-only plan mode; both stalled without returning a
+review and therefore are not counted as completed evidence.
+
+### Confirmed validity or release defects repaired
+
+1. The anonymous supplement text could be read as promising cache replay even
+   though raw provider responses and caches are intentionally excluded. The
+   paper now states that all eight scored runs were replayed before packaging
+   and limits `make reproduce` to deterministic artifacts.
+2. Two new synchronization tests changed the manuscript/scientific suite count
+   from 51 to 53. LaTeX, DOCX, and tests now agree on 53.
+3. A bold indicator glyph introduced an offline Tectonic font dependency. The
+   metric is now an explicit piecewise predicate and compiles without network.
+4. DOCX rendering exposed overlapping title lines and an orphaned table
+   caption. Explicit title leading and keep-with-next caption rules repair both;
+   the final accessibility audit reports zero findings.
+
+### Plausible reviewer concerns, bounded rather than hidden
+
+1. Permitted and forbidden targets remain provisional author specifications,
+   so target failure is taxonomy conformance rather than demonstrated harm.
+2. `adult_implicated` is not passed to prompted routers; the deterministic
+   checksum infers implication from conversation text, and the manuscript
+   retains the ablation failure rather than claiming independent validity.
+3. Reaction delay is not estimated because every v0.1 decisive cue occurs on a
+   fixed turn. The metric remains omitted rather than censored into a favorable
+   score.
+4. The eight complete trials share one exposed synthetic specification and do
+   not support a leaderboard, population estimate, or independent holdout
+   claim. The incomplete 79/80 GPT trial remains retained and unscored without
+   retry.
+5. The informal review is editorial only. It motivates explicit handoff
+   semantics and a future abstain/clarify state but contributes no labels,
+   quotation, statistic, or validation claim.
+
+### Optional improvements deferred
+
+Independent practitioner and youth review, jurisdiction-specific target
+authoring, an information-needed state, a family-locked controlled test, and a
+human rubric for supportive-response quality remain post-submission work. None
+can be completed defensibly as a deadline-day manuscript edit.

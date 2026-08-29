@@ -167,3 +167,24 @@ f5c077b6842706266cd99077b1cb902f5aa019ee555728c6bfa5d518217b0e12  normalized Gem
 cd6996a69baba733e100f9cc146797dea1207f5a5b2ead49c345299f599a2fef  normalized GPT trial 1 and replay
 24d72adfbdd453a2b14e7c5b70c1867804bd8a8d60f160a8ec7e4cfe62b4aff8  normalized GPT trial 2 and replay
 ```
+
+## Final anonymous build audit, 2026-08-29
+
+The final PDF uses four content pages; references begin on page 5, the appendix
+begins later on page 5, and the checklist begins on page 9. All 15 PDF pages and
+all six DOCX pages were rendered and inspected. The DOCX accessibility audit
+reported zero high-, medium-, or low-severity findings.
+
+The 83-entry anonymous supplement was extracted to a fresh temporary directory.
+`make reproduce` passed 53 scientific/manuscript tests and five release tests;
+`make llm-test` passed 26 provider-path tests. All 16 packaged result artifacts
+matched the workspace byte-for-byte. The release audit found no secret, local
+path, participant-data path, raw provider response, or cache. The prompted
+results are versioned evidence that was replayed before packaging, not outputs
+that the public archive can independently re-query or replay.
+
+```text
+1dac8dcca932b68a38215c532dd56f1dfed00140bb4d6d612914732eba2cd308  paper/ChildEsc_Workshop_Paper.pdf
+f4197a9e13e3747bbd2d408b4dbfc4d6b6170b6917bf846b6c619ed4ec07d04a  paper/ChildEsc_Workshop_Paper.docx
+462991559bfba29c3a7c08564d9eae424e2d32680e5278b363b9e31765e951c1  paper/childesc_anonymous_supplement.zip
+```

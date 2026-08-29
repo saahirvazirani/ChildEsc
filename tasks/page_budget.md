@@ -11,18 +11,24 @@ Verified on 2026-08-17 from the NeurIPS 2026 Child Safety in AI workshop call:
 
 Source: https://childsafety-ai.github.io/
 
-## Final acceptance build boundary (2026-08-19)
+## Final acceptance build boundary (verified 2026-08-29)
 
 - Content pages: 1-4.
 - References begin: page 5.
 - Appendix begins: page 5 after the references.
-- Checklist begins: page 8.
-- Total compiled pages: 14.
+- Checklist begins: page 9.
+- Total compiled pages: 15.
 
 The acceptance-focused paper is compliant and uses the full four-page content
 allowance without changing the official template. The completed prompted-router
 diagnostic, its post-pilot validity boundary, and prospective validation outputs
-occupy the fourth page; the 988 follow-up proposal appears only in the appendix.
+occupy the fourth page. Unsupported automatic contact, disclosure, dispatch,
+and timed-outreach proposals are excluded from all submission sources.
+
+The final render was inspected at 160 DPI. The formal route-validity predicate,
+three-system result table, and failure-decomposition table are legible; no
+content spills onto page 5, and visible hyperlink boxes are suppressed without
+changing template geometry.
 
 ## Revision allocation
 
@@ -35,7 +41,7 @@ occupy the fourth page; the 988 follow-up proposal appears only in the appendix.
 
 Detailed error tables, ablations, robustness checks, protocols, and extended limitations belong in the unlimited appendix.
 
-The fourth page is not filled with more policy-exposed score detail. Its acceptance purpose is to show: (1) the exact construct and supported claim, (2) the distinction from CAREBench, KIDBench, and the August 2026 CARE-Bench triage benchmark, (3) source-informed relational contract results, (4) validation gates required before comparative or deployment claims, and (5) the bounded, non-operational status of the proposed delegated 988 follow-up extension.
+The fourth page is not filled with more policy-exposed score detail. Its acceptance purpose is to show: (1) the exact construct and supported claim, (2) the distinction from CAREBench, KIDBench, and the August 2026 CARE-Bench triage benchmark, (3) the review-form-informed need for explicit action semantics and an abstain/clarify state, (4) validation gates required before comparative or deployment claims, and (5) concrete questions the workshop can help resolve.
 
 ## Acceptance revision allocation, 2026-08-19
 
@@ -50,10 +56,11 @@ replace checksum breadth rather than add another table:
 | 4 | Earn workshop fit | Validity boundary, practical use, and three concrete workshop questions |
 
 Keyword and severity-agnostic rows, full intervals, stress tests, the complete
-contract audit, procedural validation detail, and delegated 988 follow-up move
-to the appendix. The live-result branch is active: one pinned prompted router
-has three complete replayable trials. The checksum remains as an independent
-mechanistic diagnostic rather than the headline result.
+contract audit, and procedural validation detail move to the appendix. The
+reported audit contains eight complete replayable trials across three prompted
+systems; one additional GPT trial failed at 79/80 and remains unscored without
+retry. The checksum remains an independent mechanistic diagnostic rather than
+the headline result.
 
 ## Verification rule
 

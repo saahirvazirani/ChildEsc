@@ -1281,3 +1281,20 @@ an AoE buffer; do not spend the buffer on optional experiments.
   benchmark, service-partnership, data-transfer, or deployment claim appears.
 - [ ] Practitioner and youth validation remain prospective and are correctly
   disclosed as incomplete.
+
+## Deadline-day execution outcome
+
+| Task | Status | Evidence |
+|---|---|---|
+| 47--49 | Complete | v1.2 protocol, endpoint freeze, claim gates, and tested target-failure decomposition |
+| 50--51 | Complete | Both four-item qualification smokes passed identity, schema, and replay gates |
+| 52 | Complete | Three Gemini trials completed and replayed |
+| 53 | Complete with disclosed incomplete run | Two GPT trials completed; trial 3 remains 79/80 and unscored without retry |
+| 54--57 | Complete | Frozen cross-system evidence, four-page rewrite, appendix reallocation, and bounded use documentation |
+| 58 | Complete | Earlier read-only Gemini findings and informal editorial form reconciled; two additional headless attempts stalled and are not counted |
+| 59 | Complete locally | PDF, DOCX, and anonymous supplement built, rendered, clean-room tested, hashed, and audited |
+| External submission | Pending user action | OpenReview upload and uploaded-preview inspection require the submission account |
+
+All local acceptance gates are complete. The only remaining unchecked items are
+external upload metadata, OpenReview preview inspection, and final submission
+before the workshop deadline.

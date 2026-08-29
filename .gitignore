@@ -34,6 +34,8 @@ node_modules
 # Generated paper artifacts and render checks
 /paper/build/
 /paper/rendered_*/
+/paper/rendered-final/
+/paper/docx-render-final/
 /paper/tmp/
 /paper/template/
 /paper/*.aux

@@ -22,8 +22,8 @@ class ArtifactSynchronizationTests(unittest.TestCase):
 
     def test_manuscript_reports_current_test_count(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
-        self.assertIn("51 tests for the frozen scientific and manuscript path", manuscript)
-        self.assertIn("25 provider-path tests", manuscript)
+        self.assertIn("53 tests for the frozen scientific and manuscript path", manuscript)
+        self.assertIn("26 provider-path tests", manuscript)
 
     def test_latex_table_matches_versioned_metrics(self) -> None:
         systems = json.loads(
@@ -50,33 +50,52 @@ class ArtifactSynchronizationTests(unittest.TestCase):
             )
             self.assertIn(expected, manuscript)
 
-    def test_latex_table_and_claims_match_prompted_router_summary(self) -> None:
+    def test_latex_table_and_claims_match_cross_system_summary(self) -> None:
         result = json.loads(
-            (ROOT / "results" / "llm_v1_1_summary.json").read_text(
+            (ROOT / "results" / "llm_v1_2_summary.json").read_text(
                 encoding="utf-8"
             )
         )
-        metrics = result["metrics"]
         manuscript = self.manuscript()
+        labels = {
+            "openrouter/anthropic/claude-sonnet-5-20260630": "Claude Sonnet 5",
+            "openrouter/google/gemini-3.1-pro-preview": "Gemini 3.1 Pro",
+            "openrouter/openai/gpt-5.5": "GPT-5.5",
+        }
         fields = (
             "action_accuracy",
-            "urgent_recall",
-            "under_escalation_rate",
-            "valid_target_rate",
-            "action_route_gap",
             "exact_route_accuracy",
+            "action_route_gap",
+            "action_correct_target_failure_rate",
         )
-        expected = " & ".join(
-            [
-                "Prompted router$^{\\dagger}$",
-                *(paper_number(float(metrics[field]["mean"])) for field in fields),
-            ]
-        )
-        self.assertIn(expected, manuscript)
-        self.assertIn("29.2-point action-route gap", manuscript)
-        self.assertIn("22.5\\% of items varied in full route", manuscript)
-        self.assertIn("1.3\\% varied in action", manuscript)
+        for system_key, label in labels.items():
+            system = result["systems"][system_key]
+            expected = " & ".join(
+                [
+                    label,
+                    str(system["complete_trials"]),
+                    *(
+                        paper_number(float(system["metric_summary"][field]["mean"]))
+                        for field in fields
+                    ),
+                    paper_number(float(system["route_instability_rate"])),
+                ]
+            )
+            self.assertIn(expected, manuscript)
+        self.assertIn("29.2--49.4-point action-route gaps", manuscript)
+        self.assertIn("42.7--71.2\\%", manuscript)
+        self.assertIn("one GPT trial failed at 79/80", manuscript)
         self.assertIn("pre-specified after a failed pilot", manuscript)
+
+    def test_main_paper_formalizes_and_decomposes_route_failures(self) -> None:
+        manuscript = self.main_content()
+
+        self.assertIn("V_i", manuscript)
+        self.assertIn("T_i\\subseteq P_i", manuscript)
+        self.assertIn("Failure decomposition across complete trials", manuscript)
+        self.assertIn("Claude Sonnet 5 & 164 & 70 & 70 & 0 & 0", manuscript)
+        self.assertIn("Gemini 3.1 Pro & 160 & 98 & 98 & 0 & 2", manuscript)
+        self.assertIn("GPT-5.5 & 111 & 79 & 79 & 0 & 0", manuscript)
 
     def test_title_and_abstract_center_safe_recipient_gap(self) -> None:
         systems = json.loads(
@@ -108,18 +127,20 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         self.assertIn("Yet action-only evaluations", abstract)
         self.assertIn("We introduce ChildEsc", abstract)
         self.assertIn("80 LLM-assisted synthetic conversations", abstract)
-        self.assertIn("80.8\\% mean action accuracy", abstract)
-        self.assertIn("51.7\\% exact routing", abstract)
-        self.assertIn("29.2-point gap", abstract)
+        self.assertIn("80.0--83.1\\% mean action accuracy", abstract)
+        self.assertIn("33.8--51.7\\% exact routing", abstract)
+        self.assertIn("29.2--49.4-point gaps", abstract)
+        self.assertIn("three prompted systems", abstract)
         self.assertIn("specification-conformance diagnostics", abstract)
         for phrase in (
             "increasingly mediates emotional support",
             "Yet action-only evaluations",
             "We introduce",
             "ChildEsc, a works-in-progress testbed",
-            "80.8% mean action accuracy",
-            "51.7% exact routing",
-            "29.2-point",
+            "80.0--83.1% mean action accuracy",
+            "33.8--51.7% exact routing",
+            "29.2--49.4-point",
+            "three prompted systems",
             "specification-conformance",
         ):
             self.assertIn(phrase, docx_builder)
@@ -131,6 +152,8 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         self.assertIn("does not authorize autonomous contact", manuscript)
         self.assertIn("incomplete informal editorial read", manuscript)
         self.assertIn("but is not validation", manuscript)
+        self.assertIn("dual interpretation", manuscript)
+        self.assertIn("abstain or clarify", manuscript)
         self.assertIn("No practitioner or youth validation has occurred", manuscript)
 
     def test_main_content_asks_four_actionable_workshop_questions(self) -> None:
@@ -219,6 +242,20 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8").lower()
         for phrase in ("ground truth", "ground-truth", "clinically valid", "model safety"):
             self.assertNotIn(phrase, manuscript)
+
+    def test_supplement_points_to_frozen_cross_system_evidence(self) -> None:
+        supplement = (ROOT / "paper" / "SUPPLEMENT_README.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("results/llm_v1_2_summary.json", supplement)
+        self.assertIn("results/llm_v1_2_target_failures.csv", supplement)
+        self.assertIn("all eight scored trials", supplement.lower())
+        self.assertIn("incomplete 79/80 GPT trial", supplement)
+        self.assertIn("tasks/llm_evaluation_protocol_v1_2.md", supplement)
+        self.assertIn(
+            "raw provider responses and caches are excluded", self.manuscript().lower()
+        )
 
     def test_manuscript_explains_two_layer_safeguard_scope(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")

@@ -204,22 +204,27 @@ results collected under different prompt/schema hashes as if they were the same
 evaluation. Provider/model names and cache files are experiment provenance, not
 evidence of clinical validity or deployment safety.
 
-## Reported v1.1.1 Result
+## Reported v1.2 Cross-System Audit
 
-After incomplete v1.0 pilots exposed reasoning-budget and credit failures, a
-new protocol fixed the provider, model identity rule, reasoning policy, token
-budget, three sequential trials, and no-repair gate. This is transparently a
-post-pilot configuration, not a pre-output preregistration or independent
-holdout.
+After incomplete v1.0 pilots exposed reasoning-budget and credit failures,
+protocol v1.1 fixed the Claude configuration and yielded three complete trials.
+Protocol v1.2 then froze two comparison model families, first-party endpoint
+requirements, hashes, inclusion rules, and a result-dependent claim gate before
+the comparison calls. This remains a post-pilot study, not a preregistration,
+independent holdout, or leaderboard.
 
-All three 80-item trials completed with valid structured routes and replayed
-without credentials. Across trials, mean action accuracy was 80.8% and mean
-exact route accuracy was 51.7%, producing a 29.2-point action-route gap.
-Action-correct target failures ranged from 40.7% to 43.6% of handoffs. Action
-instability was 1/80 items, while full-route instability was 18/80. These are
-diagnostics against the same provisional, policy-exposed synthetic labels; they
-do not establish generalization or real-world safety. The checked-in aggregate
-is `results/llm_v1_1_summary.json`; raw responses remain excluded from Git.
+Eight complete 80-item trials across Claude Sonnet 5, Gemini 3.1 Pro Preview,
+and GPT-5.5 replayed without credentials. Mean action accuracy spans
+80.0--83.1%, while exact route accuracy spans 33.8--51.7%, producing
+29.2--49.4-point action-route gaps. Among action-correct handoffs,
+42.7--71.2% violate target constraints. Every one of the 247 such failures
+includes an extra unpermitted target; two Gemini trial-items also include a
+forbidden target. One additional GPT trial ended at 79/80 after a provider
+error and remains incomplete and unscored without retry. These are diagnostics
+against the same provisional, policy-exposed synthetic labels; they do not
+establish generalization, clinical validity, model superiority, or real-world
+safety. The checked-in aggregate is `results/llm_v1_2_summary.json`; raw
+responses remain excluded from Git.
 
 ## Repeated-Trial Analysis
 
@@ -228,9 +233,9 @@ decisions without treating repeated outputs as independent benchmark items:
 
 ```bash
 PYTHONPATH=src python3 -m childesc.llm_analysis \
-  --run results/llm/gemini/trial-1 \
-  --run results/llm/gemini/trial-2 \
-  --run results/llm/gemini/trial-3 \
+  --run results/llm/openrouter-gemini/trial-1 \
+  --run results/llm/openrouter-gemini/trial-2 \
+  --run results/llm/openrouter-gemini/trial-3 \
   --output results/llm/analysis
 ```
 

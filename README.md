@@ -178,8 +178,9 @@ payload.
 Aggregate complete repeated trials with `python3 -m childesc.llm_analysis` and
 one `--run` argument per trial directory. The analysis reports action/full-route
 instability and the action-route gap, and retains item-level cases whose action
-is correct but whose target selection invalidates the route. It does not use an
-LLM judge.
+is correct but whose target selection invalidates the route. Those failures are
+decomposed deterministically into missing, unpermitted-extra, and forbidden
+targets. It does not use an LLM judge.
 
 Cache files contain prompts, synthetic conversations, and raw provider
 responses, but never API keys. They are ignored by Git. Do not use this command
@@ -206,6 +207,9 @@ provider API sources, full-run workflow, and interpretation limits.
 | `results/contract_assertions.csv` | Every retained contract pass and failure. |
 | `results/contract_table.csv` | Compact contract summary for the paper. |
 | `results/llm_v1_1_summary.json` | Versioned aggregate for the complete, replayed prompted-router experiment. |
+| `results/llm_v1_2_summary.json` | Three-system prompted-routing aggregate with complete-trial gating. |
+| `results/llm_v1_2_paper_table.csv` | Compact prompted-system result table. |
+| `results/llm_v1_2_target_failures.csv` | Action-correct recipient failures and atomic causes. |
 
 Do not interpret these outputs as model capability estimates. The source
 scenarios, initial reference labels, and lexical router were developed in the
@@ -222,15 +226,16 @@ appropriately governed human-validation study.
 
 Practitioner and youth validation remain prospective and are correctly
 disclosed as incomplete. One incomplete informal editorial read by a
-non-professional individual with mental-health knowledge prompted wording
-clarification and reinforced the planned missing-context review only; it is
-outside the practitioner protocol and is not validation evidence.
+non-professional individual with mental-health knowledge exposed a dual
+interpretation of handoff actions and reinforced the planned missing-context
+and jurisdiction review. It changed no label, is outside the practitioner
+protocol, and is not validation evidence.
 
 | Evidence layer | Status | What may be claimed |
 |---|---|---|
 | Schema, deterministic generation, leakage, metrics, and synchronization tests | Complete | The implementation satisfies its tested technical contract. |
 | Relational contract audit | Complete; developer-authored | 36/39 atomic assertions passed across 7/9 families; this is mechanistic conformance only. |
-| Prompted-router routing audit | Complete for one pinned system; post-pilot protocol | Three 80-item trials are complete and cache-replayable; findings apply only to the provisional synthetic specification. |
+| Prompted-router routing audit | Complete across three pinned systems; post-pilot protocols | Eight 80-item trials completed and were cache-replayed before evidence freeze; raw caches are not published. One additional GPT trial failed at 79/80 and is retained unscored. Findings apply only to the provisional synthetic specification. |
 | Independent holdout | Not completed | No generalization claim. |
 | Practitioner construct review | Protocol prepared; not started | No expert consensus, clinical validity, or practitioner validation claim. |
 | Youth-participatory review | Protocol prepared; not started | No `youth-informed` or `youth-validated` claim. |
