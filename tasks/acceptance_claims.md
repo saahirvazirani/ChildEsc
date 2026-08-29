@@ -92,3 +92,34 @@ model outputs. The frozen base assignment uses eight 30-item packets over all
 missing-context judgments, revisions, and unresolved disagreement rather than
 manufacturing one consensus gold label. Youth participation remains prospective
 pending separate minors-specific ethics and safeguarding approval.
+
+## Deadline-day comparison extension, 2026-08-29
+
+Protocol v1.2 extends the same frozen routing-only task to the Gemini and GPT
+families named in the original model manifest. These systems are construct
+replications, not competitors. Every complete pre-specified run must be
+disclosed, and the main claim is selected by the frozen result gate rather than
+by favorable scores.
+
+The incomplete informal review form remains editorial feedback only. Its
+action choices and rationales exposed three useful manuscript risks without
+validating any label: supportive conversation can be interpreted as compatible
+with referral, missing immediacy/medical context can make forced actions
+ambiguous, and target choices can depend on jurisdiction. The submission must
+therefore define actions as handoff obligations, treat abstention/clarification
+as a v0.2 question, and preserve target uncertainty and disagreement in future
+validation. Suggestions of automatic reporting, dispatch, or 988 involvement
+are not evidence and remain outside ChildEsc.
+
+Additional permitted claims depend on complete v1.2 evidence:
+
+- positive gaps in both comparison families permit a bounded statement that the
+  action-route gap recurs across three prompted systems on ChildEsc v0.1;
+- one completed positive comparison permits a statement that the gap appears in
+  more than one prompted system; and
+- heterogeneous or near-zero gaps permit only the statement that action-only
+  accuracy incompletely characterizes routing and the discrepancy is
+  system-dependent.
+
+No comparison outcome permits a model winner, external generalization,
+validated-benchmark, clinical, response-quality, or deployment claim.

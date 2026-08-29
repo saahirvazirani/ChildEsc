@@ -189,5 +189,46 @@
       "v1-1-trial-2",
       "v1-1-trial-3"
     ]
+  },
+  "v1_2_extension": {
+    "cost_ceiling_usd": 5.0,
+    "freeze_date": "2026-08-29",
+    "models": [
+      {
+        "accepted_returned_model": "google/gemini-3.1-pro-preview",
+        "backend_name": "google/gemini-3.1-pro-preview-20260219",
+        "endpoint_provider_slug": "google-ai-studio",
+        "request_model": "google/gemini-3.1-pro-preview",
+        "required_returned_provider": "Google AI Studio",
+        "role": "construct_replication",
+        "snapshot_path": "experiments/openrouter_gemini_snapshot_2026-08-29.json",
+        "snapshot_sha256": "f0cb4e8c228fc298de7a656e4ae489bb19e94acbeea14562a3f6ba78751fb93c"
+      },
+      {
+        "accepted_returned_model": "openai/gpt-5.5",
+        "backend_name": "openai/gpt-5.5-20260423",
+        "endpoint_provider_slug": "openai",
+        "request_model": "openai/gpt-5.5",
+        "required_returned_provider": "OpenAI",
+        "role": "construct_replication",
+        "snapshot_path": "experiments/openrouter_gpt_snapshot_2026-08-29.json",
+        "snapshot_sha256": "37e8e088362b3fea138e2551594826c58e45ba39f5bf6cbcb67dba8ed48159bd"
+      }
+    ],
+    "protocol": {
+      "path": "tasks/llm_evaluation_protocol_v1_2.md",
+      "sha256": "44271373927c9f777e8f928231c05f8c629b3c0fb6548d271b23e2bea4cc9daf",
+      "version": "1.2.0"
+    },
+    "selection_policy": "named_in_original_manifest_and_frozen_before_v1_2_calls",
+    "settings": {
+      "max_output_tokens": 1024,
+      "reasoning_effort": "low",
+      "reasoning_excluded": true,
+      "temperature": null,
+      "timeout_seconds": 60,
+      "trials_per_model": 3
+    },
+    "status": "frozen_before_calls"
   }
 }

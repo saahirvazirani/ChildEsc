@@ -7,6 +7,7 @@ from childesc.llm_analysis import (
     paired_family_bootstrap_difference,
     run_analysis,
     summarize_trials,
+    target_failure_reasons,
 )
 from childesc.metrics import compute_metrics
 
@@ -96,6 +97,63 @@ class LLMAnalysisTests(unittest.TestCase):
         self.assertEqual(len(failures), 1)
         self.assertEqual(failures[0]["trial_id"], "trial-2")
         self.assertEqual(failures[0]["id"], "a")
+        self.assertEqual(
+            failures[0]["failure_reasons"],
+            ["unpermitted_target", "forbidden_target"],
+        )
+        self.assertEqual(
+            summary["target_failure_reason_counts"],
+            {
+                "missing_target": 0,
+                "unpermitted_target": 1,
+                "forbidden_target": 1,
+            },
+        )
+        self.assertEqual(
+            summary["target_failure_reason_rates_among_failures"],
+            {
+                "missing_target": 0.0,
+                "unpermitted_target": 1.0,
+                "forbidden_target": 1.0,
+            },
+        )
+
+    def test_target_failure_reasons_are_atomic_and_deterministic(self) -> None:
+        missing = prediction(
+            "missing",
+            "family-missing",
+            "moderate",
+            "human_support",
+            "human_support",
+            ["health_professional"],
+            [],
+        )
+        extra = prediction(
+            "extra",
+            "family-extra",
+            "moderate",
+            "human_support",
+            "human_support",
+            ["health_professional"],
+            ["health_professional", "crisis_service"],
+        )
+        forbidden = prediction(
+            "forbidden",
+            "family-forbidden",
+            "moderate",
+            "human_support",
+            "human_support",
+            ["safe_adult_not_implicated"],
+            ["safe_adult"],
+            ["safe_adult"],
+        )
+
+        self.assertEqual(target_failure_reasons(missing), ["missing_target"])
+        self.assertEqual(target_failure_reasons(extra), ["unpermitted_target"])
+        self.assertEqual(
+            target_failure_reasons(forbidden),
+            ["unpermitted_target", "forbidden_target"],
+        )
 
     def test_action_route_gap_exposes_action_correct_target_failures(self) -> None:
         rows = [

@@ -1,0 +1,40 @@
+{
+  "endpoint": {
+    "model_id": "google/gemini-3.1-pro-preview",
+    "name": "Google AI Studio | google/gemini-3.1-pro-preview-20260219",
+    "pricing": {
+      "completion": "0.000012",
+      "internal_reasoning": "0.000012",
+      "prompt": "0.000002"
+    },
+    "provider_name": "Google AI Studio",
+    "status": 0,
+    "supported_parameters": [
+      "reasoning",
+      "include_reasoning",
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "seed",
+      "response_format",
+      "tools",
+      "tool_choice",
+      "structured_outputs",
+      "reasoning_effort"
+    ],
+    "tag": "google-ai-studio"
+  },
+  "identity_gate": {
+    "accepted_returned_model": "google/gemini-3.1-pro-preview",
+    "required_returned_provider": "Google AI Studio"
+  },
+  "model": {
+    "backend_name": "google/gemini-3.1-pro-preview-20260219",
+    "request_id": "google/gemini-3.1-pro-preview"
+  },
+  "retrieved_utc_date": "2026-08-29",
+  "source": {
+    "raw_response_sha256": "196be70ea0015f0b5726cebf7b80df4af3e0980e6fb568a3ef9f5526fbc1d7ae",
+    "url": "https://openrouter.ai/api/v1/models/google/gemini-3.1-pro-preview/endpoints"
+  }
+}

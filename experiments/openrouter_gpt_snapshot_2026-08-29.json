@@ -1,0 +1,37 @@
+{
+  "endpoint": {
+    "model_id": "openai/gpt-5.5",
+    "name": "OpenAI | openai/gpt-5.5-20260423",
+    "pricing": {
+      "completion": "0.00003",
+      "prompt": "0.000005"
+    },
+    "provider_name": "OpenAI",
+    "status": 0,
+    "supported_parameters": [
+      "reasoning",
+      "include_reasoning",
+      "seed",
+      "max_tokens",
+      "response_format",
+      "structured_outputs",
+      "tools",
+      "tool_choice",
+      "reasoning_effort"
+    ],
+    "tag": "openai"
+  },
+  "identity_gate": {
+    "accepted_returned_model": "openai/gpt-5.5",
+    "required_returned_provider": "OpenAI"
+  },
+  "model": {
+    "backend_name": "openai/gpt-5.5-20260423",
+    "request_id": "openai/gpt-5.5"
+  },
+  "retrieved_utc_date": "2026-08-29",
+  "source": {
+    "raw_response_sha256": "a6a27c28648e544f26fdcf12cbd6f9fe15d66c466a3dedbceda4042c5da1b6d4",
+    "url": "https://openrouter.ai/api/v1/models/openai/gpt-5.5/endpoints"
+  }
+}

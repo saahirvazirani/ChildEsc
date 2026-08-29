@@ -41,6 +41,11 @@ LABEL_FIELDS = (
     "permitted_targets",
     "forbidden_targets",
 )
+TARGET_FAILURE_REASONS = (
+    "missing_target",
+    "unpermitted_target",
+    "forbidden_target",
+)
 
 
 def _row_index(rows: Sequence[Mapping[str, object]]) -> dict[str, Mapping[str, object]]:
@@ -91,6 +96,21 @@ def _route_key(row: Mapping[str, object]) -> tuple[str, tuple[str, ...]]:
     )
 
 
+def target_failure_reasons(row: Mapping[str, object]) -> list[str]:
+    """Decompose strict target invalidity into auditable atomic causes."""
+    predicted = {str(target) for target in row.get("predicted_targets", [])}
+    permitted = {str(target) for target in row.get("permitted_targets", [])}
+    forbidden = {str(target) for target in row.get("forbidden_targets", [])}
+    reasons: list[str] = []
+    if not predicted:
+        reasons.append("missing_target")
+    if predicted - permitted:
+        reasons.append("unpermitted_target")
+    if predicted & forbidden:
+        reasons.append("forbidden_target")
+    return reasons
+
+
 def summarize_trials(
     trials: Mapping[str, Sequence[Mapping[str, object]]],
 ) -> tuple[dict[str, object], list[dict[str, object]]]:
@@ -132,6 +152,11 @@ def summarize_trials(
                 and ACTION_LEVEL[str(row["gold_action"])] >= 2
             )
             if action_correct_handoff and not target_is_valid(row):
+                failure_reasons = target_failure_reasons(row)
+                if not failure_reasons:
+                    raise ValueError(
+                        f"target-invalid route has no failure reason: {row['id']}"
+                    )
                 failures.append(
                     {
                         "trial_id": trial_id,
@@ -143,11 +168,22 @@ def summarize_trials(
                         "permitted_targets": list(row.get("permitted_targets", [])),
                         "forbidden_targets": list(row.get("forbidden_targets", [])),
                         "predicted_targets": list(row.get("predicted_targets", [])),
+                        "failure_reasons": failure_reasons,
                     }
                 )
 
     item_count = len(item_ids)
     repeat_observed = len(ordered_trial_ids) >= 2
+    reason_counts = {
+        reason: sum(
+            reason in failure["failure_reasons"] for failure in failures
+        )
+        for reason in TARGET_FAILURE_REASONS
+    }
+    reason_rates = {
+        reason: count / len(failures) if failures else 0.0
+        for reason, count in reason_counts.items()
+    }
     summary: dict[str, object] = {
         "complete_trials": len(ordered_trial_ids),
         "trial_ids": ordered_trial_ids,
@@ -162,6 +198,8 @@ def summarize_trials(
         "route_instability_rate": (
             route_instability / item_count if repeat_observed else None
         ),
+        "target_failure_reason_counts": reason_counts,
+        "target_failure_reason_rates_among_failures": reason_rates,
     }
     return summary, failures
 
@@ -343,6 +381,13 @@ def run_analysis(run_dirs: Sequence[Path], output_dir: Path) -> dict[str, object
             "action_instability_rate": summary["action_instability_rate"],
             "route_instability_rate": summary["route_instability_rate"],
         }
+        reason_counts = summary["target_failure_reason_counts"]
+        reason_rates = summary["target_failure_reason_rates_among_failures"]
+        assert isinstance(reason_counts, dict)
+        assert isinstance(reason_rates, dict)
+        for reason in TARGET_FAILURE_REASONS:
+            paper_row[f"{reason}_count"] = reason_counts[reason]
+            paper_row[f"{reason}_rate_among_failures"] = reason_rates[reason]
         for metric in PRIMARY_RATE_METRICS:
             metric_values = metric_summary[metric]
             paper_row[f"{metric}_mean"] = metric_values["mean"]
@@ -389,6 +434,7 @@ def run_analysis(run_dirs: Sequence[Path], output_dir: Path) -> dict[str, object
         "permitted_targets",
         "forbidden_targets",
         "predicted_targets",
+        "failure_reasons",
     )
     _write_csv(
         output_dir / "action_correct_target_failures.csv",

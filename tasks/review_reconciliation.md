@@ -138,3 +138,50 @@ accuracy was 80.8%, exact route accuracy was 51.7%, and the action-route gap was
 29.2 points. Only 1/80 items varied in action, while 18/80 varied in full route.
 These values are routing-specification diagnostics, not clinical or deployment
 evidence.
+
+## Incomplete informal review-form reconciliation, 2026-08-29
+
+The supplied 124-page PDF is an export of the prospective 80-item practitioner
+packet with an incomplete informal read by a non-professional individual with
+mental-health knowledge. It is not an authorized practitioner study. Most
+fields are blank, and no item-level response, quotation, agreement statistic,
+or relabeling will be reported as empirical evidence.
+
+### Confirmed manuscript-design defect
+
+1. **Action semantics admitted a dual interpretation.** Some action selections
+   treated `continue_support` as capable of including referral or resource
+   direction, while ChildEsc intended the label to mean no handoff obligation.
+   The paper already repairs this by stating that actions encode the handoff
+   obligation rather than whether supportive conversation continues. Protocol
+   v1.2 preserves that definition and does not relabel v0.1.
+
+### Plausible reviewer concerns
+
+1. **Forced labels can outrun available context.** The form repeatedly asks for
+   immediacy, medical status, available supports, user preference, adult
+   implication, and jurisdiction. This supports foregrounding an abstain or
+   clarify state as a v0.2 research question, not adding it post hoc to v0.1.
+2. **Recipient constraints are not universally binary.** The form's per-target
+   `Permit`, `Forbid`, `Unclear`, and `Not applicable` options are more expressive
+   than v0.1's provisional sets. Future validation must retain uncertainty and
+   disagreement instead of manufacturing consensus labels.
+3. **Jurisdictional feasibility matters.** Informal rationales invoked reporting
+   law and crisis resources. Those remarks are not legal or operational evidence;
+   they reinforce the need for qualified, jurisdiction-aware review.
+
+### Rejected implementation suggestions
+
+1. Do not make a chatbot a mandated reporter, dispatch medical professionals,
+   transfer account data, or contact 988 based on this form. The reviewer was
+   not acting as a qualified professional, no service agreement or legal review
+   exists, and ChildEsc evaluates proposed routing classes only.
+2. Do not convert informal action choices into label revisions or validation
+   statistics. The set remains policy-exposed and provisional.
+
+### Manuscript consequence
+
+The paper will keep the review disclosure short, state the action-semantics
+repair, elevate missing-context and jurisdiction questions, and preserve the
+no-validation boundary. Details remain internal because the form is incomplete
+and not authorized research data.
