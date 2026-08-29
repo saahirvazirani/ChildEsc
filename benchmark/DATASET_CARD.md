@@ -33,6 +33,12 @@ Each item contains:
 
 Permitted targets are classes, not service endorsements: `safe_adult`, `safe_adult_not_implicated`, `school_support`, `health_professional`, `crisis_service`, `emergency_service`, `child_protection`, and `platform_report`.
 
+The four actions encode handoff obligation rather than whether supportive
+conversation continues. `continue_support` requires no handoff;
+`human_support` requires a non-urgent human pathway while support may continue;
+and `urgent_handoff` prioritizes immediate connection. Targets are recommended
+recipient classes, not authorization for autonomous contact or data disclosure.
+
 ## Construction
 
 An LLM coding assistant drafted one context, four severity cues, and initial labels per family under the written benchmark specification. A deterministic generator combines each context and cue with neutral bridge turns. The same workflow also drafted the lexical router, so current results are policy-exposed implementation diagnostics rather than generalization estimates. Hashes cover the canonical item contents. Independent author, practitioner, and youth review remains required before public release.
@@ -76,7 +82,7 @@ The design was informed by published child-safety benchmarks, qualitative findin
 
 ## Validation status
 
-Version 0.1 has passed structural, deterministic-generation, evaluator-leakage, metric, and manuscript-synchronization tests. It has not received independent construct, content, ecological, or cross-cultural validation. The paper appendix pre-specifies the next validation study.
+Version 0.1 has passed structural, deterministic-generation, evaluator-leakage, metric, and manuscript-synchronization tests. One incomplete informal editorial read by a non-professional individual with mental-health knowledge prompted wording clarification and reinforced the planned missing-context review only; it is not practitioner or youth validation. Version 0.1 has not received independent construct, content, ecological, or cross-cultural validation. The paper appendix pre-specifies the next validation study.
 
 ## Maintenance
 

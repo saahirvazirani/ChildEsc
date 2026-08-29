@@ -11,6 +11,14 @@ No institutional ethics determination, approved protocol, or authorized collabor
 - No participant quotation, agreement statistic, or validation claim may appear in the current submission.
 - Practitioner and youth materials created here are prospective protocol artifacts only.
 
+After the technical evidence freeze, one non-professional individual with
+mental-health knowledge provided an incomplete informal editorial read of a
+review worksheet. It was not conducted under the prospective practitioner
+protocol and does not satisfy that protocol's role, sampling, independence, or
+authorization requirements. It may inform wording and protocol design only.
+Do not publish item-level responses, quotations, agreement statistics, or label
+changes from it. This editorial feedback does not reopen the gate.
+
 This is a conservative project control, not a legal or institutional determination. A qualified institutional reviewer must decide the applicable requirements.
 
 ## Evidence vocabulary

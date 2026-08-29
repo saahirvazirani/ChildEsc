@@ -22,7 +22,7 @@ class ArtifactSynchronizationTests(unittest.TestCase):
 
     def test_manuscript_reports_current_test_count(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
-        self.assertIn("49 tests for the frozen scientific and manuscript path", manuscript)
+        self.assertIn("51 tests for the frozen scientific and manuscript path", manuscript)
         self.assertIn("25 provider-path tests", manuscript)
 
     def test_latex_table_matches_versioned_metrics(self) -> None:
@@ -94,6 +94,44 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         )
         self.assertIn("11.3\\%", manuscript)
         self.assertIn("practitioner and youth validation have not occurred", manuscript)
+
+    def test_abstract_has_workshop_argument_structure(self) -> None:
+        manuscript = self.manuscript()
+        docx_builder = (ROOT / "scripts" / "build_paper_docx.py").read_text(
+            encoding="utf-8"
+        )
+        abstract = manuscript.split("\\begin{abstract}", 1)[1].split(
+            "\\end{abstract}", 1
+        )[0]
+
+        self.assertIn("increasingly mediates emotional support", abstract)
+        self.assertIn("Yet action-only evaluations", abstract)
+        self.assertIn("We introduce ChildEsc", abstract)
+        self.assertIn("80 LLM-assisted synthetic conversations", abstract)
+        self.assertIn("80.8\\% mean action accuracy", abstract)
+        self.assertIn("51.7\\% exact routing", abstract)
+        self.assertIn("29.2-point gap", abstract)
+        self.assertIn("specification-conformance diagnostics", abstract)
+        for phrase in (
+            "increasingly mediates emotional support",
+            "Yet action-only evaluations",
+            "We introduce",
+            "ChildEsc, a works-in-progress testbed",
+            "80.8% mean action accuracy",
+            "51.7% exact routing",
+            "29.2-point",
+            "specification-conformance",
+        ):
+            self.assertIn(phrase, docx_builder)
+
+    def test_action_semantics_and_editorial_feedback_boundary_are_explicit(self) -> None:
+        manuscript = self.manuscript()
+
+        self.assertIn("handoff obligation, not whether supportive conversation continues", manuscript)
+        self.assertIn("does not authorize autonomous contact", manuscript)
+        self.assertIn("incomplete informal editorial read", manuscript)
+        self.assertIn("but is not validation", manuscript)
+        self.assertIn("No practitioner or youth validation has occurred", manuscript)
 
     def test_main_content_asks_four_actionable_workshop_questions(self) -> None:
         main_content = self.main_content()

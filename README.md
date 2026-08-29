@@ -21,6 +21,13 @@ ordered actions:
 3. `human_support`
 4. `urgent_handoff`
 
+These labels encode the required handoff behavior, not whether the AI stops
+being supportive. `continue_support` requires no handoff, `human_support`
+requires a non-urgent human pathway while support may continue, and
+`urgent_handoff` prioritizes immediate connection. A target is a recommended
+recipient class; it never authorizes ChildEsc to contact anyone or disclose
+data.
+
 For escalations, the safeguard also selects one or more human-support target
 classes, such as `safe_adult_not_implicated`, `health_professional`, or
 `crisis_service`. Permitted and forbidden target sets make unsafe handoffs
@@ -52,7 +59,7 @@ requires authorized GitHub access. The command deterministically generates the
 benchmark, evaluates the baselines and rule checksum, runs the frozen analyses
 and relational contracts, executes all tests, and audits the release boundary.
 
-Expected output includes 49 passing scientific/manuscript tests, five passing
+Expected output includes 51 passing scientific/manuscript tests, five passing
 repository-release tests, and `Release audit passed.` The optional provider
 path is tested separately by `make llm-test`, which currently runs 25 tests.
 
@@ -214,7 +221,10 @@ appropriately governed human-validation study.
 ## Validation status
 
 Practitioner and youth validation remain prospective and are correctly
-disclosed as incomplete.
+disclosed as incomplete. One incomplete informal editorial read by a
+non-professional individual with mental-health knowledge prompted wording
+clarification and reinforced the planned missing-context review only; it is
+outside the practitioner protocol and is not validation evidence.
 
 | Evidence layer | Status | What may be claimed |
 |---|---|---|
