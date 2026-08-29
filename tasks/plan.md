@@ -1070,3 +1070,348 @@ or metrics.
 - The central 29.2-point action-route gap remains the primary empirical result.
 - Practitioner and youth validation remain unmistakably incomplete.
 - References begin on page five and all technical values remain synchronized.
+
+# Deadline-Day Acceptance Optimization Plan, 2026-08-29
+
+## Status and Scope
+
+This section supersedes the dated execution schedule in the 2026-08-19 plan,
+but not its evidence freezes, claim boundaries, or completed work. It is a
+pre-implementation plan for the final Child Safety in AI workshop submission.
+No benchmark label, prompt, router output, manuscript claim, or paid model run
+is changed by this planning step.
+
+At 12:40 EDT on August 29, the August 29 Anywhere-on-Earth deadline leaves
+approximately 19 hours. The default submission remains the current compliant,
+anonymous, four-page works-in-progress paper. Every additional experiment is
+therefore optional and must earn its place without putting that viable package
+at risk.
+
+## Verified Workshop Fit
+
+The live call at https://childsafety-ai.github.io/ confirms:
+
+- submissions may be works in progress and are limited to four content pages;
+- the NeurIPS 2026 `dblblindworkshop` option and anonymous review are required;
+- an unlimited appendix is permitted; and
+- review prioritizes productive workshop discussion alongside technical
+  soundness.
+
+ChildEsc's primary fit is **Safe Data, Evaluation, and Benchmarking**: it uses a
+non-procedural synthetic proxy under restricted-data constraints, defines
+machine-checkable metrics, and audits a child-safety safeguard. Its secondary
+fit is **Deployment, Monitoring, and Ecosystem Safeguards** because it tests a
+routing layer before response generation. Its prospective practitioner and
+youth protocols support the workshop's human-centered and cross-stakeholder
+agenda, but remain explicitly incomplete. The paper should not present itself
+as a robust-model-design or clinical-intervention paper.
+
+## Acceptance Thesis
+
+The paper will make one memorable, bounded claim:
+
+> Action-only evaluation can conceal recipient-selection failures in
+> child-facing escalation routers; ChildEsc makes the action and the proposed
+> recipient independently auditable.
+
+The acceptance strategy is not to make ChildEsc look larger or more validated
+than it is. It is to show that the proposed decomposition exposes a concrete
+failure missed by common action-only summaries, that the artifact is technically
+replayable, and that the unresolved construct questions are exactly the kind of
+cross-disciplinary questions this workshop is designed to advance.
+
+## Reviewer-Centered Diagnosis
+
+### Existing strengths
+
+- The action-recipient distinction is narrow, legible, and differentiated from
+  response-quality and action-only child-safety benchmarks.
+- The current prompted-router case study is complete across three trials and
+  replays from cache without credentials.
+- Strict target scoring exposes a 29.2-point action-route gap and substantial
+  recipient instability even when action selection is stable.
+- The artifact has explicit provenance, failed-run retention, deterministic
+  scoring, family-grouped intervals, an anonymous supplement, and a prospective
+  validation protocol.
+- The paper candidly states circular authoring, policy exposure, missing
+  practitioner/youth validation, and the difference between taxonomy
+  conformance and real-world safety.
+
+### Remaining acceptance risks
+
+1. The headline empirical evidence covers only one prompted model family.
+2. The four-page paper currently devotes valuable space to the deterministic
+   contract table rather than showing whether the main phenomenon recurs across
+   prompted systems.
+3. Target-invalid routes are counted but not decomposed into missing,
+   unpermitted-extra, and forbidden-recipient failures, limiting practical
+   diagnosis.
+4. A benchmark reviewer may mistake the table for a model leaderboard despite
+   provisional, same-workflow labels.
+5. A child-safety reviewer may reasonably reject the target taxonomy as
+   validated or operational; the manuscript must keep calling it a proposed
+   routing contract.
+6. The public repository is identity-linked and cannot be the anonymous
+   submission artifact.
+7. Deadline-day experimentation can create more risk than evidence if models,
+   endpoints, prompts, or inclusion rules are changed after scores are seen.
+
+## Architecture Decisions
+
+1. **Keep the submission type as works in progress.** The absence of qualified
+   practitioner and youth validation is incompatible with a validated-benchmark
+   framing but appropriate for a technically substantive WIP with explicit
+   evidence gates.
+2. **Freeze ChildEsc v0.1.** Do not change the 80 scenarios, provisional labels,
+   prompt, action space, target taxonomy, or existing Claude outputs.
+3. **Use comparison models as construct replication, not ranking.** The earlier
+   manifest already named Gemini and GPT comparison families. Subject to public
+   metadata and smoke gates, run those two families through OpenRouter with the
+   same input, prompt, schema, and scoring. Do not select models based on
+   favorable ChildEsc performance.
+4. **Preserve endpoint identity.** OpenRouter's documentation states that its
+   default routing can load-balance and fall back. Every reported run must name
+   one endpoint provider, disable fallbacks, require requested parameters, and
+   record the returned model/provider. See
+   https://openrouter.ai/docs/guides/routing/provider-selection.
+5. **Require strict structured output.** Comparison endpoints must support
+   `response_format`/structured outputs and strict JSON Schema according to
+   public metadata and a four-item smoke. See
+   https://openrouter.ai/docs/guides/features/structured-outputs and
+   https://openrouter.ai/docs/guides/overview/models.
+6. **Do not tune after inspection.** No prompt repair, label change, model
+   substitution, output repair, selective retry, or result-conditioned metric
+   change is permitted. A failed or incomplete run stays in the attempt ledger
+   and receives no score.
+7. **Add diagnostic resolution, not benchmark breadth.** Decompose target
+   failures and report family-grouped uncertainty. Do not add scenarios,
+   response generation, LLM judging, a new action class, or human data on the
+   deadline.
+8. **Use the fourth page for evidence and discussion.** Move the full relational
+   contract table to the appendix. Use the recovered space for a compact
+   multi-system table, one recipient-level failure decomposition, supported use
+   cases, and three workshop questions.
+
+## Pre-Specified OpenRouter Extension
+
+### Candidate systems
+
+- Existing system: the frozen Claude Sonnet 5 result, three complete trials.
+- Comparison family 1: Gemini 3.1 Pro Preview, subject to a fresh public model
+  and first-party Google endpoint snapshot.
+- Comparison family 2: GPT-5.5, subject to a fresh public model and first-party
+  OpenAI endpoint snapshot. The earlier direct-provider dated identifier is not
+  silently interchangeable with an OpenRouter alias; any alias-to-returned-
+  model mapping must be frozen before calls and disclosed.
+
+If either exact endpoint fails the metadata or smoke gate, it is not replaced
+after correctness outputs are visible. The fallback is a two-system or current
+one-system paper, not a post-hoc model search.
+
+### Execution contract
+
+- Benchmark, prompt, and schema hashes must equal the frozen v0.1/v1.1 hashes.
+- Use one named first-party endpoint, `allow_fallbacks=false`, and
+  `require_parameters=true`.
+- Omit temperature; use low reasoning when the endpoint supports the same
+  control; cap output at 1,024 tokens; exclude reasoning text from the route.
+- Use one call per item, no repair, no hidden retry, and unique trial IDs.
+- Run a four-item smoke first. It must return 4/4 valid routes, expected provider
+  identity, acceptable model identity, and exact cache replay.
+- Preferred evidence is three complete 80-item trials for each qualifying
+  comparison family. Parallelize across model families, not within an item's
+  attempt history.
+- Set an additional OpenRouter spend ceiling of USD 5.00. Snapshot public
+  pricing and estimate the full run before the first paid smoke; stop rather
+  than exceed the ceiling.
+- Include every complete pre-specified trial. Retain incomplete trials and costs
+  without deriving scores from partial rows.
+
+### Primary analysis
+
+For each system, report:
+
+1. action accuracy;
+2. exact-route accuracy;
+3. the paired action-route gap;
+4. action-correct target-failure rate; and
+5. the target-failure composition: missing target, unpermitted extra target,
+   and forbidden target.
+
+Urgent recall, under-escalation, strict target validity, action instability, and
+route instability remain secondary diagnostics. Grouped bootstrap intervals
+resample the 20 scenario families rather than treating 80 sibling items or
+repeated model calls as independent. No p-value, model winner, or general model
+safety claim is needed.
+
+### Result-dependent claim gates
+
+| Observed complete evidence | Permitted main claim |
+|---|---|
+| Both comparison families complete and show positive gaps | The action-route gap recurs across three prompted systems on ChildEsc v0.1 |
+| At least one comparison completes and shows a positive gap | The gap appears in more than one prompted system; scope remains system-specific |
+| Complete systems differ materially or a gap is near zero | Action-only accuracy incompletely characterizes routing and the discrepancy is system-dependent |
+| No comparison completes | Retain the current one-system specification-conformance case study |
+
+All complete pre-specified results remain in the appendix even when they weaken
+the preferred narrative. This prevents cherry-picking and makes heterogeneity a
+workshop result rather than a failed experiment.
+
+## Four-Page Reviewer Path
+
+| Page | Reviewer question | Required content |
+|---|---|---|
+| 1 | Why is this needed and distinct? | Child-facing handoff risk, action-only gap, closest-work distinction, bounded contributions |
+| 2 | What exactly is measured? | Scope, synthetic construction, four actions, permitted/forbidden targets, metrics, source/validation boundary |
+| 3 | Does the artifact expose a real technical failure? | Frozen protocol, compact prompted-system table, action-route gaps, failure composition, one concrete route |
+| 4 | Is it useful and workshop-worthy despite limitations? | Routing-contract use cases, reproducibility, limitations/evidence gates, three cross-disciplinary discussion questions |
+
+The deterministic checksum and contract-audit headline numbers may remain as
+one sentence, but their full tables move to the appendix. The main table should
+contain only prompted systems plus, if space permits, `ChildEsc-Rules` as a
+transparent checksum rather than a competitor.
+
+## Dependency Graph
+
+```text
+Workshop and claim freeze (Task 47)
+        |
+        +--> Endpoint and cost freeze (Task 48)
+        |           |
+        |           +--> Gemini smoke/replay (Task 50) --> Gemini full trials (Task 52)
+        |           +--> GPT smoke/replay (Task 51) ----> GPT full trials (Task 53)
+        |
+        +--> Failure taxonomy tests/analysis (Task 49)
+                            |
+Comparison runs + analysis -+--> Evidence freeze (Task 54)
+                                      |
+                                      +--> Main-paper rewrite (Task 55)
+                                      +--> Fourth-page/appendix allocation (Task 56)
+                                                    |
+                                      Artifact utility docs (Task 57)
+                                                    |
+                                      Issues-only review (Task 58)
+                                                    |
+                                      Final submission QA (Task 59)
+```
+
+Tasks 50 and 51 may run in parallel after Task 48. Tasks 52 and 53 may also run
+in parallel after their own smoke gates. Manuscript results must wait for the
+single evidence freeze in Task 54.
+
+## Phase Plan
+
+### Phase 1: Freeze Before Spending
+
+- [ ] Task 47: Freeze the deadline-day claim and experiment contract.
+- [ ] Task 48: Snapshot the exact OpenRouter comparison endpoints and cost.
+- [ ] Task 49: Add and test target-failure decomposition.
+
+### Checkpoint: Protocol Integrity
+
+- [ ] No paid comparison call occurred before the protocol/model/cost freeze.
+- [ ] Benchmark, prompt, schema, and current Claude result hashes are unchanged.
+- [ ] The current paper remains a viable fallback.
+- [ ] Human approves the plan before implementation begins.
+
+### Phase 2: Qualify and Run Comparators
+
+- [ ] Task 50: Qualify and replay the Gemini smoke.
+- [ ] Task 51: Qualify and replay the GPT smoke.
+- [ ] Task 52: Execute complete Gemini trials if qualified.
+- [ ] Task 53: Execute complete GPT trials if qualified.
+- [ ] Task 54: Aggregate, audit, and freeze all admissible evidence.
+
+### Checkpoint: Evidence Integrity
+
+- [ ] Every reported run is complete, identity-verified, and cache-replayable.
+- [ ] Every incomplete attempt is retained and unscored.
+- [ ] Total new spend remains at or below USD 5.00.
+- [ ] Claim wording follows the result-dependent gate rather than the preferred
+  outcome.
+
+### Phase 3: Rewrite for the Workshop
+
+- [ ] Task 55: Rewrite the abstract, result table, and empirical narrative.
+- [ ] Task 56: Reallocate the fourth page and unlimited appendix.
+- [ ] Task 57: Document bounded developer and reviewer use cases.
+
+### Checkpoint: Reviewer Read
+
+- [ ] A reviewer can state the thesis, novelty, main result, and limitation after
+  reading only the abstract, Figure/Table 1, and conclusion.
+- [ ] The paper maps explicitly to restricted-data synthetic evaluation,
+  safeguard auditing, and stakeholder discussion.
+- [ ] No sentence converts taxonomy conformance into clinical, real-world, or
+  deployment safety.
+
+### Phase 4: Adversarial Review and Submission
+
+- [ ] Task 58: Conduct an issues-only independent editorial/methodological read.
+- [ ] Task 59: Run page, anonymity, evidence, cache, clean-room, and release QA.
+
+## Deadline Schedule
+
+| Local target | Gate |
+|---|---|
+| 13:30 EDT | Plan approved; protocol and model-selection rules frozen |
+| 14:30 EDT | Analysis tests and endpoint snapshots complete |
+| 15:00 EDT | Both four-item smokes resolved |
+| 19:00 EDT | Full comparison calls stopped; no late model substitution |
+| 20:00 EDT | Evidence and permitted claim frozen |
+| 22:30 EDT | Four-page manuscript and appendix rebuilt |
+| 23:30 EDT | Issues-only read reconciled; final QA starts |
+| 01:00 EDT, Aug 30 | Submission package uploaded, leaving an AoE buffer |
+
+If implementation begins later, preserve the ordering and shorten or omit
+optional comparison runs. Do not compress the final submission audit.
+
+## Explicit Stop-List
+
+- Do not recruit practitioners or youth, collect personal disclosures, or call
+  the informal reviewer a validator.
+- Do not create new scenarios or relabel v0.1 after seeing model outputs.
+- Do not evaluate supportive-response quality or use an LLM-as-a-judge.
+- Do not add a `cannot_determine` action to v0.1 on the deadline; discuss it as
+  a v0.2 workshop question.
+- Do not make an operational 988, caregiver-contact, data-transfer, or timed-
+  outreach proposal part of the submission.
+- Do not publish or link the identity-bearing repository in the anonymous paper.
+- Do not claim that a permitted target is actually available, consensual,
+  culturally appropriate, or safe in a real case.
+- Do not sacrifice page-limit, anonymity, cache replay, or clean-room checks to
+  squeeze in another experiment.
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Cross-model run looks post-hoc | Critical | Freeze model families, endpoint identities, metrics, inclusion rules, and claim gates before calls |
+| OpenRouter alias/provider drift | High | Save public metadata, pin one endpoint, disable fallbacks, and verify returned model/provider per response |
+| Additional runs fail or time out | Medium | Four-item fail-fast smoke and current one-system paper as the protected fallback |
+| Results weaken the preferred thesis | Medium | Report all complete results and use the pre-specified heterogeneity claim |
+| More rows imply a model leaderboard | High | Use systems as construct replications; omit winner language and pairwise superiority claims |
+| Same-workflow labels are mistaken for ground truth | Critical | Repeat `proposed`, `provisional`, `policy-exposed`, and `specification conformance` at claim-bearing points |
+| Target metric is mistaken for real-world safety | Critical | Name it strict target-constraint conformance and state accessibility/consent/local availability are unmeasured |
+| Main paper overflows | Critical | Replace the contract table; move details to the unlimited appendix; never alter template geometry |
+| Deadline pressure causes selective reruns | High | Append-only attempts, no repair, unique trial IDs, and a 19:00 execution cutoff |
+
+## Definition of Done
+
+- The PDF is anonymous, uses `dblblindworkshop`, has at most four content pages,
+  and begins references no later than page five.
+- The abstract follows hook, gap, named method, mechanics, result, and bounded
+  impact in one coherent paragraph.
+- The main table reports only complete, cache-replayed evidence and makes the
+  action-route gap immediately visible.
+- Any multi-system claim follows the pre-specified result gate; otherwise the
+  current one-system claim remains unchanged.
+- Target failures are diagnostically decomposed without expanding the benchmark
+  or changing labels.
+- Practitioner and youth validation remain prospective and unmistakably
+  incomplete.
+- The paper states concrete technical, practitioner, and policy use cases while
+  rejecting deployment, clinical, response-quality, and operational-contact
+  interpretations.
+- The anonymous supplement reproduces all reported values without credentials,
+  secrets, local paths, identities, or network access.

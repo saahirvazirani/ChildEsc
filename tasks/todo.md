@@ -827,3 +827,457 @@ provider terms, local paths, stale outputs, and unsupported claims.
   directory and contains no identity, secret, raw response, operational service
   proposal, or timed-contact material. Public crisis-practice sources may remain
   as bounded design provenance.
+
+# Deadline-Day Acceptance Optimization Tasks, 2026-08-29
+
+These tasks implement the approved deadline-day plan. They do not authorize
+implementation until the human checkpoint after Task 49 is reviewed.
+
+## Task 47: Freeze the deadline-day claim and experiment contract
+
+**Description:** Create a v1.2 comparison protocol before any new paid model
+call. Preserve ChildEsc v0.1, the routing prompt/schema, current Claude trials,
+and the works-in-progress claim boundary. Pre-specify the model families,
+settings, primary analyses, inclusion rules, result-dependent claim gates,
+execution cutoff, and no-tuning rule.
+
+**Acceptance criteria:**
+- [ ] Protocol names Gemini and GPT as construct-replication families selected
+  from the earlier manifest, not from ChildEsc scores.
+- [ ] Protocol fixes three preferred trials per qualified model, one attempt per
+  item, no repair, complete-run gating, a USD 5.00 spend ceiling, and all-result
+  disclosure.
+- [ ] Claim ledger distinguishes positive-gap replication, heterogeneous
+  results, and no-comparator fallbacks without permitting model ranking.
+
+**Verification:**
+- [ ] Manual hash check: benchmark, prompt, schema, and current Claude summary
+  match their frozen values.
+- [ ] Manual review: no paid comparison call predates the v1.2 freeze.
+- [ ] Manual review: the current one-system paper remains the protected
+  fallback.
+
+**Dependencies:** None
+
+**Files likely touched:**
+- `tasks/llm_evaluation_protocol_v1_2.md`
+- `tasks/acceptance_claims.md`
+- `experiments/llm_manifest.json`
+
+**Estimated scope:** Medium: 3 files
+
+## Task 48: Snapshot exact OpenRouter endpoints and projected cost
+
+**Description:** Query OpenRouter's public model and endpoint metadata before
+correctness-bearing calls. Freeze the exact Gemini and GPT request slugs,
+first-party provider slugs, returned-model identity rules, structured-output
+support, reasoning controls, public pricing, and worst-case projected spend.
+Document explicitly that the earlier dated direct-provider GPT identifier is
+not silently equivalent to a dynamic OpenRouter alias.
+
+**Acceptance criteria:**
+- [ ] Each candidate has a dated metadata snapshot with raw-response hash,
+  supported parameters, endpoint provider, request slug, and identity gate.
+- [ ] Each endpoint supports strict `response_format`; fallback routing is
+  disabled and required parameters are enforced.
+- [ ] Projected smoke plus full-trial spend is at most USD 5.00; otherwise the
+  affected candidate is stopped before a paid call.
+
+**Verification:**
+- [ ] Compare snapshots with OpenRouter's public models/endpoints API.
+- [ ] Validate JSON and recompute snapshot SHA-256 values.
+- [ ] Manual check: model eligibility is based only on metadata, provenance,
+  compatibility, cost, and deadline feasibility.
+
+**Dependencies:** Task 47
+
+**Files likely touched:**
+- `experiments/openrouter_gemini_snapshot_2026-08-29.json`
+- `experiments/openrouter_gpt_snapshot_2026-08-29.json`
+- `tasks/llm_evaluation_protocol_v1_2.md`
+- `experiments/llm_manifest.json`
+
+**Estimated scope:** Medium: 4 files
+
+## Task 49: Add target-failure decomposition to cross-system analysis
+
+**Description:** Test-drive a deterministic failure taxonomy for action-correct
+handoffs: missing all targets, adding an unpermitted target, emitting a
+forbidden target, or combinations of those conditions. Add per-system counts
+and rates without changing route validity, benchmark labels, or existing
+metrics.
+
+**Acceptance criteria:**
+- [ ] Every action-correct target-invalid row receives one deterministic set of
+  atomic failure reasons.
+- [ ] Counts reconcile exactly with the existing action-correct target-failure
+  numerator for each trial and system.
+- [ ] Existing one-system summaries and metric values remain byte-for-byte or
+  numerically unchanged except for additive fields.
+
+**Verification:**
+- [ ] Tests pass: `python3 -m unittest llm_tests.test_llm_analysis -v`.
+- [ ] Tests pass: `make llm-test`.
+- [ ] Manual check: failure reasons use only predicted and provisional
+  permitted/forbidden target sets, never an LLM judge.
+
+**Dependencies:** Task 47
+
+**Files likely touched:**
+- `src/childesc/llm_analysis.py`
+- `llm_tests/test_llm_analysis.py`
+
+**Estimated scope:** Small: 2 files
+
+## Checkpoint: Protocol Integrity After Tasks 47-49
+
+- [ ] All focused and provider-path tests pass.
+- [ ] No benchmark item, label, router rule, prompt, or current model output
+  changed.
+- [ ] Exact endpoint identities, spend ceiling, trial count, primary analyses,
+  and result-dependent claims are frozen.
+- [ ] Human reviews and approves this checkpoint before any new paid call.
+
+## Task 50: Qualify the Gemini comparison through smoke and replay
+
+**Description:** Run the frozen four-item smoke against the qualified Gemini
+endpoint, record one append-only attempt per item, and immediately replay the
+same four outputs without network access. Do not inspect correctness to decide
+whether the system qualifies; qualification depends on completeness, schema,
+identity, replay, and cost only.
+
+**Acceptance criteria:**
+- [ ] Smoke returns 4/4 valid structured routes with the expected model and
+  first-party Google provider identity.
+- [ ] Cache-only replay reproduces every normalized decision and response hash.
+- [ ] Any invalid output, provider mismatch, timeout, or cost-gate failure stops
+  Gemini full trials and remains documented without a score.
+
+**Verification:**
+- [ ] Live command exits successfully for the four-item smoke.
+- [ ] Equivalent `--cache-only` command exits successfully without an API key.
+- [ ] Inspect `attempts.jsonl` for four unique item attempts and no hidden retry.
+
+**Dependencies:** Tasks 48 and 49
+
+**Files likely touched:**
+- `results/llm/openrouter-gemini-v1-2/smoke/routing_metrics.json`
+- `results/llm/openrouter-gemini-v1-2/smoke/routing_predictions.jsonl`
+- `results/llm/openrouter-gemini-v1-2/smoke/attempts.jsonl`
+- `experiments/llm_manifest.json`
+
+**Estimated scope:** Medium: 4 generated/provenance files
+
+## Task 51: Qualify the GPT comparison through smoke and replay
+
+**Description:** Run the same frozen four-item smoke against the qualified GPT
+endpoint and replay it offline. Apply the pre-frozen alias/returned-model
+identity rule; do not create a metadata amendment after seeing correctness.
+
+**Acceptance criteria:**
+- [ ] Smoke returns 4/4 valid structured routes with the expected model mapping
+  and first-party OpenAI provider identity.
+- [ ] Cache-only replay reproduces every normalized decision and response hash.
+- [ ] Any invalid output, provider mismatch, timeout, or cost-gate failure stops
+  GPT full trials and remains documented without a score.
+
+**Verification:**
+- [ ] Live command exits successfully for the four-item smoke.
+- [ ] Equivalent `--cache-only` command exits successfully without an API key.
+- [ ] Inspect `attempts.jsonl` for four unique item attempts and no hidden retry.
+
+**Dependencies:** Tasks 48 and 49
+
+**Files likely touched:**
+- `results/llm/openrouter-gpt-v1-2/smoke/routing_metrics.json`
+- `results/llm/openrouter-gpt-v1-2/smoke/routing_predictions.jsonl`
+- `results/llm/openrouter-gpt-v1-2/smoke/attempts.jsonl`
+- `experiments/llm_manifest.json`
+
+**Estimated scope:** Medium: 4 generated/provenance files
+
+## Checkpoint: Comparator Qualification After Tasks 50-51
+
+- [ ] Each model independently passes or fails the pre-specified smoke gate.
+- [ ] Failed candidates are not replaced after outputs are viewed.
+- [ ] Qualified candidates replay exactly from cache.
+- [ ] Spend remains within the pre-run estimate.
+
+## Task 52: Execute and replay complete Gemini trials
+
+**Description:** If Task 50 qualifies, execute three sequential 80-item Gemini
+trials using unique v1.2 trial IDs, then replay each trial from cache. Preserve
+all attempts and stop new calls at the deadline-day execution cutoff even if
+fewer than three trials complete.
+
+**Acceptance criteria:**
+- [ ] Each reported trial has 80/80 valid routes, expected model/provider
+  identity, one attempt per item, and no repair.
+- [ ] Every complete trial reproduces offline with matching normalized hashes.
+- [ ] Incomplete trials remain retained and receive no aggregate score.
+
+**Verification:**
+- [ ] Live and cache-only evaluator commands pass for every reported trial.
+- [ ] `routing_metrics.json` reports `complete: true`, 80 items, and zero invalid
+  outputs/provider errors for every scored trial.
+- [ ] Attempt count, provider metadata, cache hit status, and reported cost are
+  reconciled against the protocol ledger.
+
+**Dependencies:** Task 50
+
+**Files likely touched:**
+- `results/llm/openrouter-gemini-v1-2/trial-1/`
+- `results/llm/openrouter-gemini-v1-2/trial-2/`
+- `results/llm/openrouter-gemini-v1-2/trial-3/`
+- `experiments/llm_manifest.json`
+
+**Estimated scope:** Medium: generated trial artifacts plus one manifest
+
+## Task 53: Execute and replay complete GPT trials
+
+**Description:** If Task 51 qualifies, execute three sequential 80-item GPT
+trials using unique v1.2 trial IDs, then replay each trial from cache under the
+same completeness and cutoff rules used for Gemini.
+
+**Acceptance criteria:**
+- [ ] Each reported trial has 80/80 valid routes, expected model/provider
+  identity, one attempt per item, and no repair.
+- [ ] Every complete trial reproduces offline with matching normalized hashes.
+- [ ] Incomplete trials remain retained and receive no aggregate score.
+
+**Verification:**
+- [ ] Live and cache-only evaluator commands pass for every reported trial.
+- [ ] `routing_metrics.json` reports `complete: true`, 80 items, and zero invalid
+  outputs/provider errors for every scored trial.
+- [ ] Attempt count, provider metadata, cache hit status, and reported cost are
+  reconciled against the protocol ledger.
+
+**Dependencies:** Task 51
+
+**Files likely touched:**
+- `results/llm/openrouter-gpt-v1-2/trial-1/`
+- `results/llm/openrouter-gpt-v1-2/trial-2/`
+- `results/llm/openrouter-gpt-v1-2/trial-3/`
+- `experiments/llm_manifest.json`
+
+**Estimated scope:** Medium: generated trial artifacts plus one manifest
+
+## Task 54: Aggregate, audit, and freeze admissible evidence
+
+**Description:** Aggregate every complete pre-specified system/trial, produce
+family-grouped intervals and target-failure decomposition, retain every
+incomplete attempt, and freeze a single reviewer-facing result table. Apply the
+pre-specified claim gate based on the full evidence rather than selecting a
+preferred model subset.
+
+**Acceptance criteria:**
+- [ ] Summary includes the frozen Claude trials and every complete Gemini/GPT
+  trial with matching benchmark, prompt, and schema hashes.
+- [ ] Main metrics reconcile to item-level rows; failure-reason counts reconcile
+  to action-correct target failures; repeated calls are not pooled as IID items.
+- [ ] Evidence manifest records trial hashes, model/provider identities, costs,
+  incomplete attempts, and the permitted result-dependent claim.
+
+**Verification:**
+- [ ] Tests pass: `make llm-test`.
+- [ ] Run aggregate analysis twice and compare outputs byte-for-byte.
+- [ ] Manual claim audit: no model ranking, population estimate, clinical claim,
+  or omitted complete pre-specified result.
+
+**Dependencies:** Tasks 49, 52, and 53; a failed comparator task satisfies its
+dependency when the documented fallback rule is applied.
+
+**Files likely touched:**
+- `results/llm_v1_2_summary.json`
+- `results/llm_v1_2_paper_table.csv`
+- `results/llm_v1_2_target_failures.csv`
+- `tasks/evidence_manifest.md`
+- `experiments/llm_manifest.json`
+
+**Estimated scope:** Medium: 5 files
+
+## Checkpoint: Evidence Integrity After Tasks 52-54
+
+- [ ] All reported runs are complete, identity-verified, and cache-replayable.
+- [ ] All incomplete attempts are retained and unscored.
+- [ ] New spend is at or below USD 5.00.
+- [ ] The selected claim is exactly the one authorized by the result gate.
+- [ ] Current one-system evidence remains available as the fallback.
+
+## Task 55: Rewrite the abstract and empirical story around the frozen evidence
+
+**Description:** Rewrite the abstract in hook-gap-method-mechanics-result-impact
+order, replace the deterministic breadth table with a compact prompted-system
+table when admissible, and make one recipient-level failure decomposition the
+technical payoff. Keep the title, abstract, table, conclusion, and claim ledger
+on the same safe-recipient thesis.
+
+**Acceptance criteria:**
+- [ ] Abstract names ChildEsc, explains action-plus-recipient mechanics, gives
+  exact complete-run results, and ends with a bounded WIP impact statement.
+- [ ] Main table visibly contrasts action and exact-route performance without
+  presenting a model winner or unsupported cross-model generalization.
+- [ ] Every number in the abstract, table, prose, and generated DOCX derives
+  from the frozen summary or existing deterministic artifacts.
+
+**Verification:**
+- [ ] Tests pass: `python3 -m unittest tests.test_artifacts -v`.
+- [ ] Search manuscript sources for stale one-system values and prohibited
+  validation/deployment language.
+- [ ] Manual reviewer check: thesis, novelty, main result, and limitation are
+  recoverable from the abstract alone.
+
+**Dependencies:** Task 54
+
+**Files likely touched:**
+- `paper/main.tex`
+- `paper/manuscript.md`
+- `scripts/build_paper_docx.py`
+- `tests/test_artifacts.py`
+
+**Estimated scope:** Medium: 4 files
+
+## Task 56: Reallocate page four and the unlimited appendix
+
+**Description:** Move the full contract-audit table and secondary diagnostics
+to the appendix, preserve only the mechanistic takeaway in the main paper, and
+use the recovered space for supported use cases, validation gates, and three
+questions tailored to workshop discussion. Do not shrink the official template.
+
+**Acceptance criteria:**
+- [ ] Main content remains at most four pages and references begin no later than
+  page five.
+- [ ] Page four clearly states what developers, practitioners, youth advisors,
+  and policymakers can use ChildEsc to inspect now and what remains blocked.
+- [ ] Appendix contains model manifests, complete secondary results, failed-run
+  status, contract audit, validation protocol, and reproducibility details.
+
+**Verification:**
+- [ ] Compile with the official `dblblindworkshop` template.
+- [ ] Render and inspect all content, references, appendix, and checklist pages.
+- [ ] Confirm no manual margin, font-size, or spacing override is used to fit.
+
+**Dependencies:** Task 55
+
+**Files likely touched:**
+- `paper/main.tex`
+- `tasks/page_budget.md`
+- `scripts/build_paper_docx.py`
+
+**Estimated scope:** Medium: 3 files
+
+## Task 57: Document bounded artifact use cases
+
+**Description:** Make the released utility concrete without implying
+deployment. Document how a developer can audit a router or policy revision,
+how a reviewer can inspect action-correct recipient failures, and how future
+authorized stakeholders can propose or dispute target constraints. Keep
+supportive-response assessment and real-world contact outside this artifact.
+
+**Acceptance criteria:**
+- [ ] README gives one credential-free replay path and one bring-your-own-model
+  routing audit path with explicit routing-only scope.
+- [ ] Use cases distinguish specification conformance from clinical or
+  real-world safety and identify outputs a reviewer can inspect.
+- [ ] No documentation authorizes disclosure, contact, counseling generation,
+  or operational crisis routing.
+
+**Verification:**
+- [ ] Run every documented no-network command in a clean environment.
+- [ ] Tests pass: `make release-test` and `make release-audit`.
+- [ ] Manual safety-language scan against `tasks/acceptance_claims.md`.
+
+**Dependencies:** Tasks 54 and 56
+
+**Files likely touched:**
+- `README.md`
+- `tasks/acceptance_claims.md`
+- `paper/main.tex`
+
+**Estimated scope:** Medium: 3 files
+
+## Checkpoint: Reviewer Read After Tasks 55-57
+
+- [ ] The four-page paper has one thesis, one primary table, one concrete
+  recipient-level failure, and one bounded impact story.
+- [ ] Workshop fit is explicit in evaluation, safeguard, and stakeholder terms.
+- [ ] Full technical detail is available in the appendix without crowding the
+  main paper.
+- [ ] Practitioner and youth validation are still clearly prospective.
+
+## Task 58: Conduct and reconcile an issues-only independent read
+
+**Description:** Give the frozen anonymous paper to one available methods-
+oriented reader and, if feasible, one child-safety or youth-facing practitioner
+for an issues-only editorial review. Do not request item labels, scores,
+personal disclosures, or research responses. Classify findings as confirmed
+validity defects, plausible reviewer concerns, or optional improvements.
+
+**Acceptance criteria:**
+- [ ] Review request asks only about construct clarity, claim validity,
+  recipient constraints, workshop fit, anonymity, and usability.
+- [ ] Feedback is not described as practitioner/youth validation or reported as
+  a human-subject result.
+- [ ] Confirmed defects are repaired; plausible concerns are repaired or bounded;
+  optional deadline-risk work is deferred.
+
+**Verification:**
+- [ ] Review reconciliation records disposition and evidence for every finding.
+- [ ] Manual check: no quote, score, demographic, or item-level response enters
+  the anonymous submission as study evidence.
+- [ ] Re-run focused manuscript tests after every accepted repair.
+
+**Dependencies:** Task 57
+
+**Files likely touched:**
+- `tasks/external_review_log.md`
+- `tasks/review_reconciliation.md`
+- `paper/main.tex`
+- `tests/test_artifacts.py`
+
+**Estimated scope:** Medium: 4 files
+
+## Task 59: Build and audit the final anonymous submission
+
+**Description:** Compile the final PDF and anonymous supplement, reproduce all
+reported results from a clean directory, and run page-limit, identity, secret,
+local-path, evidence, citation, cache, and prohibited-claim checks. Upload with
+an AoE buffer; do not spend the buffer on optional experiments.
+
+**Acceptance criteria:**
+- [ ] PDF is anonymous, uses `dblblindworkshop`, has at most four content pages,
+  and starts references no later than page five.
+- [ ] Anonymous supplement reproduces every reported value without credentials
+  or network access and contains no identity-linked repository URL or raw secret.
+- [ ] Submission metadata uses the WIP framing and matches the final title,
+  abstract, keywords, and author anonymity state.
+
+**Verification:**
+- [ ] Tests pass: `make reproduce`, `make llm-test`, `make packet-test`,
+  `make release-test`, and `make release-audit`.
+- [ ] Clean-room extraction reproduces benchmark, deterministic, contract, and
+  prompted-router tables byte-for-byte.
+- [ ] Visual inspection covers every PDF page and OpenReview's uploaded preview.
+
+**Dependencies:** Task 58
+
+**Files likely touched:**
+- `paper/ChildEsc_Workshop_Paper.pdf`
+- `dist/`
+- `tasks/evidence_manifest.md`
+- `tasks/page_budget.md`
+
+**Estimated scope:** Medium: generated submission artifacts plus 2 ledgers
+
+## Final Acceptance Checkpoint
+
+- [ ] The paper complies with the live workshop call and is uploaded before the
+  August 29 AoE deadline.
+- [ ] Additional model evidence, if present, was pre-specified, complete,
+  identity-verified, fully disclosed, and replayable.
+- [ ] The action-route gap remains the central result; target failures are
+  decomposed into actionable specification-conformance categories.
+- [ ] No model-ranking, clinical, population, supportive-response, validated-
+  benchmark, service-partnership, data-transfer, or deployment claim appears.
+- [ ] Practitioner and youth validation remain prospective and are correctly
+  disclosed as incomplete.
