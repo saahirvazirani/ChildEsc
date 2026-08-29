@@ -128,3 +128,42 @@ b31166cf3f977d512519e79513e557c6d0cadfb05639a7fb121d7e618ce60562  experiments/op
 117e194d46ddf8d06fa10cf7689a45f66f988b8ec1c00eed04b93c2a1c035d8d  normalized replay v1-1-trial-2
 12b8fd755e781c1c7b960a47dab0680a2c2eb8c1058ba86430b93c04c1899257  normalized replay v1-1-trial-3
 ```
+
+## Cross-system routing extension, 2026-08-29
+
+Protocol v1.2.0 was committed before any v1.2 model call. It preserved the
+benchmark, prompt, schema, labels, metrics, and existing Claude outputs while
+freezing first-party OpenRouter endpoints for the Gemini and GPT families named
+in the original manifest. Provider fallbacks were disabled, strict structured
+outputs were required, reasoning was set to low and excluded, and no output
+repair or hidden retry was allowed.
+
+Both four-item smokes qualified on completeness, endpoint identity, schema, and
+offline replay. All three Gemini 80-item trials completed. Two GPT 80-item
+trials completed; the third returned one provider error and remains retained at
+79/80 valid outputs without a score or retry. Every scored trial replays from
+content-addressed cache with matching normalized decision hashes.
+
+New spend, including smokes and the incomplete GPT trial, was USD 1.999982:
+
+- Gemini: 244/244 valid calls, USD 0.644322.
+- GPT: 243/244 valid calls, one provider error, USD 1.355660.
+
+The result-dependent claim gate permits a bounded statement that the
+action-route gap recurs across three prompted systems on ChildEsc v0.1. It does
+not permit model ranking or external, clinical, validated-benchmark, response-
+quality, or deployment claims.
+
+```text
+44271373927c9f777e8f928231c05f8c629b3c0fb6548d271b23e2bea4cc9daf  tasks/llm_evaluation_protocol_v1_2.md
+f0cb4e8c228fc298de7a656e4ae489bb19e94acbeea14562a3f6ba78751fb93c  experiments/openrouter_gemini_snapshot_2026-08-29.json
+37e8e088362b3fea138e2551594826c58e45ba39f5bf6cbcb67dba8ed48159bd  experiments/openrouter_gpt_snapshot_2026-08-29.json
+0b1594d1e4d12f015fad5bbb2bcb2468eb7e891458b347252c9e7698c35652df  results/llm_v1_2_summary.json
+d750dc24d8dcba7debfa322c52a8351b9688e10e5a4f443e31a73c4feadabc2f  results/llm_v1_2_paper_table.csv
+650438e4aac81a5bb65930baaba5e6604467540c6e96f9ac0acee3c9cfe28816  results/llm_v1_2_target_failures.csv
+ea03cb4b072ea0f33cdbbaa5f738b537c1226d43e2e17462a96bfb7d51ea4798  normalized Gemini trial 1 and replay
+897243daa2b23b0d98c6e04e2147d21fe6c7f228fc95fbd3e1f84cacf1a181cc  normalized Gemini trial 2 and replay
+f5c077b6842706266cd99077b1cb902f5aa019ee555728c6bfa5d518217b0e12  normalized Gemini trial 3 and replay
+cd6996a69baba733e100f9cc146797dea1207f5a5b2ead49c345299f599a2fef  normalized GPT trial 1 and replay
+24d72adfbdd453a2b14e7c5b70c1867804bd8a8d60f160a8ec7e4cfe62b4aff8  normalized GPT trial 2 and replay
+```

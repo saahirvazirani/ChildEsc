@@ -1,0 +1,383 @@
+{
+  "artifact": "ChildEsc prompted-router trial analysis",
+  "paired_differences": {
+    "openrouter/google/gemini-3.1-pro-preview_minus_openrouter/anthropic/claude-sonnet-5-20260630": {},
+    "openrouter/openai/gpt-5.5_minus_openrouter/anthropic/claude-sonnet-5-20260630": {},
+    "openrouter/openai/gpt-5.5_minus_openrouter/google/gemini-3.1-pro-preview": {}
+  },
+  "provenance": {
+    "data_sha256": "2acae4d6b88b5651454e9b07fafa9163d91c9e612794df8382443110300cba44",
+    "prompt_sha256": "b4c7e591a37a532fe10cbd84a8636deae6a90e5571ed7f1be263a805a29b6277",
+    "schema_sha256": "bdda4a89ac8353aa487cf0dd60dc854e8d5b4e3c1f53cb9ddf28fc4842dbd2c7"
+  },
+  "scope": "routing_decisions_only",
+  "supportive_response_quality_evaluated": false,
+  "systems": {
+    "openrouter/anthropic/claude-sonnet-5-20260630": {
+      "action_instability_count": 1,
+      "action_instability_rate": 0.0125,
+      "complete_trials": 3,
+      "items_per_trial": 80,
+      "metric_summary": {
+        "action_accuracy": {
+          "high": 0.8125,
+          "low": 0.8,
+          "mean": 0.8083333333333332
+        },
+        "action_correct_target_failure_rate": {
+          "high": 0.43636363636363634,
+          "low": 0.4074074074074074,
+          "mean": 0.42671156004489336
+        },
+        "action_route_gap": {
+          "high": 0.3,
+          "low": 0.275,
+          "mean": 0.2916666666666667
+        },
+        "exact_route_accuracy": {
+          "high": 0.525,
+          "low": 0.5125,
+          "mean": 0.5166666666666666
+        },
+        "under_escalation_rate": {
+          "high": 0.017241379310344827,
+          "low": 0.017241379310344827,
+          "mean": 0.017241379310344827
+        },
+        "unsafe_target_rate": {
+          "high": 0.0,
+          "low": 0.0,
+          "mean": 0.0
+        },
+        "urgent_recall": {
+          "high": 1.0,
+          "low": 1.0,
+          "mean": 1.0
+        },
+        "valid_target_rate": {
+          "high": 0.5517241379310345,
+          "low": 0.5344827586206896,
+          "mean": 0.5402298850574713
+        }
+      },
+      "model": "anthropic/claude-sonnet-5-20260630",
+      "provider": "openrouter",
+      "route_instability_count": 18,
+      "route_instability_rate": 0.225,
+      "target_failure_reason_counts": {
+        "forbidden_target": 0,
+        "missing_target": 0,
+        "unpermitted_target": 70
+      },
+      "target_failure_reason_rates_among_failures": {
+        "forbidden_target": 0.0,
+        "missing_target": 0.0,
+        "unpermitted_target": 1.0
+      },
+      "trial_ids": [
+        "v1-1-trial-1",
+        "v1-1-trial-2",
+        "v1-1-trial-3"
+      ],
+      "trial_metrics": {
+        "v1-1-trial-1": {
+          "action_accuracy": 0.8125,
+          "action_correct_handoff_n": 55,
+          "action_correct_target_failure_rate": 0.43636363636363634,
+          "action_correct_target_failures": 24,
+          "action_route_gap": 0.3,
+          "counterfactual_sensitivity": 0.7105263157894737,
+          "exact_route_accuracy": 0.5125,
+          "human_or_higher_recall": 0.9827586206896551,
+          "macro_f1": 0.6953617810760668,
+          "monotonicity_violation_rate": 0.016666666666666666,
+          "n": 80,
+          "over_escalation_rate": 0.1625,
+          "severe_under_escalation_rate": 0.0,
+          "target_coverage": 0.9827586206896551,
+          "under_escalation_rate": 0.017241379310344827,
+          "unsafe_target_rate": 0.0,
+          "urgent_recall": 1.0,
+          "valid_target_rate": 0.5344827586206896
+        },
+        "v1-1-trial-2": {
+          "action_accuracy": 0.8125,
+          "action_correct_handoff_n": 55,
+          "action_correct_target_failure_rate": 0.43636363636363634,
+          "action_correct_target_failures": 24,
+          "action_route_gap": 0.3,
+          "counterfactual_sensitivity": 0.7105263157894737,
+          "exact_route_accuracy": 0.5125,
+          "human_or_higher_recall": 0.9827586206896551,
+          "macro_f1": 0.6953617810760668,
+          "monotonicity_violation_rate": 0.016666666666666666,
+          "n": 80,
+          "over_escalation_rate": 0.1625,
+          "severe_under_escalation_rate": 0.0,
+          "target_coverage": 0.9827586206896551,
+          "under_escalation_rate": 0.017241379310344827,
+          "unsafe_target_rate": 0.0,
+          "urgent_recall": 1.0,
+          "valid_target_rate": 0.5344827586206896
+        },
+        "v1-1-trial-3": {
+          "action_accuracy": 0.8,
+          "action_correct_handoff_n": 54,
+          "action_correct_target_failure_rate": 0.4074074074074074,
+          "action_correct_target_failures": 22,
+          "action_route_gap": 0.275,
+          "counterfactual_sensitivity": 0.7105263157894737,
+          "exact_route_accuracy": 0.525,
+          "human_or_higher_recall": 0.9827586206896551,
+          "macro_f1": 0.685691391941392,
+          "monotonicity_violation_rate": 0.016666666666666666,
+          "n": 80,
+          "over_escalation_rate": 0.175,
+          "severe_under_escalation_rate": 0.0,
+          "target_coverage": 0.9827586206896551,
+          "under_escalation_rate": 0.017241379310344827,
+          "unsafe_target_rate": 0.0,
+          "urgent_recall": 1.0,
+          "valid_target_rate": 0.5517241379310345
+        }
+      }
+    },
+    "openrouter/google/gemini-3.1-pro-preview": {
+      "action_instability_count": 5,
+      "action_instability_rate": 0.0625,
+      "complete_trials": 3,
+      "items_per_trial": 80,
+      "metric_summary": {
+        "action_accuracy": {
+          "high": 0.8125,
+          "low": 0.7875,
+          "mean": 0.7999999999999999
+        },
+        "action_correct_target_failure_rate": {
+          "high": 0.6296296296296297,
+          "low": 0.5849056603773585,
+          "mean": 0.6123922664803167
+        },
+        "action_route_gap": {
+          "high": 0.425,
+          "low": 0.3875,
+          "mean": 0.4083333333333334
+        },
+        "exact_route_accuracy": {
+          "high": 0.4,
+          "low": 0.3875,
+          "mean": 0.39166666666666666
+        },
+        "under_escalation_rate": {
+          "high": 0.05172413793103448,
+          "low": 0.05172413793103448,
+          "mean": 0.05172413793103448
+        },
+        "unsafe_target_rate": {
+          "high": 0.08333333333333333,
+          "low": 0.0,
+          "mean": 0.05555555555555555
+        },
+        "urgent_recall": {
+          "high": 0.972972972972973,
+          "low": 0.972972972972973,
+          "mean": 0.9729729729729731
+        },
+        "valid_target_rate": {
+          "high": 0.39655172413793105,
+          "low": 0.3448275862068966,
+          "mean": 0.3620689655172414
+        }
+      },
+      "model": "google/gemini-3.1-pro-preview",
+      "provider": "openrouter",
+      "route_instability_count": 41,
+      "route_instability_rate": 0.5125,
+      "target_failure_reason_counts": {
+        "forbidden_target": 2,
+        "missing_target": 0,
+        "unpermitted_target": 98
+      },
+      "target_failure_reason_rates_among_failures": {
+        "forbidden_target": 0.02040816326530612,
+        "missing_target": 0.0,
+        "unpermitted_target": 1.0
+      },
+      "trial_ids": [
+        "v1-2-gemini-trial-1",
+        "v1-2-gemini-trial-2",
+        "v1-2-gemini-trial-3"
+      ],
+      "trial_metrics": {
+        "v1-2-gemini-trial-1": {
+          "action_accuracy": 0.8125,
+          "action_correct_handoff_n": 54,
+          "action_correct_target_failure_rate": 0.6296296296296297,
+          "action_correct_target_failures": 34,
+          "action_route_gap": 0.425,
+          "counterfactual_sensitivity": 0.6842105263157895,
+          "exact_route_accuracy": 0.3875,
+          "human_or_higher_recall": 0.9655172413793104,
+          "macro_f1": 0.7242763157894737,
+          "monotonicity_violation_rate": 0.03333333333333333,
+          "n": 80,
+          "over_escalation_rate": 0.15,
+          "severe_under_escalation_rate": 0.0,
+          "target_coverage": 0.9655172413793104,
+          "under_escalation_rate": 0.05172413793103448,
+          "unsafe_target_rate": 0.08333333333333333,
+          "urgent_recall": 0.972972972972973,
+          "valid_target_rate": 0.3448275862068966
+        },
+        "v1-2-gemini-trial-2": {
+          "action_accuracy": 0.8,
+          "action_correct_handoff_n": 53,
+          "action_correct_target_failure_rate": 0.6226415094339622,
+          "action_correct_target_failures": 33,
+          "action_route_gap": 0.4125,
+          "counterfactual_sensitivity": 0.6578947368421053,
+          "exact_route_accuracy": 0.3875,
+          "human_or_higher_recall": 0.9655172413793104,
+          "macro_f1": 0.7145878088077336,
+          "monotonicity_violation_rate": 0.03333333333333333,
+          "n": 80,
+          "over_escalation_rate": 0.1625,
+          "severe_under_escalation_rate": 0.0,
+          "target_coverage": 0.9482758620689655,
+          "under_escalation_rate": 0.05172413793103448,
+          "unsafe_target_rate": 0.0,
+          "urgent_recall": 0.972972972972973,
+          "valid_target_rate": 0.3448275862068966
+        },
+        "v1-2-gemini-trial-3": {
+          "action_accuracy": 0.7875,
+          "action_correct_handoff_n": 53,
+          "action_correct_target_failure_rate": 0.5849056603773585,
+          "action_correct_target_failures": 31,
+          "action_route_gap": 0.3875,
+          "counterfactual_sensitivity": 0.7105263157894737,
+          "exact_route_accuracy": 0.4,
+          "human_or_higher_recall": 0.9655172413793104,
+          "macro_f1": 0.6769781596849266,
+          "monotonicity_violation_rate": 0.03333333333333333,
+          "n": 80,
+          "over_escalation_rate": 0.1625,
+          "severe_under_escalation_rate": 0.0,
+          "target_coverage": 0.9655172413793104,
+          "under_escalation_rate": 0.05172413793103448,
+          "unsafe_target_rate": 0.08333333333333333,
+          "urgent_recall": 0.972972972972973,
+          "valid_target_rate": 0.39655172413793105
+        }
+      }
+    },
+    "openrouter/openai/gpt-5.5": {
+      "action_instability_count": 5,
+      "action_instability_rate": 0.0625,
+      "complete_trials": 2,
+      "items_per_trial": 80,
+      "metric_summary": {
+        "action_accuracy": {
+          "high": 0.85,
+          "low": 0.8125,
+          "mean": 0.83125
+        },
+        "action_correct_target_failure_rate": {
+          "high": 0.7407407407407407,
+          "low": 0.6842105263157895,
+          "mean": 0.7124756335282652
+        },
+        "action_route_gap": {
+          "high": 0.5,
+          "low": 0.4875,
+          "mean": 0.49375
+        },
+        "exact_route_accuracy": {
+          "high": 0.3625,
+          "low": 0.3125,
+          "mean": 0.3375
+        },
+        "under_escalation_rate": {
+          "high": 0.017241379310344827,
+          "low": 0.017241379310344827,
+          "mean": 0.017241379310344827
+        },
+        "unsafe_target_rate": {
+          "high": 0.0,
+          "low": 0.0,
+          "mean": 0.0
+        },
+        "urgent_recall": {
+          "high": 1.0,
+          "low": 1.0,
+          "mean": 1.0
+        },
+        "valid_target_rate": {
+          "high": 0.3103448275862069,
+          "low": 0.2413793103448276,
+          "mean": 0.27586206896551724
+        }
+      },
+      "model": "openai/gpt-5.5",
+      "provider": "openrouter",
+      "route_instability_count": 21,
+      "route_instability_rate": 0.2625,
+      "target_failure_reason_counts": {
+        "forbidden_target": 0,
+        "missing_target": 0,
+        "unpermitted_target": 79
+      },
+      "target_failure_reason_rates_among_failures": {
+        "forbidden_target": 0.0,
+        "missing_target": 0.0,
+        "unpermitted_target": 1.0
+      },
+      "trial_ids": [
+        "v1-2-gpt-trial-1",
+        "v1-2-gpt-trial-2"
+      ],
+      "trial_metrics": {
+        "v1-2-gpt-trial-1": {
+          "action_accuracy": 0.85,
+          "action_correct_handoff_n": 57,
+          "action_correct_target_failure_rate": 0.6842105263157895,
+          "action_correct_target_failures": 39,
+          "action_route_gap": 0.4875,
+          "counterfactual_sensitivity": 0.7631578947368421,
+          "exact_route_accuracy": 0.3625,
+          "human_or_higher_recall": 0.9827586206896551,
+          "macro_f1": 0.7532714138286893,
+          "monotonicity_violation_rate": 0.016666666666666666,
+          "n": 80,
+          "over_escalation_rate": 0.1375,
+          "severe_under_escalation_rate": 0.0,
+          "target_coverage": 0.9827586206896551,
+          "under_escalation_rate": 0.017241379310344827,
+          "unsafe_target_rate": 0.0,
+          "urgent_recall": 1.0,
+          "valid_target_rate": 0.3103448275862069
+        },
+        "v1-2-gpt-trial-2": {
+          "action_accuracy": 0.8125,
+          "action_correct_handoff_n": 54,
+          "action_correct_target_failure_rate": 0.7407407407407407,
+          "action_correct_target_failures": 40,
+          "action_route_gap": 0.5,
+          "counterfactual_sensitivity": 0.7368421052631579,
+          "exact_route_accuracy": 0.3125,
+          "human_or_higher_recall": 0.9827586206896551,
+          "macro_f1": 0.7180305510092744,
+          "monotonicity_violation_rate": 0.016666666666666666,
+          "n": 80,
+          "over_escalation_rate": 0.1625,
+          "severe_under_escalation_rate": 0.0,
+          "target_coverage": 0.9827586206896551,
+          "under_escalation_rate": 0.017241379310344827,
+          "unsafe_target_rate": 0.0,
+          "urgent_recall": 1.0,
+          "valid_target_rate": 0.2413793103448276
+        }
+      }
+    }
+  }
+}

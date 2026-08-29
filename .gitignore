@@ -10,6 +10,7 @@ venv/
 node_modules
 /.cache/
 /results/llm/
+/results/llm_v1_2_analysis/
 
 # Credentials and local configuration
 .env

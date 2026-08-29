@@ -229,6 +229,50 @@
       "timeout_seconds": 60,
       "trials_per_model": 3
     },
-    "status": "frozen_before_calls"
+    "execution": {
+      "claim_gate": "positive_action_route_gap_recurs_across_three_prompted_systems_on_childesc_v0_1",
+      "gemini": {
+        "complete_trials": 3,
+        "cost_usd_including_smoke": 0.644322,
+        "provider_errors": 0,
+        "replay_decision_hashes": [
+          "ea03cb4b072ea0f33cdbbaa5f738b537c1226d43e2e17462a96bfb7d51ea4798",
+          "897243daa2b23b0d98c6e04e2147d21fe6c7f228fc95fbd3e1f84cacf1a181cc",
+          "f5c077b6842706266cd99077b1cb902f5aa019ee555728c6bfa5d518217b0e12"
+        ],
+        "returned_model": "google/gemini-3.1-pro-preview",
+        "returned_provider": "Google AI Studio",
+        "valid_full_trial_calls": 240
+      },
+      "gpt": {
+        "complete_trials": 2,
+        "cost_usd_including_smoke_and_incomplete_trial": 1.35566,
+        "incomplete_trials": [
+          {
+            "provider_errors": 1,
+            "status": "incomplete_unscored",
+            "trial_id": "v1-2-gpt-trial-3",
+            "valid_outputs": 79
+          }
+        ],
+        "replay_decision_hashes": [
+          "cd6996a69baba733e100f9cc146797dea1207f5a5b2ead49c345299f599a2fef",
+          "24d72adfbdd453a2b14e7c5b70c1867804bd8a8d60f160a8ec7e4cfe62b4aff8"
+        ],
+        "returned_model": "openai/gpt-5.5",
+        "returned_provider": "OpenAI",
+        "valid_full_trial_calls": 239
+      },
+      "new_cost_usd": 1.999982,
+      "result": {
+        "paper_table_path": "results/llm_v1_2_paper_table.csv",
+        "paper_table_sha256": "d750dc24d8dcba7debfa322c52a8351b9688e10e5a4f443e31a73c4feadabc2f",
+        "summary_path": "results/llm_v1_2_summary.json",
+        "summary_sha256": "0b1594d1e4d12f015fad5bbb2bcb2468eb7e891458b347252c9e7698c35652df",
+        "target_failures_path": "results/llm_v1_2_target_failures.csv",
+        "target_failures_sha256": "650438e4aac81a5bb65930baaba5e6604467540c6e96f9ac0acee3c9cfe28816"
+      }
+    },
+    "status": "complete_with_one_retained_unscored_gpt_trial"
   }
 }
