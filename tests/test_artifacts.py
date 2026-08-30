@@ -59,7 +59,7 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         manuscript = self.manuscript()
         labels = {
             "openrouter/anthropic/claude-sonnet-5-20260630": "Claude Sonnet 5",
-            "openrouter/google/gemini-3.1-pro-preview": "Gemini 3.1 Pro",
+            "openrouter/google/gemini-3.1-pro-preview": "Gemini 3.1 Pro Preview",
             "openrouter/openai/gpt-5.5": "GPT-5.5",
         }
         fields = (
@@ -94,7 +94,7 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         self.assertIn("T_i\\subseteq P_i", manuscript)
         self.assertIn("Failure decomposition across complete trials", manuscript)
         self.assertIn("Claude Sonnet 5 & 164 & 70 & 70 & 0 & 0", manuscript)
-        self.assertIn("Gemini 3.1 Pro & 160 & 98 & 98 & 0 & 2", manuscript)
+        self.assertIn("Gemini 3.1 Pro Preview & 160 & 98 & 98 & 0 & 2", manuscript)
         self.assertIn("GPT-5.5 & 111 & 79 & 79 & 0 & 0", manuscript)
 
     def test_title_and_abstract_center_safe_recipient_gap(self) -> None:
@@ -104,7 +104,10 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         point = systems["childesc_rules"]["point"]
         manuscript = self.manuscript()
 
-        self.assertIn("Who Is Safe to Involve?", manuscript)
+        self.assertIn("Who Gets Involved?", manuscript)
+        self.assertIn("\\usepackage[dblblindworkshop]{neurips_2026}", manuscript)
+        self.assertIn("\\workshoptitle{Child Safety in AI}", manuscript)
+        self.assertNotIn("\\usepackage[final]", manuscript)
         self.assertIn("action-route gap", manuscript)
         self.assertIn(
             f"{point['action_correct_target_failures']}/"
@@ -137,9 +140,9 @@ class ArtifactSynchronizationTests(unittest.TestCase):
             "Yet action-only evaluations",
             "We introduce",
             "ChildEsc, a works-in-progress testbed",
-            "80.0--83.1% mean action accuracy",
-            "33.8--51.7% exact routing",
-            "29.2--49.4-point",
+            "mean action accuracy ranges from 80.0% to 83.1%",
+            "exact routing ranges from 33.8% to 51.7%",
+            "29.2- to 49.4-point",
             "three prompted systems",
             "specification-conformance",
         ):
@@ -148,7 +151,8 @@ class ArtifactSynchronizationTests(unittest.TestCase):
     def test_action_semantics_and_editorial_feedback_boundary_are_explicit(self) -> None:
         manuscript = self.manuscript()
 
-        self.assertIn("handoff obligation, not whether supportive conversation continues", manuscript)
+        self.assertIn("intervention and routing obligation rather than complete response style", manuscript)
+        self.assertIn("boundary-setting without human handoff", manuscript)
         self.assertIn("does not authorize autonomous contact", manuscript)
         self.assertIn("incomplete informal editorial read", manuscript)
         self.assertIn("but is not validation", manuscript)
@@ -163,7 +167,7 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         self.assertNotIn("Questions for the workshop", main_content)
         self.assertIn("Conclusion", main_content)
         self.assertIn("recipient-constrained routing", main_content)
-        self.assertIn("machine-checkable safety object", main_content)
+        self.assertIn("machine-checkable object", main_content)
         self.assertIn("abstain or clarify", main_content)
         self.assertIn("practitioner and youth", main_content)
         self.assertNotIn("\\input{checklist}", manuscript)
@@ -231,6 +235,8 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         bibliography = (ROOT / "paper" / "references.bib").read_text(encoding="utf-8")
         self.assertIn("CARE-Bench", manuscript)
         self.assertIn("hua2026caretriage", bibliography)
+        self.assertIn("KORA", manuscript)
+        self.assertIn("kora2026benchmark", bibliography)
 
     def test_submission_sources_exclude_delegated_followup_and_988(self) -> None:
         submission_sources = (
@@ -255,12 +261,15 @@ class ArtifactSynchronizationTests(unittest.TestCase):
 
         self.assertIn("results/llm_v1_2_summary.json", supplement)
         self.assertIn("results/llm_v1_2_target_failures.csv", supplement)
+        self.assertIn("results/llm_v1_2_bootstrap_intervals.csv", supplement)
+        self.assertTrue((ROOT / "results" / "llm_v1_2_bootstrap_intervals.csv").is_file())
         self.assertIn("all eight scored trials", supplement.lower())
         self.assertIn("incomplete 79/80 GPT trial", supplement)
         self.assertIn("tasks/llm_evaluation_protocol_v1_2.md", supplement)
         self.assertIn(
             "raw provider responses and caches are excluded", self.manuscript().lower()
         )
+        self.assertIn("cannot replay provider calls", supplement.lower())
 
     def test_manuscript_explains_two_layer_safeguard_scope(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")

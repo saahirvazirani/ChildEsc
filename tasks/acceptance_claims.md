@@ -14,7 +14,7 @@ implicated.
 
 Submission title:
 
-> Who Is Safe to Involve? ChildEsc Audits Escalation and Handoff Routing in
+> Who Gets Involved? ChildEsc Audits Escalation and Handoff Routing in
 > Child-Facing AI
 
 ## Construct chain
@@ -31,9 +31,9 @@ Submission title:
 
 | Submission claim | Evidence | Boundary |
 |---|---|---|
-| Action-only scoring can conceal recipient-selection failures | Three complete trials: 80.8% mean action accuracy versus 51.7% exact routing; 29.2-point gap | One pinned prompted router on provisional, policy-exposed synthetic labels |
-| Recipient choice is a distinct and less stable routing decision | 40.7--43.6% target failure among action-correct handoffs; 1/80 action instability versus 18/80 full-route instability | Specification conformance, not observed real-world harm |
-| ChildEsc makes action-plus-recipient constraints auditable | Versioned permitted/forbidden targets, strict deterministic scoring, item-level audit trails, and cache replay | Proposed measurement construct, not clinical or developmental validation |
+| Action-only scoring can conceal recipient-constraint failures | Eight complete trials across three prompted systems: 80.0--83.1% mean action accuracy versus 33.8--51.7% exact routing; 29.2--49.4-point gaps | Provisional, policy-exposed synthetic labels; no model ranking or external generalization |
+| Recipient choice is a distinct and less stable routing decision | 42.7--71.2% target failure among action-correct handoffs; 1.3--6.3% action instability versus 22.5--51.3% full-route instability | Primarily over-broad recipient sets and specification conformance, not observed real-world harm |
+| ChildEsc makes action-plus-recipient constraints auditable | Versioned permitted/forbidden targets, strict deterministic scoring, item-level audit trails, grouped intervals, and hash-documented internal replay | Proposed measurement construct, not clinical or developmental validation; caches are not distributed |
 | Practitioner and youth input is required before stronger claims | Prospective blinded practitioner and youth protocols with disagreement retention | No recruitment, review data, or validation statistic exists |
 | Supportive-response quality remains a separate layer | Evaluator emits and scores only action and recipient targets | No therapeutic-helpfulness, language-safety, or response-quality claim |
 
@@ -45,8 +45,9 @@ Submission title:
   policy-exposed ChildEsc v0.1 set.
 - The action-route gap identifies action-correct cases with missing,
   unpermitted, forbidden, or otherwise nonconforming target decisions.
-- Cached outputs and exact manifests make reported provider runs replayable
-  without credentials or network access.
+- Retained caches enabled internal offline replay without new provider calls, while the anonymous
+  supplement distributes normalized hashes, aggregates, and deterministic
+  analysis code rather than raw provider responses or caches.
 - The artifact supplies a concrete object for practitioner, youth, policy, and
   technical discussion about child-specific escalation.
 
@@ -67,10 +68,10 @@ Submission title:
 
 ## Main-paper evidence hierarchy
 
-1. The complete, replayable one-system prompted-router case study.
+1. The complete cross-system prompted-router diagnostic.
 2. The frozen ChildEsc-Rules checksum as policy-exposed implementation evidence.
 3. One action-correct but target-invalid example supporting the central thesis.
-4. Construct limits and four workshop discussion questions.
+4. Construct limits, broader impacts, and one focused workshop question.
 
 Keyword and severity-agnostic baselines, full contract probes, stress tests,
 and complete intervals belong in the appendix. Operational crisis-service
@@ -106,14 +107,14 @@ action choices and rationales exposed three useful manuscript risks without
 validating any label: supportive conversation can be interpreted as compatible
 with referral, missing immediacy/medical context can make forced actions
 ambiguous, and target choices can depend on jurisdiction. The submission must
-therefore define actions as handoff obligations, treat abstention/clarification
+therefore define actions by intervention and routing obligations, treat abstention/clarification
 as a v0.2 question, and preserve target uncertainty and disagreement in future
 validation. Suggestions of automatic reporting, dispatch, or 988 involvement
 are not evidence and remain outside ChildEsc.
 
 Additional permitted claims depend on complete v1.2 evidence:
 
-- positive gaps in both comparison families permit a bounded statement that the
+- positive gaps in both comparison systems permit a bounded statement that the
   action-route gap recurs across three prompted systems on ChildEsc v0.1;
 - one completed positive comparison permits a statement that the gap appears in
   more than one prompted system; and

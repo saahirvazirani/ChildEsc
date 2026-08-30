@@ -17,7 +17,7 @@ Source: https://childsafety-ai.github.io/
 - References begin: page 5.
 - Appendix begins: page 5 after the references.
 - NeurIPS checklist: not included.
-- Total compiled pages: 8.
+- Total compiled pages: 9.
 
 The acceptance-focused paper is compliant and uses the full four-page content
 allowance without changing the official template. The completed prompted-router
@@ -41,7 +41,7 @@ changing template geometry.
 
 Detailed error tables, ablations, robustness checks, protocols, and extended limitations belong in the unlimited appendix.
 
-The fourth page is not filled with more policy-exposed score detail. Its acceptance purpose is to show: (1) the exact construct and supported claim, (2) the distinction from CAREBench, KIDBench, and the August 2026 CARE-Bench triage benchmark, (3) the review-form-informed need for explicit action semantics and an abstain/clarify state, (4) validation gates required before comparative or deployment claims, and (5) a bounded conclusion stating what recipient-constrained routing adds.
+The fourth page is not filled with more policy-exposed score detail. Its acceptance purpose is to show: (1) the exact construct and supported claim, (2) the distinction from CAREBench, KIDBench, KORA, and the August 2026 CARE-Bench triage benchmark, (3) the review-form-informed need for explicit action semantics and an abstain/clarify state, (4) validation gates and broader-impact risks required before comparative or deployment claims, and (5) a bounded conclusion stating what recipient-constrained routing adds.
 
 ## Acceptance revision allocation, 2026-08-19
 

@@ -94,6 +94,25 @@ class LLMAnalysisTests(unittest.TestCase):
         self.assertEqual(summary["metric_summary"]["action_route_gap"]["mean"], 0.25)
         self.assertEqual(summary["metric_summary"]["action_route_gap"]["low"], 0.0)
         self.assertEqual(summary["metric_summary"]["action_route_gap"]["high"], 0.5)
+        trial_ci = summary["trial_ci95_grouped_bootstrap"]
+        self.assertEqual(set(trial_ci), {"trial-1", "trial-2"})
+        self.assertEqual(
+            set(trial_ci["trial-1"]),
+            {
+                "action_accuracy",
+                "under_escalation_rate",
+                "urgent_recall",
+                "valid_target_rate",
+                "unsafe_target_rate",
+                "action_route_gap",
+                "action_correct_target_failure_rate",
+                "exact_route_accuracy",
+            },
+        )
+        self.assertEqual(trial_ci["trial-1"]["action_accuracy"]["repetitions"], 1000)
+        self.assertEqual(trial_ci["trial-1"]["action_accuracy"]["seed"], 20260829)
+        self.assertEqual(trial_ci["trial-1"]["action_accuracy"]["ci95"]["low"], 1.0)
+        self.assertEqual(trial_ci["trial-1"]["action_accuracy"]["ci95"]["high"], 1.0)
         self.assertEqual(len(failures), 1)
         self.assertEqual(failures[0]["trial_id"], "trial-2")
         self.assertEqual(failures[0]["id"], "a")
@@ -245,6 +264,7 @@ class LLMAnalysisTests(unittest.TestCase):
             first_summary = (output / "summary.json").read_bytes()
             first_table = (output / "paper_table.csv").read_bytes()
             first_failures = (output / "action_correct_target_failures.csv").read_bytes()
+            first_intervals = (output / "bootstrap_intervals.csv").read_bytes()
             second = run_analysis(run_dirs, output)
 
             self.assertEqual(first, second)
@@ -253,6 +273,14 @@ class LLMAnalysisTests(unittest.TestCase):
             self.assertEqual(
                 first_failures,
                 (output / "action_correct_target_failures.csv").read_bytes(),
+            )
+            self.assertEqual(
+                first_intervals,
+                (output / "bootstrap_intervals.csv").read_bytes(),
+            )
+            self.assertIn(
+                b"provider,model,trial_id,metric,point,ci95_low,ci95_high,repetitions,seed",
+                first_intervals,
             )
             self.assertEqual(first["systems"]["gemini/test-model"]["complete_trials"], 2)
 

@@ -188,3 +188,36 @@ c351747dfd5e8dec64f04e147510737768a9eb841906def6c8d6f93a3e8a4e64  paper/ChildEsc
 e6ba513b1277a686b60d510f92fb43954f482b655fea37fe4bf19d13080a8604  paper/ChildEsc_Workshop_Paper.docx
 88da4099bd2ebb3023de69d4c64f8da90937d8784c33a84ef6410badabb81c18  paper/childesc_anonymous_supplement.zip
 ```
+
+## Reviewer-validity reconciliation, 2026-08-29
+
+The external review was checked against the official style source, frozen
+protocols, analysis code, and distributed artifact. The generic anonymous
+conference footer is expected under the official `dblblindworkshop` style, and
+the already-removed checklist was not restored. Confirmed defects were repaired:
+target failures are now interpreted primarily as over-broad provisional-set
+nonconformance; action semantics distinguish boundary redirection from human
+handoff; v1.1/v1.2 differences and the bounded claim gate are explicit; internal
+cache replay is distinguished from reviewer-distributed evidence; KORA is
+positioned in related work; and per-trial family-bootstrap intervals are
+exported and displayed.
+
+The final PDF has four content pages, references beginning on page 5, and nine
+total pages including the unlimited appendix. All nine PDF pages and all six
+DOCX pages were rendered and inspected. The DOCX accessibility audit reported
+zero findings. A fresh extraction of the 85-file anonymous supplement passed
+`make reproduce` (53 scientific/manuscript tests plus five release tests),
+`make llm-test` (26 tests), and `make packet-test` (five tests). All 17 packaged
+result artifacts matched the workspace byte-for-byte. Raw responses, caches,
+the checklist, and internal reviewer-reconciliation notes are excluded.
+
+```text
+48b15e6f37cc46d6801492fafbd76d8f870c4cca499a472b92c059d07a300e94  paper/ChildEsc_Workshop_Paper.pdf
+e7f65480fb749914e4e78fa4596800e2dba6ad8ced4ef5eb67ffb8884277d5c4  paper/ChildEsc_Workshop_Paper.docx
+87dca957fd1ba4b4a3d445fa50f634a9e849d642291bafceb68b59a1d9683f6d  paper/childesc_anonymous_supplement.zip
+8f314943310998b636872eb8830767889e0bfda30b6cff594242e04d4eb088a4  results/llm_v1_2_summary.json
+8f8728fcb91c4f3f0e5daeae16aecbfaab5f6f1778dc294b00ba1ef08da9fcb8  results/llm_v1_2_bootstrap_intervals.csv
+d4735d9c8e980f29ef8ce6627d7ea9bd8e64d9ed9b62cf34fd307c1f4b0e08de  paper/main.tex
+056cb2a69c02f655e43772f7f4a625fd9a5f9f174107d7ba8192840db09328d7  paper/references.bib
+c860921cf7a091cab5872d87d94e91a4d0a2de6d99aed4b36d90d8c637d55ddd  tests/test_artifacts.py
+```

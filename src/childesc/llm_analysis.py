@@ -12,7 +12,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Mapping, Sequence
 
-from .metrics import ACTION_LEVEL, compute_metrics, target_is_valid
+from .metrics import ACTION_LEVEL, compute_metrics, grouped_bootstrap, target_is_valid
 
 
 PRIMARY_RATE_METRICS = (
@@ -46,6 +46,8 @@ TARGET_FAILURE_REASONS = (
     "unpermitted_target",
     "forbidden_target",
 )
+BOOTSTRAP_REPETITIONS = 1000
+BOOTSTRAP_SEED = 20260829
 
 
 def _row_index(rows: Sequence[Mapping[str, object]]) -> dict[str, Mapping[str, object]]:
@@ -124,6 +126,23 @@ def summarize_trials(
         trial_id: compute_metrics(list(trials[trial_id]))
         for trial_id in ordered_trial_ids
     }
+    trial_ci95_grouped_bootstrap: dict[str, dict[str, dict[str, object]]] = {}
+    for trial_id in ordered_trial_ids:
+        intervals = grouped_bootstrap(
+            trials[trial_id],
+            PRIMARY_RATE_METRICS,
+            repetitions=BOOTSTRAP_REPETITIONS,
+            seed=BOOTSTRAP_SEED,
+        )
+        trial_ci95_grouped_bootstrap[trial_id] = {
+            metric: {
+                "point": float(trial_metrics[trial_id][metric]),
+                "ci95": intervals[metric],
+                "repetitions": BOOTSTRAP_REPETITIONS,
+                "seed": BOOTSTRAP_SEED,
+            }
+            for metric in PRIMARY_RATE_METRICS
+        }
 
     metric_summary: dict[str, dict[str, float]] = {}
     for metric in PRIMARY_RATE_METRICS:
@@ -189,6 +208,7 @@ def summarize_trials(
         "trial_ids": ordered_trial_ids,
         "items_per_trial": item_count,
         "trial_metrics": trial_metrics,
+        "trial_ci95_grouped_bootstrap": trial_ci95_grouped_bootstrap,
         "metric_summary": metric_summary,
         "action_instability_count": action_instability if repeat_observed else None,
         "action_instability_rate": (
@@ -354,6 +374,7 @@ def run_analysis(run_dirs: Sequence[Path], output_dir: Path) -> dict[str, object
     }
     all_failures: list[dict[str, object]] = []
     paper_rows: list[dict[str, object]] = []
+    interval_rows: list[dict[str, object]] = []
     summarized_systems = result["systems"]
     assert isinstance(summarized_systems, dict)
     for system_key in sorted(systems):
@@ -364,6 +385,29 @@ def run_analysis(run_dirs: Sequence[Path], output_dir: Path) -> dict[str, object
         summary["provider"] = system["provider"]
         summary["model"] = system["model"]
         summarized_systems[system_key] = summary
+        trial_intervals = summary["trial_ci95_grouped_bootstrap"]
+        assert isinstance(trial_intervals, dict)
+        for trial_id in sorted(trial_intervals):
+            metrics = trial_intervals[trial_id]
+            assert isinstance(metrics, dict)
+            for metric in PRIMARY_RATE_METRICS:
+                interval = metrics[metric]
+                assert isinstance(interval, dict)
+                ci95 = interval["ci95"]
+                assert isinstance(ci95, dict)
+                interval_rows.append(
+                    {
+                        "provider": system["provider"],
+                        "model": system["model"],
+                        "trial_id": trial_id,
+                        "metric": metric,
+                        "point": interval["point"],
+                        "ci95_low": ci95["low"],
+                        "ci95_high": ci95["high"],
+                        "repetitions": interval["repetitions"],
+                        "seed": interval["seed"],
+                    }
+                )
         for failure in failures:
             all_failures.append(
                 {
@@ -440,6 +484,22 @@ def run_analysis(run_dirs: Sequence[Path], output_dir: Path) -> dict[str, object
         output_dir / "action_correct_target_failures.csv",
         all_failures,
         failure_fields,
+    )
+    interval_fields = (
+        "provider",
+        "model",
+        "trial_id",
+        "metric",
+        "point",
+        "ci95_low",
+        "ci95_high",
+        "repetitions",
+        "seed",
+    )
+    _write_csv(
+        output_dir / "bootstrap_intervals.csv",
+        interval_rows,
+        interval_fields,
     )
     return result
 

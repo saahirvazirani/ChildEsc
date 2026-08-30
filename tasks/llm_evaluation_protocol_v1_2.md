@@ -176,7 +176,7 @@ The previously supplied review-form PDF is an incomplete informal editorial
 read by a non-professional individual with mental-health knowledge. It is not
 Gate 1 evidence and does not alter v0.1 labels. Its guidance is used only to:
 
-- clarify that action labels encode handoff obligations while supportive
+- clarify that action labels encode intervention and routing obligations while supportive
   conversation may continue;
 - foreground missing context and an abstain/clarify state as v0.2 questions;
 - preserve jurisdictional uncertainty and per-target disagreement in the

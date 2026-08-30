@@ -74,6 +74,230 @@
         "missing_target": 0.0,
         "unpermitted_target": 1.0
       },
+      "trial_ci95_grouped_bootstrap": {
+        "v1-1-trial-1": {
+          "action_accuracy": {
+            "ci95": {
+              "high": 0.8875,
+              "low": 0.725
+            },
+            "point": 0.8125,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_correct_target_failure_rate": {
+            "ci95": {
+              "high": 0.5272727272727272,
+              "low": 0.33962264150943394
+            },
+            "point": 0.43636363636363634,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_route_gap": {
+            "ci95": {
+              "high": 0.375,
+              "low": 0.225
+            },
+            "point": 0.3,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "exact_route_accuracy": {
+            "ci95": {
+              "high": 0.625,
+              "low": 0.4125
+            },
+            "point": 0.5125,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "under_escalation_rate": {
+            "ci95": {
+              "high": 0.05454545454545454,
+              "low": 0.0
+            },
+            "point": 0.017241379310344827,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "unsafe_target_rate": {
+            "ci95": {
+              "high": 0.0,
+              "low": 0.0
+            },
+            "point": 0.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "urgent_recall": {
+            "ci95": {
+              "high": 1.0,
+              "low": 1.0
+            },
+            "point": 1.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "valid_target_rate": {
+            "ci95": {
+              "high": 0.6363636363636364,
+              "low": 0.4406779661016949
+            },
+            "point": 0.5344827586206896,
+            "repetitions": 1000,
+            "seed": 20260829
+          }
+        },
+        "v1-1-trial-2": {
+          "action_accuracy": {
+            "ci95": {
+              "high": 0.8875,
+              "low": 0.725
+            },
+            "point": 0.8125,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_correct_target_failure_rate": {
+            "ci95": {
+              "high": 0.559322033898305,
+              "low": 0.30612244897959184
+            },
+            "point": 0.43636363636363634,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_route_gap": {
+            "ci95": {
+              "high": 0.4,
+              "low": 0.2125
+            },
+            "point": 0.3,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "exact_route_accuracy": {
+            "ci95": {
+              "high": 0.6375,
+              "low": 0.4
+            },
+            "point": 0.5125,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "under_escalation_rate": {
+            "ci95": {
+              "high": 0.05454545454545454,
+              "low": 0.0
+            },
+            "point": 0.017241379310344827,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "unsafe_target_rate": {
+            "ci95": {
+              "high": 0.0,
+              "low": 0.0
+            },
+            "point": 0.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "urgent_recall": {
+            "ci95": {
+              "high": 1.0,
+              "low": 1.0
+            },
+            "point": 1.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "valid_target_rate": {
+            "ci95": {
+              "high": 0.6666666666666666,
+              "low": 0.41935483870967744
+            },
+            "point": 0.5344827586206896,
+            "repetitions": 1000,
+            "seed": 20260829
+          }
+        },
+        "v1-1-trial-3": {
+          "action_accuracy": {
+            "ci95": {
+              "high": 0.8875,
+              "low": 0.7125
+            },
+            "point": 0.8,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_correct_target_failure_rate": {
+            "ci95": {
+              "high": 0.5576923076923077,
+              "low": 0.2653061224489796
+            },
+            "point": 0.4074074074074074,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_route_gap": {
+            "ci95": {
+              "high": 0.3875,
+              "low": 0.175
+            },
+            "point": 0.275,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "exact_route_accuracy": {
+            "ci95": {
+              "high": 0.675,
+              "low": 0.375
+            },
+            "point": 0.525,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "under_escalation_rate": {
+            "ci95": {
+              "high": 0.05454545454545454,
+              "low": 0.0
+            },
+            "point": 0.017241379310344827,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "unsafe_target_rate": {
+            "ci95": {
+              "high": 0.0,
+              "low": 0.0
+            },
+            "point": 0.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "urgent_recall": {
+            "ci95": {
+              "high": 1.0,
+              "low": 1.0
+            },
+            "point": 1.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "valid_target_rate": {
+            "ci95": {
+              "high": 0.7068965517241379,
+              "low": 0.4067796610169492
+            },
+            "point": 0.5517241379310345,
+            "repetitions": 1000,
+            "seed": 20260829
+          }
+        }
+      },
       "trial_ids": [
         "v1-1-trial-1",
         "v1-1-trial-2",
@@ -203,6 +427,230 @@
         "missing_target": 0.0,
         "unpermitted_target": 1.0
       },
+      "trial_ci95_grouped_bootstrap": {
+        "v1-2-gemini-trial-1": {
+          "action_accuracy": {
+            "ci95": {
+              "high": 0.9,
+              "low": 0.725
+            },
+            "point": 0.8125,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_correct_target_failure_rate": {
+            "ci95": {
+              "high": 0.7241379310344828,
+              "low": 0.5178571428571429
+            },
+            "point": 0.6296296296296297,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_route_gap": {
+            "ci95": {
+              "high": 0.5125,
+              "low": 0.3375
+            },
+            "point": 0.425,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "exact_route_accuracy": {
+            "ci95": {
+              "high": 0.475,
+              "low": 0.3
+            },
+            "point": 0.3875,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "under_escalation_rate": {
+            "ci95": {
+              "high": 0.10909090909090909,
+              "low": 0.0
+            },
+            "point": 0.05172413793103448,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "unsafe_target_rate": {
+            "ci95": {
+              "high": 0.25,
+              "low": 0.0
+            },
+            "point": 0.08333333333333333,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "urgent_recall": {
+            "ci95": {
+              "high": 1.0,
+              "low": 0.9166666666666666
+            },
+            "point": 0.972972972972973,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "valid_target_rate": {
+            "ci95": {
+              "high": 0.4406779661016949,
+              "low": 0.25862068965517243
+            },
+            "point": 0.3448275862068966,
+            "repetitions": 1000,
+            "seed": 20260829
+          }
+        },
+        "v1-2-gemini-trial-2": {
+          "action_accuracy": {
+            "ci95": {
+              "high": 0.8875,
+              "low": 0.725
+            },
+            "point": 0.8,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_correct_target_failure_rate": {
+            "ci95": {
+              "high": 0.7454545454545455,
+              "low": 0.4883720930232558
+            },
+            "point": 0.6226415094339622,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_route_gap": {
+            "ci95": {
+              "high": 0.525,
+              "low": 0.3
+            },
+            "point": 0.4125,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "exact_route_accuracy": {
+            "ci95": {
+              "high": 0.4875,
+              "low": 0.2875
+            },
+            "point": 0.3875,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "under_escalation_rate": {
+            "ci95": {
+              "high": 0.10909090909090909,
+              "low": 0.0
+            },
+            "point": 0.05172413793103448,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "unsafe_target_rate": {
+            "ci95": {
+              "high": 0.0,
+              "low": 0.0
+            },
+            "point": 0.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "urgent_recall": {
+            "ci95": {
+              "high": 1.0,
+              "low": 0.9166666666666666
+            },
+            "point": 0.972972972972973,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "valid_target_rate": {
+            "ci95": {
+              "high": 0.46551724137931033,
+              "low": 0.23728813559322035
+            },
+            "point": 0.3448275862068966,
+            "repetitions": 1000,
+            "seed": 20260829
+          }
+        },
+        "v1-2-gemini-trial-3": {
+          "action_accuracy": {
+            "ci95": {
+              "high": 0.8625,
+              "low": 0.7125
+            },
+            "point": 0.7875,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_correct_target_failure_rate": {
+            "ci95": {
+              "high": 0.7017543859649122,
+              "low": 0.46153846153846156
+            },
+            "point": 0.5849056603773585,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_route_gap": {
+            "ci95": {
+              "high": 0.5,
+              "low": 0.2875
+            },
+            "point": 0.3875,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "exact_route_accuracy": {
+            "ci95": {
+              "high": 0.4625,
+              "low": 0.325
+            },
+            "point": 0.4,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "under_escalation_rate": {
+            "ci95": {
+              "high": 0.10909090909090909,
+              "low": 0.0
+            },
+            "point": 0.05172413793103448,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "unsafe_target_rate": {
+            "ci95": {
+              "high": 0.25,
+              "low": 0.0
+            },
+            "point": 0.08333333333333333,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "urgent_recall": {
+            "ci95": {
+              "high": 1.0,
+              "low": 0.9166666666666666
+            },
+            "point": 0.972972972972973,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "valid_target_rate": {
+            "ci95": {
+              "high": 0.5178571428571429,
+              "low": 0.2833333333333333
+            },
+            "point": 0.39655172413793105,
+            "repetitions": 1000,
+            "seed": 20260829
+          }
+        }
+      },
       "trial_ids": [
         "v1-2-gemini-trial-1",
         "v1-2-gemini-trial-2",
@@ -331,6 +779,156 @@
         "forbidden_target": 0.0,
         "missing_target": 0.0,
         "unpermitted_target": 1.0
+      },
+      "trial_ci95_grouped_bootstrap": {
+        "v1-2-gpt-trial-1": {
+          "action_accuracy": {
+            "ci95": {
+              "high": 0.925,
+              "low": 0.775
+            },
+            "point": 0.85,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_correct_target_failure_rate": {
+            "ci95": {
+              "high": 0.7894736842105263,
+              "low": 0.5692307692307692
+            },
+            "point": 0.6842105263157895,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_route_gap": {
+            "ci95": {
+              "high": 0.5875,
+              "low": 0.375
+            },
+            "point": 0.4875,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "exact_route_accuracy": {
+            "ci95": {
+              "high": 0.45,
+              "low": 0.275
+            },
+            "point": 0.3625,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "under_escalation_rate": {
+            "ci95": {
+              "high": 0.05454545454545454,
+              "low": 0.0
+            },
+            "point": 0.017241379310344827,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "unsafe_target_rate": {
+            "ci95": {
+              "high": 0.0,
+              "low": 0.0
+            },
+            "point": 0.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "urgent_recall": {
+            "ci95": {
+              "high": 1.0,
+              "low": 1.0
+            },
+            "point": 1.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "valid_target_rate": {
+            "ci95": {
+              "high": 0.42105263157894735,
+              "low": 0.20689655172413793
+            },
+            "point": 0.3103448275862069,
+            "repetitions": 1000,
+            "seed": 20260829
+          }
+        },
+        "v1-2-gpt-trial-2": {
+          "action_accuracy": {
+            "ci95": {
+              "high": 0.9,
+              "low": 0.725
+            },
+            "point": 0.8125,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_correct_target_failure_rate": {
+            "ci95": {
+              "high": 0.8461538461538461,
+              "low": 0.6153846153846154
+            },
+            "point": 0.7407407407407407,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "action_route_gap": {
+            "ci95": {
+              "high": 0.6125,
+              "low": 0.3875
+            },
+            "point": 0.5,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "exact_route_accuracy": {
+            "ci95": {
+              "high": 0.4125,
+              "low": 0.225
+            },
+            "point": 0.3125,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "under_escalation_rate": {
+            "ci95": {
+              "high": 0.05454545454545454,
+              "low": 0.0
+            },
+            "point": 0.017241379310344827,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "unsafe_target_rate": {
+            "ci95": {
+              "high": 0.0,
+              "low": 0.0
+            },
+            "point": 0.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "urgent_recall": {
+            "ci95": {
+              "high": 1.0,
+              "low": 1.0
+            },
+            "point": 1.0,
+            "repetitions": 1000,
+            "seed": 20260829
+          },
+          "valid_target_rate": {
+            "ci95": {
+              "high": 0.3508771929824561,
+              "low": 0.14754098360655737
+            },
+            "point": 0.2413793103448276,
+            "repetitions": 1000,
+            "seed": 20260829
+          }
+        }
       },
       "trial_ids": [
         "v1-2-gpt-trial-1",
