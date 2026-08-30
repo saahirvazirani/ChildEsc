@@ -156,14 +156,19 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         self.assertIn("abstain or clarify", manuscript)
         self.assertIn("No practitioner or youth validation has occurred", manuscript)
 
-    def test_main_content_asks_four_actionable_workshop_questions(self) -> None:
+    def test_main_content_ends_with_defensible_contribution_not_open_questions(self) -> None:
         main_content = self.main_content()
-        self.assertIn("Questions for the workshop", main_content)
-        self.assertIn("clarify", main_content)
-        self.assertIn("practitioner", main_content)
-        self.assertIn("universal", main_content)
-        self.assertIn("jurisdiction-specific", main_content)
-        self.assertIn("becomes operational", main_content)
+        manuscript = self.manuscript()
+
+        self.assertNotIn("Questions for the workshop", main_content)
+        self.assertIn("Conclusion", main_content)
+        self.assertIn("recipient-constrained routing", main_content)
+        self.assertIn("machine-checkable safety object", main_content)
+        self.assertIn("abstain or clarify", main_content)
+        self.assertIn("practitioner and youth", main_content)
+        self.assertNotIn("\\input{checklist}", manuscript)
+        self.assertIn("\\author{Anonymous Author(s)}", manuscript)
+        self.assertNotIn("The author had inspected", manuscript)
 
     def test_manuscript_labels_results_as_policy_exposed_diagnostics(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8").lower()

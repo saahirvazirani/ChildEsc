@@ -88,7 +88,7 @@ Freeze all reported evidence by August 24. Incomplete or procedurally ambiguous 
 - Robustness transformations and any independently authored holdout protocol/results.
 - Practitioner rubric, youth-participatory protocol, safeguarding plan, and analysis plan.
 - Compute, LLM usage, release restrictions, and expanded limitations.
-- NeurIPS checklist.
+- No NeurIPS checklist is compiled or packaged; the workshop call does not require it.
 
 ## Phase 1: Freeze and Governance
 

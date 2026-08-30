@@ -77,7 +77,7 @@ The final 57-file anonymous supplement was extracted into `/private/tmp/childesc
 
 The acceptance-oriented model protocol was frozen before any full live
 prompted-model result. Provider credentials were absent, and no eligible
-independent holdout author was documented. The current author and coding agents
+independent holdout author was documented. The current authors and coding agents
 remain ineligible to create a claimed independent holdout.
 
 ```text
@@ -170,12 +170,12 @@ cd6996a69baba733e100f9cc146797dea1207f5a5b2ead49c345299f599a2fef  normalized GPT
 
 ## Final anonymous build audit, 2026-08-29
 
-The final PDF uses four content pages; references begin on page 5, the appendix
-begins later on page 5, and the checklist begins on page 9. All 15 PDF pages and
+The final PDF uses four content pages; references begin on page 5 and the appendix
+begins later on page 5. No NeurIPS checklist is compiled. All eight PDF pages and
 all six DOCX pages were rendered and inspected. The DOCX accessibility audit
 reported zero high-, medium-, or low-severity findings.
 
-The 83-entry anonymous supplement was extracted to a fresh temporary directory.
+The 82-entry anonymous supplement was extracted to a fresh temporary directory.
 `make reproduce` passed 53 scientific/manuscript tests and five release tests;
 `make llm-test` passed 26 provider-path tests. All 16 packaged result artifacts
 matched the workspace byte-for-byte. The release audit found no secret, local
@@ -184,7 +184,7 @@ results are versioned evidence that was replayed before packaging, not outputs
 that the public archive can independently re-query or replay.
 
 ```text
-1dac8dcca932b68a38215c532dd56f1dfed00140bb4d6d612914732eba2cd308  paper/ChildEsc_Workshop_Paper.pdf
-f4197a9e13e3747bbd2d408b4dbfc4d6b6170b6917bf846b6c619ed4ec07d04a  paper/ChildEsc_Workshop_Paper.docx
-462991559bfba29c3a7c08564d9eae424e2d32680e5278b363b9e31765e951c1  paper/childesc_anonymous_supplement.zip
+c351747dfd5e8dec64f04e147510737768a9eb841906def6c8d6f93a3e8a4e64  paper/ChildEsc_Workshop_Paper.pdf
+e6ba513b1277a686b60d510f92fb43954f482b655fea37fe4bf19d13080a8604  paper/ChildEsc_Workshop_Paper.docx
+88da4099bd2ebb3023de69d4c64f8da90937d8784c33a84ef6410badabb81c18  paper/childesc_anonymous_supplement.zip
 ```
