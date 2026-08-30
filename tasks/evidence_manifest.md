@@ -252,3 +252,10 @@ b9d5fb4cb1804d76895995e7325c7f66bce542b14556366c814f0298028415e3  benchmark/eval
 33f96461220104181be8deec321d9196ac950f2e73f44ed6ba9615bf71709b21  paper/references.bib
 f274214a18fcc8a1f572efd356c856b4ccfed9f0ec9459b4438ed92346ff4cc1  tests/test_artifacts.py
 ```
+
+The issues-only five-axis review found no unresolved correctness, readability,
+architecture, security, or performance finding. The substantive accepted-paper
+readiness revision is commit `7b8ded1` on
+`codex/provider-neutral-llm-eval`. The only remaining scientific limitation is
+prospective practitioner, youth, and independent-holdout validation; the paper
+states this limitation and gates stronger claims on completing that work.

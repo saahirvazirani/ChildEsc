@@ -1479,15 +1479,18 @@ interpretation.
 
 ## Task 67: Version the submission-ready iteration
 
+**Status:** Complete.
+
 **Description:** Commit and push the accepted-workshop-paper readiness revision
 only after every local gate passes.
 
 **Acceptance criteria:**
-- [ ] Commit contains no unrelated or identity-bearing submission change.
-- [ ] Branch is synchronized with GitHub.
+- [x] Commit contains no unrelated or identity-bearing submission change.
+- [x] Branch is synchronized with GitHub.
 
 **Verification:**
-- [ ] Clean `git status` and pushed commit hash recorded.
+- [x] The tracked tree is clean, the pushed substantive commit is `7b8ded1`,
+  and local visual-QA render directories remain deliberately untracked.
 
 **Dependencies:** Task 66
 

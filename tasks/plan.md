@@ -1464,7 +1464,7 @@ protocol that makes follow-up work executable.
 - [x] Task 65: Rebuild PDF, DOCX, and supplement; visually inspect all pages.
 - [x] Task 66: Run repository and clean-room test suites, release audit, claim
   scan, anonymity scan, citation check, and evidence-hash reconciliation.
-- [ ] Task 67: Conduct a final issues-only review and push the accepted repairs.
+- [x] Task 67: Conduct a final issues-only review and push the accepted repairs.
 
 ### Risks and mitigations
 
