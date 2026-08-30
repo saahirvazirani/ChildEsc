@@ -70,3 +70,19 @@ After every material manuscript change:
 2. Confirm `References` starts no later than page 5.
 3. Render and inspect every page.
 4. Reject any layout change that compresses the paper by altering template margins, type size, or spacing.
+
+## Measurement-readiness build, 2026-08-29
+
+- Content pages remain 1--4; references begin on page 5.
+- The PDF remains nine pages including references and the unlimited appendix.
+- Figure 1 adds a compact conversation-to-route-to-audit map without changing
+  template geometry.
+- The four-level measurement boundary and exact action-route-gap identity fit
+  on page 2; the three-system evidence and decomposition remain legible on page
+  3; validation gates and conclusion remain complete on page 4.
+- Appendix tables use a package-free fixed table environment and a deliberate
+  page break before representative examples, preventing headings or captions
+  from becoming detached from their tables.
+- All nine final PDF pages and all six final DOCX pages were rendered and
+  visually inspected; no clipping, overlap, orphaned caption, or unreadable
+  table was found.

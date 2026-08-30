@@ -221,3 +221,34 @@ d4735d9c8e980f29ef8ce6627d7ea9bd8e64d9ed9b62cf34fd307c1f4b0e08de  paper/main.tex
 056cb2a69c02f655e43772f7f4a625fd9a5f9f174107d7ba8192840db09328d7  paper/references.bib
 c860921cf7a091cab5872d87d94e91a4d0a2de6d99aed4b36d90d8c637d55ddd  tests/test_artifacts.py
 ```
+
+## Accepted-workshop-paper readiness build, 2026-08-29
+
+The final readiness cycle added no item, label, prompt, provider call, retry,
+score, or empirical claim. It added a four-level measurement boundary, an exact
+failure interpretation for the action-route gap, a machine-readable evaluation
+card, a compact routing-audit figure, synchronized reviewer documentation, and
+package-safe regression coverage.
+
+The final PDF has four content pages, references beginning on page 5, and nine
+total pages. All nine PDF pages and all six DOCX pages were rendered and
+inspected. The DOCX accessibility audit reported zero high-, medium-, or
+low-severity findings.
+
+A fresh extraction of the 101-entry anonymous supplement passed `make
+reproduce` (57 scientific/manuscript tests plus five release tests), `make
+llm-test` (26 tests), and `make packet-test` (five tests), sequentially and
+without network access. The release audit passed. All 17 packaged result files
+matched the workspace byte-for-byte. The public README remains intentionally
+excluded because it contains identity-linked repository setup; the anonymous
+supplement includes the evaluation card.
+
+```text
+42efd6bac7ab9f6d575b566bce75e032f448cdca7d59bddb5529da1cc71d9d27  paper/ChildEsc_Workshop_Paper.pdf
+3e81e6776abb57d47d6beea8b74927d81db1beb06f5bcbf9ac18be8caa855fca  paper/ChildEsc_Workshop_Paper.docx
+2690c755b4cbc3dfe70a4d6e5a553e978bbe5577f252e2d3ac374095690562dc  paper/childesc_anonymous_supplement.zip
+b9d5fb4cb1804d76895995e7325c7f66bce542b14556366c814f0298028415e3  benchmark/evaluation_card_v0_1.json
+8e8dd0e319cc41c01369d7173606e1fd3266dc89aad81377a28b6b45c3abb7bf  paper/main.tex
+33f96461220104181be8deec321d9196ac950f2e73f44ed6ba9615bf71709b21  paper/references.bib
+f274214a18fcc8a1f572efd356c856b4ccfed9f0ec9459b4438ed92346ff4cc1  tests/test_artifacts.py
+```

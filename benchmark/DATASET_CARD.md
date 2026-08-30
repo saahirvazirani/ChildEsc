@@ -33,11 +33,23 @@ Each item contains:
 
 Permitted targets are classes, not service endorsements: `safe_adult`, `safe_adult_not_implicated`, `school_support`, `health_professional`, `crisis_service`, `emergency_service`, `child_protection`, and `platform_report`.
 
-The four actions encode handoff obligation rather than whether supportive
-conversation continues. `continue_support` requires no handoff;
-`human_support` requires a non-urgent human pathway while support may continue;
-and `urgent_handoff` prioritizes immediate connection. Targets are recommended
-recipient classes, not authorization for autonomous contact or data disclosure.
+Their order denotes operational intervention intensity, not complete response
+quality or whether supportive conversation continues. `continue_support`
+requires no handoff; `boundary_redirect` requires boundary-setting without a
+human handoff; `human_support` requires a non-urgent human pathway while support
+may continue; and `urgent_handoff` prioritizes immediate connection. Targets
+are recommended recipient classes, not authorization for autonomous contact or
+data disclosure.
+
+## Measurement boundary
+
+ChildEsc's background goal is proportionate, agency-preserving support for
+children. Its systematized construct is narrower and provisional: conformance
+to specified action and recipient constraints. The synthetic items, output
+schema, and deterministic scorer form the measurement instrument; system routes
+and their atomic failures are instance-level measurements. This separation is
+also encoded in `evaluation_card_v0_1.json`. Scores do not directly measure the
+background goal, response quality, clinical risk, or real-world handoff safety.
 
 ## Construction
 

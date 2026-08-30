@@ -1298,3 +1298,199 @@ an AoE buffer; do not spend the buffer on optional experiments.
 All local acceptance gates are complete. The only remaining unchecked items are
 external upload metadata, OpenReview preview inspection, and final submission
 before the workshop deadline.
+
+## Task 60: Test the construct and metric claim chain
+
+**Status:** Complete.
+
+**Description:** Add failing regression tests that require the manuscript to
+separate the broad child-safety goal from the provisional routing-conformance
+construct and require the action-route gap to be stated as an exact failure
+decomposition.
+
+**Acceptance criteria:**
+- [x] Tests require all four measurement levels and provisional-status wording.
+- [x] Tests require the gap identity without changing metric implementation.
+- [x] Tests reject validated-ground-truth or real-world-safety interpretations.
+
+**Verification:**
+- [x] Focused tests fail before manuscript/card changes and pass afterward.
+
+**Dependencies:** None
+
+**Files likely touched:**
+- `tests/test_artifacts.py`
+
+**Estimated scope:** Small: 1 file
+
+## Task 61: Add the ChildEsc evaluation card
+
+**Status:** Complete.
+
+**Description:** Create a versioned JSON evaluation card that exposes the
+background goal, systematized construct, instrument, measurements, intended
+uses, prohibited uses, evidence status, validation status, and update triggers.
+
+**Acceptance criteria:**
+- [x] JSON is deterministic, anonymous, machine-readable, and schema-tested.
+- [x] It labels v0.1 target constraints as provisional.
+- [x] It prohibits deployment, clinical, contact, and model-ranking uses.
+
+**Verification:**
+- [x] Artifact tests parse and validate every required field.
+- [x] Release audit passes.
+
+**Dependencies:** Task 60
+
+**Files likely touched:**
+- `benchmark/evaluation_card_v0_1.json`
+- `tests/test_artifacts.py`
+
+**Estimated scope:** Small: 2 files
+
+## Task 62: Tighten construct and metric exposition
+
+**Status:** Complete.
+
+**Description:** Revise the paper to distinguish measurement levels, define the
+action order as operational intervention intensity, and state the exact
+action-route-gap identity. Do not change benchmark evidence.
+
+**Acceptance criteria:**
+- [x] Claim boundaries are explicit in the main paper rather than appendix-only.
+- [x] The mathematical identity is correct and consistent with all 247 failures.
+- [x] No existing score, item, label, prompt, or protocol changes.
+
+**Verification:**
+- [x] Focused artifact and arithmetic checks pass.
+- [x] Manuscript diff contains interpretation changes only.
+
+**Dependencies:** Tasks 60-61
+
+**Files likely touched:**
+- `paper/main.tex`
+- `paper/references.bib`
+- `paper/manuscript.md`
+
+**Estimated scope:** Medium: 3 files
+
+## Task 63: Add a compact audit-pipeline figure
+
+**Status:** Complete.
+
+**Description:** Add one compact main-paper figure connecting synthetic
+conversation, router output, provisional reference constraints, deterministic
+scoring, and validation-gated claims. Remove it if it causes overflow or harms
+legibility.
+
+**Acceptance criteria:**
+- [x] Figure clarifies rather than duplicates the prose.
+- [x] Caption states the provisional-label and routing-only boundary.
+- [x] References still begin on page 5 using unchanged template geometry.
+
+**Verification:**
+- [x] Compile and render all four content pages.
+- [x] Manual visual inspection confirms no crowding or clipping.
+
+**Dependencies:** Task 62
+
+**Files likely touched:**
+- `paper/main.tex`
+- `scripts/build_paper_docx.py`
+
+**Estimated scope:** Small: 2 files
+
+## Task 64: Synchronize reviewer-facing artifacts
+
+**Status:** Complete.
+
+**Description:** Mirror the final semantics and evaluation-card pointer across
+the DOCX builder, dataset card, README, supplement README, and tests.
+
+**Acceptance criteria:**
+- [x] No stale handoff semantics, test counts, replay promises, or model names.
+- [x] Evaluation card is listed in outputs and included in the supplement.
+- [x] PDF and DOCX communicate the same central claim.
+
+**Verification:**
+- [x] Manuscript synchronization and release tests pass.
+
+**Dependencies:** Tasks 61-63
+
+**Files likely touched:**
+- `scripts/build_paper_docx.py`
+- `benchmark/DATASET_CARD.md`
+- `README.md`
+- `paper/SUPPLEMENT_README.md`
+- `tests/test_artifacts.py`
+
+**Estimated scope:** Medium: 5 files
+
+## Task 65: Rebuild and visually inspect submission artifacts
+
+**Status:** Complete.
+
+**Description:** Compile the anonymous PDF, rebuild the DOCX and supplement,
+render every page, and inspect layout, page boundaries, citations, and tables.
+
+**Acceptance criteria:**
+- [x] Exactly four content pages; references begin on page 5.
+- [x] No visual defect, stale title, or identity-bearing content.
+- [x] Supplement excludes raw responses, caches, and internal review notes.
+
+**Verification:**
+- [x] PDF and DOCX render-and-inspect checks pass.
+- [x] ZIP integrity and content audit pass.
+
+**Dependencies:** Task 64
+
+**Files likely touched:**
+- `paper/ChildEsc_Workshop_Paper.pdf`
+- `paper/ChildEsc_Workshop_Paper.docx`
+- `paper/childesc_anonymous_supplement.zip`
+
+**Estimated scope:** Generated artifacts
+
+## Task 66: Run clean-room and adversarial gates
+
+**Status:** Complete.
+
+**Description:** Reproduce from a fresh supplement extraction and verify every
+claim-bearing count, interval, hash, citation, anonymity boundary, and prohibited
+interpretation.
+
+**Acceptance criteria:**
+- [x] All repository and packaged tests pass without network access.
+- [x] All packaged result artifacts match the workspace byte-for-byte.
+- [x] No unresolved high- or medium-severity review finding remains.
+
+**Verification:**
+- [x] `make reproduce`, `make llm-test`, and `make packet-test` pass in the
+  workspace and fresh anonymous-supplement extraction.
+- [x] `git diff --check` and release audit pass.
+
+**Dependencies:** Task 65
+
+**Files likely touched:**
+- `tasks/evidence_manifest.md`
+- `tasks/page_budget.md`
+
+**Estimated scope:** Small: 2 files plus verification
+
+## Task 67: Version the submission-ready iteration
+
+**Description:** Commit and push the accepted-workshop-paper readiness revision
+only after every local gate passes.
+
+**Acceptance criteria:**
+- [ ] Commit contains no unrelated or identity-bearing submission change.
+- [ ] Branch is synchronized with GitHub.
+
+**Verification:**
+- [ ] Clean `git status` and pushed commit hash recorded.
+
+**Dependencies:** Task 66
+
+**Files likely touched:** None beyond version-control metadata
+
+**Estimated scope:** Small

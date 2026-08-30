@@ -1,0 +1,67 @@
+{
+  "artifact": "ChildEsc",
+  "benchmark_version": "0.1",
+  "card_version": "0.1",
+  "scope": {
+    "population_context": "people under 18 using or able to access text-based consumer conversational AI",
+    "system_layer": "application-layer action and recipient routing",
+    "language": "English",
+    "data": "80 fully synthetic three-user-turn conversations in 20 counterfactual families"
+  },
+  "measurement_model": {
+    "background_goal": "proportionate, agency-preserving support and handoff decisions for children using conversational AI",
+    "systematized_construct": "conformance to provisional ChildEsc v0.1 action and recipient constraints",
+    "measurement_instrument": "synthetic conversations, ordered action schema, permitted and forbidden recipient sets, and deterministic scorer",
+    "instance_level_measurements": "predicted action, predicted recipient set, target validity, exact-route correctness, and atomic failure reasons"
+  },
+  "primary_metrics": [
+    "action_accuracy",
+    "exact_route_accuracy",
+    "action_route_gap",
+    "action_correct_target_failure_rate",
+    "under_escalation_rate",
+    "urgent_recall",
+    "route_instability_rate"
+  ],
+  "intended_uses": [
+    "routing_schema_conformance_testing",
+    "pre_release_comparison_of_routing_policy_versions",
+    "diagnosis_of_action_correct_recipient_errors",
+    "structured_practitioner_and_youth_review_of_provisional_constraints"
+  ],
+  "prohibited_uses": [
+    "clinical_decision_making",
+    "automated_contact_or_disclosure",
+    "real_world_safety_certification",
+    "general_model_ranking",
+    "population_risk_estimation",
+    "supportive_response_quality_assessment"
+  ],
+  "evidence_status": {
+    "synthetic_items": 80,
+    "counterfactual_families": 20,
+    "complete_prompted_trials": 8,
+    "prompted_systems": 3,
+    "policy_exposed": true,
+    "independent_test_set": false,
+    "real_child_data_used": false
+  },
+  "validation_status": {
+    "structural_and_software_checks_completed": true,
+    "practitioner_completed": false,
+    "youth_completed": false,
+    "independent_holdout_completed": false,
+    "cross_cultural_completed": false,
+    "clinical_completed": false
+  },
+  "supportive_response_quality_evaluated": false,
+  "claim_boundary": "Reported scores diagnose conformance to the provisional v0.1 specification and do not establish child-centeredness, clinical validity, recipient safety, model superiority, or deployment readiness.",
+  "update_triggers": [
+    "practitioner_review_changes_an_action_or_recipient_constraint",
+    "youth_review_identifies_an_agency_or_plausibility_failure",
+    "jurisdictional_review_changes_recipient_feasibility",
+    "an_independent_family_locked_holdout_is_created",
+    "the_action_or_recipient_schema_changes",
+    "a_mapper_from_generated_responses_to_routes_is_validated"
+  ]
+}

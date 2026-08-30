@@ -21,22 +21,27 @@ ordered actions:
 3. `human_support`
 4. `urgent_handoff`
 
-These labels encode the required handoff behavior, not whether the AI stops
-being supportive. `continue_support` requires no handoff, `human_support`
-requires a non-urgent human pathway while support may continue, and
-`urgent_handoff` prioritizes immediate connection. A target is a recommended
-recipient class; it never authorizes ChildEsc to contact anyone or disclose
-data.
+The order denotes operational intervention intensity, not complete response
+quality or whether the AI stops being supportive. `continue_support` requires
+no handoff, `boundary_redirect` requires boundary-setting without a human
+handoff, `human_support` requires a non-urgent human pathway while support may
+continue, and `urgent_handoff` prioritizes immediate connection. A target is a
+recommended recipient class; it never authorizes ChildEsc to contact anyone or
+disclose data.
 
 For escalations, the safeguard also selects one or more human-support target
 classes, such as `safe_adult_not_implicated`, `health_professional`, or
-`crisis_service`. Permitted and forbidden target sets make unsafe handoffs
-auditable, including cases where an adult may be implicated.
+`crisis_service`. Permitted and forbidden target sets make constraint-invalid
+handoffs auditable, including the smaller subset that intersects a forbidden
+class when an adult may be implicated.
 
-The testbed is for research, implementation auditing, and future expert review.
-Current policy-exposed results are diagnostic checksums. They do not estimate
-generalization, clinical accuracy, comparative effectiveness, or deployment
-safety.
+The background goal is proportionate, agency-preserving child support. The
+systematized construct is narrower: conformance to provisional action and
+recipient constraints. The synthetic items, schema, and scorer are the
+measurement instrument, and routing decisions and deterministic failures are
+the instance-level measurements. Current policy-exposed results are diagnostic
+checksums, not estimates of generalization, clinical accuracy, comparative
+effectiveness, or deployment safety.
 
 ## Quickstart
 
@@ -59,9 +64,9 @@ requires authorized GitHub access. The command deterministically generates the
 benchmark, evaluates the baselines and rule checksum, runs the frozen analyses
 and relational contracts, executes all tests, and audits the release boundary.
 
-Expected output includes 51 passing scientific/manuscript tests, five passing
+Expected output includes 57 passing scientific/manuscript tests, five passing
 repository-release tests, and `Release audit passed.` The optional provider
-path is tested separately by `make llm-test`, which currently runs 25 tests.
+path is tested separately by `make llm-test`, which currently runs 26 tests.
 
 ## Commands
 
@@ -210,6 +215,7 @@ provider API sources, full-run workflow, and interpretation limits.
 | `results/llm_v1_2_summary.json` | Three-system prompted-routing aggregate with complete-trial gating. |
 | `results/llm_v1_2_paper_table.csv` | Compact prompted-system result table. |
 | `results/llm_v1_2_target_failures.csv` | Action-correct recipient failures and atomic causes. |
+| `benchmark/evaluation_card_v0_1.json` | Machine-readable construct, claim, validation, and prohibited-use boundaries. |
 
 Do not interpret these outputs as model capability estimates. The source
 scenarios, initial reference labels, and lexical router were developed in the
@@ -266,6 +272,7 @@ overwriting v0.1. See [`validation/README.md`](validation/README.md) and
 Important files:
 
 - `benchmark/DATASET_CARD.md`: construction, intended uses, risks, and limits.
+- `benchmark/evaluation_card_v0_1.json`: measurement model, claim boundary, and update triggers.
 - `benchmark/AUTHORING_PROTOCOL.md`: prospective controlled family authoring.
 - `benchmark/source_register.json`: source-to-design rationale register.
 - `benchmark/contract_probes.json`: frozen developer-authored relational checks.

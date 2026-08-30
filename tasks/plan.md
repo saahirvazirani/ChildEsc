@@ -1415,3 +1415,72 @@ optional comparison runs. Do not compress the final submission audit.
   interpretations.
 - The anonymous supplement reproduces all reported values without credentials,
   secrets, local paths, identities, or network access.
+
+## Accepted-Workshop-Paper Readiness Cycle, 2026-08-29
+
+### Evidence base
+
+This cycle compares ChildEsc with accepted NeurIPS workshop papers from
+EvalEval, SafeGenAI, Behavioral ML, and GenAI4Health. The comparison is used for
+structure and reviewability, not as evidence that any stylistic choice causes
+acceptance. Recurring useful properties are a singular measurement object, an
+immediately legible contribution-evidence chain, controlled or decomposed
+diagnostics, explicit intended and invalid uses, and a concrete artifact or
+protocol that makes follow-up work executable.
+
+### Phase 1: Construct and metric clarity
+
+- [x] Task 60: Add regression tests for the four-level measurement boundary and
+  exact action-route-gap decomposition.
+- [x] Task 61: Add a versioned, machine-readable ChildEsc evaluation card.
+- [x] Task 62: Tighten the main-paper construct, action-order, and metric text
+  without changing v0.1 items, labels, scores, or protocols.
+
+### Checkpoint: Scientific claim chain
+
+- [x] Background goal, systematized construct, instrument, and reported
+  measurements are distinguishable in the paper and artifact.
+- [x] The action-route gap is shown to equal the all-item rate of
+  action-correct, target-invalid routes.
+- [x] No wording promotes provisional target sets to validated safety labels.
+
+### Phase 2: Reviewer navigation and artifact utility
+
+- [x] Task 63: Add a compact route-audit pipeline figure if and only if it fits
+  the official four-page layout without geometry changes or readability loss.
+- [x] Task 64: Synchronize the paper, DOCX builder, dataset card, README,
+  anonymous supplement, and artifact tests.
+
+### Checkpoint: Four-page read
+
+- [x] A reviewer can recover the problem, technical object, principal result,
+  strongest limitation, and next validation step from the abstract, Figure 1,
+  Table 1, and conclusion.
+- [x] References begin on page 5 and every main-content page has balanced,
+  unclipped layout.
+
+### Phase 3: Adversarial submission audit
+
+- [x] Task 65: Rebuild PDF, DOCX, and supplement; visually inspect all pages.
+- [x] Task 66: Run repository and clean-room test suites, release audit, claim
+  scan, anonymity scan, citation check, and evidence-hash reconciliation.
+- [ ] Task 67: Conduct a final issues-only review and push the accepted repairs.
+
+### Risks and mitigations
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Accepted-paper mimicry substitutes for scientific improvement | High | Adopt only changes that shorten verification of ChildEsc's existing claim chain |
+| New figure causes a fifth content page | Critical | Retain only if references still begin on page 5 under the official style |
+| Measurement framing sounds like completed validation | Critical | Name target sets provisional and keep the validation gates adjacent |
+| Evaluation card drifts from the manuscript | High | Add schema and synchronization tests, then package the exact versioned file |
+| Deadline iteration changes frozen evidence | Critical | Prohibit new items, labels, prompts, calls, retries, or scoring changes |
+
+### Definition of done
+
+- The four-page submission is easier to verify than the prior revision while
+  making no stronger empirical or safety claim.
+- The evaluation card exposes construct, scope, evidence, prohibited uses,
+  validation status, and update triggers in a machine-readable form.
+- All source, generated, and packaged artifacts pass clean-room reproduction
+  and visual inspection, and the final branch is pushed without unrelated work.

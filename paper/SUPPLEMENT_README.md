@@ -32,6 +32,11 @@ hashes, endpoint snapshots, the retained incomplete 79/80 GPT trial, and inclusi
 `tasks/llm_evaluation_protocol_v1_2.md`. The earlier v1.1 Claude aggregate is
 retained as provenance rather than presented as the complete comparison.
 
+The machine-readable construct and claim boundary is in
+`benchmark/evaluation_card_v0_1.json`. It distinguishes the broad child-safety
+goal from the provisional routing-conformance construct and records intended
+uses, prohibited uses, evidence and validation status, and update triggers.
+
 All conversations are synthetic. Do not use the artifact with real child data,
 personal crisis disclosures, hotline transcripts, clinical records, or contact
 information. Practitioner and youth validation have not occurred, and the

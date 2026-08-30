@@ -22,8 +22,29 @@ class ArtifactSynchronizationTests(unittest.TestCase):
 
     def test_manuscript_reports_current_test_count(self) -> None:
         manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
-        self.assertIn("53 tests for the frozen scientific and manuscript path", manuscript)
+        self.assertIn("57 tests for the frozen scientific and manuscript path", manuscript)
         self.assertIn("26 provider-path tests", manuscript)
+
+    def test_public_docs_report_current_boundary_and_counts(self) -> None:
+        readme_path = ROOT / "README.md"
+        readme = readme_path.read_text(encoding="utf-8") if readme_path.exists() else None
+        dataset_card = (ROOT / "benchmark" / "DATASET_CARD.md").read_text(
+            encoding="utf-8"
+        )
+        docx_builder = (ROOT / "scripts" / "build_paper_docx.py").read_text(
+            encoding="utf-8"
+        )
+
+        for text in (dataset_card, docx_builder):
+            self.assertIn("systematized construct", text)
+            self.assertIn("operational intervention intensity", text)
+        if readme is not None:
+            self.assertIn("systematized construct", readme)
+            self.assertIn("operational intervention intensity", readme)
+            self.assertIn("57 passing scientific/manuscript tests", readme)
+            self.assertIn("26 tests", readme)
+            self.assertIn("evaluation_card_v0_1.json", readme)
+        self.assertIn("57 tests for the frozen scientific and manuscript path", docx_builder)
 
     def test_latex_table_matches_versioned_metrics(self) -> None:
         systems = json.loads(
@@ -151,7 +172,7 @@ class ArtifactSynchronizationTests(unittest.TestCase):
     def test_action_semantics_and_editorial_feedback_boundary_are_explicit(self) -> None:
         manuscript = self.manuscript()
 
-        self.assertIn("intervention and routing obligation rather than complete response style", manuscript)
+        self.assertIn("operational intervention intensity, not complete response quality", manuscript)
         self.assertIn("boundary-setting without human handoff", manuscript)
         self.assertIn("does not authorize autonomous contact", manuscript)
         self.assertIn("incomplete informal editorial read", manuscript)
@@ -279,6 +300,58 @@ class ArtifactSynchronizationTests(unittest.TestCase):
         self.assertIn("supportive language", manuscript)
         self.assertIn("separate rubric", manuscript)
         self.assertIn("human validation", manuscript)
+
+    def test_manuscript_separates_construct_from_background_goal(self) -> None:
+        manuscript = self.main_content()
+
+        self.assertIn("background goal", manuscript)
+        self.assertIn("systematized construct", manuscript)
+        self.assertIn("measurement instrument", manuscript)
+        self.assertIn("instance-level measurements", manuscript)
+        self.assertIn("provisional action and recipient constraints", manuscript)
+        self.assertIn("operational intervention intensity", manuscript)
+        self.assertIn("wallach2024measurement", (ROOT / "paper" / "references.bib").read_text(encoding="utf-8"))
+
+    def test_action_route_gap_is_an_exact_failure_decomposition(self) -> None:
+        manuscript = self.main_content()
+
+        self.assertIn(
+            r"\mathrm{Gap}=\frac{1}{N}\sum_i \mathbb{1}[p_i=g_i](1-V_i)",
+            manuscript,
+        )
+        self.assertIn("all-item rate of action-correct, target-invalid routes", manuscript)
+
+    def test_evaluation_card_exposes_claim_and_validation_boundaries(self) -> None:
+        card_path = ROOT / "benchmark" / "evaluation_card_v0_1.json"
+        card = json.loads(card_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(card["artifact"], "ChildEsc")
+        self.assertEqual(card["benchmark_version"], "0.1")
+        self.assertEqual(card["card_version"], "0.1")
+        self.assertEqual(
+            set(card["measurement_model"]),
+            {
+                "background_goal",
+                "systematized_construct",
+                "measurement_instrument",
+                "instance_level_measurements",
+            },
+        )
+        self.assertIn("provisional", card["measurement_model"]["systematized_construct"])
+        self.assertFalse(card["validation_status"]["practitioner_completed"])
+        self.assertFalse(card["validation_status"]["youth_completed"])
+        self.assertFalse(card["validation_status"]["independent_holdout_completed"])
+        self.assertEqual(card["supportive_response_quality_evaluated"], False)
+        prohibited = set(card["prohibited_uses"])
+        for required in (
+            "clinical_decision_making",
+            "automated_contact_or_disclosure",
+            "real_world_safety_certification",
+            "general_model_ranking",
+        ):
+            self.assertIn(required, prohibited)
+        self.assertGreaterEqual(len(card["update_triggers"]), 4)
+        self.assertIn("benchmark/evaluation_card_v0_1.json", (ROOT / "paper" / "SUPPLEMENT_README.md").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
